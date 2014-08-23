@@ -1,0 +1,25 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="athene-web:war exploded">
+    <output-path>$PROJECT_DIR$/web/target/athene-web-0.0.1-SNAPSHOT</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="athene-web/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="athene-web" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="archive" name="athene-application-0.0.1-SNAPSHOT.jar">
+            <element id="module-output" name="athene-application" />
+          </element>
+          <element id="archive" name="athene-doamin-0.0.1-SNAPSHOT.jar">
+            <element id="module-output" name="athene-doamin" />
+          </element>
+          <element id="archive" name="athene-infrastructure-0.0.1-SNAPSHOT.jar">
+            <element id="module-output" name="athene-infrastructure" />
+          </element>
+          <element id="library" level="project" name="Maven: javax.servlet:servlet-api:3.0" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
