@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="athene-web:war">
-    <output-path>$PROJECT_DIR$/web/target</output-path>
-    <root id="archive" name="athene-web-0.0.1-SNAPSHOT.war">
-      <element id="artifact" artifact-name="athene-web:war exploded" />
-    </root>
-  </artifact>
-</component>
