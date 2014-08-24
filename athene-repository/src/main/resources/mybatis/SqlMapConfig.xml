@@ -17,11 +17,13 @@
 	<!-- 别名配置 -->
 	<typeAliases>
         <typeAlias alias="Tester" type="com.quest.model.Tester" />
+        <typeAlias alias="Question" type="com.quest.model.Question" />
     </typeAliases>
 	
 	<!-- 指定映射器路径 -->
 	<mappers>
 		<mapper resource="mybatis/mapper/TesterMapper.xml" />
+        <mapper resource="mybatis/mapper/QuestionManager.xml" />
 	</mappers>
 
 </configuration>

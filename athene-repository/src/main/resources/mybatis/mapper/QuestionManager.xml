@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.quest.mapper.QuestionManager">
+
+    <resultMap id="Question" type="com.quest.model.Question">
+        <result column="questionId" property="questionId" />
+        <result column="name" property="name" />
+        <result column="authorId" property="authorId" />
+        <result column="content" property="content" />
+        <result column="state" property="state" />
+        <result column="categoryId" property="categoryId" />
+        <result column="noOfExposures" property="noOfExposures" />
+        <result column="tagId" property="tagId" />
+        <result column="questionTitleId" property="questionTitleId" />
+    </resultMap>
+
+    <insert id="submitQestion" parameterType="com.quest.model.Question" useGeneratedKeys="true"
+            keyProperty="questionId">
+        insert into Question (authorId,questionTitleId,content,state,categoryId,noOfExposures,tagId)
+        values (#{authorId},#{questionTitleId},#{content},#{state},#{categoryId},#{noOfExposures},#{tagId})
+    </insert>
+
+</mapper>
