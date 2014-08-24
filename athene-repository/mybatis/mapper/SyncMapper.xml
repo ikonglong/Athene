@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.alibaba.alimei.dao.ISyncMapper">
+
+    <resultMap id="DomainUserViewMap" type="com.alibaba.alimei.dao.vo.sync.DomainUserView">
+        <result column="user_id" property="userId" />
+        <result column="name" property="name" />
+        <result column="alias_account" property="aliasAccount" />
+        <result column="account_id" property="accountId" />
+        <result column="type" property="type" />
+        <result column="domain_id" property="domainId" />
+        <result column="domain_name" property="domainName" />
+        <result column="biz_status" property="bizStatus" />
+        <result column="role_name" property="roleName" />
+        <result column="status" property="status" />
+        <result column="relation_user_id" property="relationUserId" />
+        <result column="relation_type" property="relationType" />
+        <result column="phone" property="phone" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+    
+    <resultMap id="DomainMap" type="com.alibaba.alimei.dao.vo.Domain">
+        <result column="number" property="number" />
+        <result column="name" property="name" />
+        <result column="city" property="city" />
+        <result column="address" property="address" />
+        <result column="contact" property="contact" />
+        <result column="phone" property="phone" />
+        <result column="id" property="id" />
+        <result column="status" property="status" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="app_name" property="appName" />
+        <result column="app_parent" property="appParent" />
+    </resultMap>
+    
+    <resultMap id="UserTeamViewMap" type="com.alibaba.alimei.dao.vo.sync.UserTeamView">
+        <result column="user_id" property="userId" />
+        <result column="alias_account" property="aliasAccount" />
+
+        <!--<result column="user_gmt_modified" property="userGmtModified" />-->
+        <result column="user_team_gmt_modified" property="userTeamGmtModified" />
+        <result column="user_team_gmt_create" property="userTeamGmtCreate" />
+        <!--<result column="user_status" property="userStatus"/>-->
+        <result column="user_team_status" property="userTeamStatus" />
+        <result column="message_push" property="messagePush" />
+
+        <result column="id" property="id" />
+        <result column="description" property="description" />
+        <result column="sort" property="sort" />
+        <result column="email" property="email" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="biz_status" property="bizStatus" />
+        <result column="parent_id" property="parentId" />
+        <result column="owner_id" property="ownerId" />
+        <result column="domain_id" property="domainId" />
+        <result column="status" property="status" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="app_name" property="appName" />
+        <result column="app_parent" property="appParent" />
+    </resultMap>
+    
+    <resultMap id="TeamMemberViewMap" type="com.alibaba.alimei.dao.vo.sync.TeamMemberView">
+    	<result column="belong_user_id" property="belongUserId" />
+    	<result column="belong_alias_account" property="belongAliasAccount" />
+    	<result column="user_type" property="userType" />
+        <result column="member_id" property="memberId" />
+        <result column="team_id" property="teamId" />
+        <result column="title_type" property="titleType" />
+        <result column="name" property="name" />
+        <result column="gender" property="gender" />
+        <result column="alias_account" property="aliasAccount" />
+        <result column="account_id" property="accountId" />
+        <result column="type" property="type" />
+        <result column="domain_id" property="domainId" />
+        <result column="biz_status" property="bizStatus" />
+        <result column="role_name" property="roleName" />
+        <result column="user_team_status" property="userTeamStatus" />
+        <result column="status" property="status" />
+        <result column="relation_user_id" property="relationUserId" />
+        <result column="relation_type" property="relationType" />
+        <result column="phone" property="phone" />
+        <result column="show_mobile" property="showMobile" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="user_team_gmt_modified" property="userTeamGmtModified" />
+    </resultMap>
+    
+    <select id="getDbDate" resultType="Date">
+    	select now()
+    </select>
+    
+    <select id="listDomainUserChange" resultMap="DomainUserViewMap">
+        <![CDATA[
+    	select a.id user_id, a.name, a.alias_account, a.account_id, a.type, a.domain_id, b.name domain_name, 
+    		a.biz_status, a.role_name, a.status, a.relation_user_id, a.relation_type, a.type, '' phone, a.gmt_create, a.gmt_modified
+    	from user a, domain b 
+    	where a.domain_id = b.id and a.app_name = #{appName} and a.account_id = #{accountId} and (a.gmt_modified > #{syncDate} and a.gmt_modified <= #{endDate} )
+    	]]>
+    </select>
+    
+    <select id="listDomainChange" resultMap="DomainMap">
+        <![CDATA[
+    	select distinct b.* 
+    	from user a, domain b 
+    	where a.domain_id = b.id and a.app_name = #{appName} and a.account_id = #{accountId} and (b.gmt_modified > #{syncDate}  and b.gmt_modified <= #{endDate} )
+        ]]>
+    </select>
+    
+    <select id="listMyAllDomain" resultMap="DomainMap">
+        <![CDATA[
+    	select distinct b.* 
+    	from user a, domain b 
+    	where a.domain_id = b.id and a.app_name = #{appName} and a.account_id = #{accountId} 
+        ]]>
+    </select>
+    
+    <select id="listTeamChangeByDomainId" resultMap="UserTeamViewMap">
+        select * from team a
+        where a.domain_id in <foreach collection="list" item="i" open="(" separator="," close=")">#{i}</foreach>
+        and a.app_name = #{appName}
+        <if test="syncDate != null and endDate != null">
+            <![CDATA[
+		        and a.gmt_modified > #{syncDate} and a.gmt_modified <= #{endDate}
+	        ]]>
+        </if>
+        <if test="type != null">
+            <![CDATA[
+		        and a.type = #{type}
+	        ]]>
+        </if>
+    </select>
+    
+    <select id="listUserTeamChangeByAccountId"  resultMap="UserTeamViewMap">
+        select
+        			b.user_id, a.alias_account, 
+        			b.message_push,
+                    b.status as user_team_status,
+                    b.gmt_modified as user_team_gmt_modified,
+                    b.gmt_create as user_team_gmt_create,
+                    c.* 
+        from user a , user_team b , team c
+
+        where <if test="domainId != null">c.domain_id = #{domainId} and</if>
+        a.id = b.user_id and b.team_id = c.id
+        and c.app_name = #{appName}
+        and a.account_id = #{accountId}
+        <if test="syncDate != null and endDate != null">
+            <![CDATA[
+	        and (
+		         ( b.gmt_modified > #{syncDate} and b.gmt_modified <= #{endDate} ) 
+		         or ( c.gmt_modified > #{syncDate} and c.gmt_modified <= #{endDate} )
+	        )
+	        ]]>
+        </if>
+        <if test="type != null">
+            <![CDATA[
+		        and c.type = #{type}
+	        ]]>
+        </if>
+    </select>
+    
+
+    
+    <select id="listUserTeamChangeByAliasAccount"  resultMap="UserTeamViewMap">
+        select
+        			b.user_id, a.alias_account, 
+        			b.message_push,
+                    b.status as user_team_status,
+                    b.gmt_modified as user_team_gmt_modified,
+                    b.gmt_create as user_team_gmt_create,
+                    c.* 
+        from user a , user_team b , team c
+
+        where <if test="domainId != null">c.domain_id = #{domainId} and</if>
+        a.id = b.user_id and b.team_id = c.id
+        and c.app_name = #{appName}
+        and a.alias_account = #{aliasAccount}
+        <if test="syncDate != null and endDate != null">
+            <![CDATA[
+	        and (
+	         	( b.gmt_modified > #{syncDate} and b.gmt_modified <= #{endDate} )
+	         	or ( c.gmt_modified> #{syncDate} and c.gmt_modified <= #{endDate} )
+	        )
+        	]]>	        
+        </if>
+        <if test="type != null">
+            <![CDATA[
+		        and c.type = #{type}
+	        ]]>
+        </if>
+    </select>
+    
+    
+<!--     <select id="listUserTeamChangeByUserId"  resultMap="UserTeamViewMap"> -->
+<!--         select -->
+<!--         			b.user_id, b.alias_account,  -->
+<!--                     b.status as user_team_status, -->
+<!--                     b.gmt_modified as user_team_gmt_modified, -->
+<!--                     c.*  -->
+<!--         from user_team b , team c -->
+
+<!--         where <if test="domainId != null">c.domain_id = #{domainId} and</if> -->
+<!--           b.team_id=c.id -->
+<!--         and c.app_name = #{appName} -->
+<!--         and b.user_id = #{userId} -->
+<!--         <if test="syncDate != null"> -->
+<!-- 	        and ( -->
+<!-- 	         b.gmt_modified >#{syncDate} or c.gmt_modified>#{syncDate} -->
+<!-- 	        ) -->
+<!--         </if> -->
+
+<!--     </select> -->
+    
+<!--     <select id="listTeamMemberChange" resultMap="TeamMemberViewMap">
+
+    	select a.*, b.id user_team_id, b.user_id, b.team_id, b.title_type, c.phone, c.show_mobile, b.status user_team_status
+    	from user a, user_team b, account c
+    	where    <if test="domainId != null">a.domain_id = #{domainId} and</if>
+    			a.app_name = #{appName} and a.account_id = c.id
+    			and a.id = b.user_id 
+    			and b.id in <foreach collection="list" item="i" open="(" separator="," close=")">#{i}</foreach>
+    			and (
+    			    	<![CDATA[
+	    				( a.gmt_modified > #{syncDate} and a.gmt_modified <= #{endDate} )
+	    				or ( b.gmt_modified > #{syncDate} and b.gmt_modified <= #{endDate} )
+	    				or ( c.gmt_modified > #{syncDate} and c.gmt_modified <= #{endDate} )
+    					]]>	    				
+    				)
+
+    </select> -->
+    
+    <select id="listTeamMemberChangeByTeamId" resultMap="TeamMemberViewMap">
+        select a.*, b.user_id member_id, b.team_id, b.title_type, c.phone, c.show_mobile, b.status user_team_status,
+        	b.gmt_modified user_team_gmt_modified
+    	from user a, user_team b, account c
+    	where     		
+    		a.app_name = #{appName} and a.account_id = c.id
+    		and a.id = b.user_id and a.type != 3
+    		and a.domain_id = #{domainId}
+    		and b.team_id = #{teamId}
+    		and (
+    		    	<![CDATA[
+	    			   ( a.gmt_modified > #{syncDate} and a.gmt_modified <= #{endDate} )
+	    			or ( b.gmt_modified > #{syncDate} and b.gmt_modified <= #{endDate} )
+	    			or ( c.gmt_modified > #{syncDate} and c.gmt_modified <= #{endDate} )
+    				]]>	    				
+    			)
+    			order by b.gmt_create desc
+    </select>
+    
+    <select id="listTeamMemberChange" resultMap="TeamMemberViewMap">
+	
+    	select a.*, b.user_id member_id, d.user_id belong_user_id, d.alias_account belong_alias_account, b.team_id, b.title_type, c.phone, c.show_mobile, b.status user_team_status, d.user_type
+    	from user a, user_team b, account c, 
+    		(    	
+    			select d1.*, d2.type user_type, d2.alias_account
+    			from user_team d1, user d2
+    			where d1.user_id = d2.id and d2.account_id = #{accountId} and d1.app_name = #{appName} and d1.status = 0 and d2.status = 0
+    				  and d1.gmt_create > #{syncDate} and type != 2
+    		) d
+    	where    
+    		<if test="domainId != null">a.domain_id = #{domainId} and</if>
+    		a.app_name = #{appName} and a.account_id = c.id
+    		and a.id = b.user_id 
+    		and b.team_id = d.team_id 
+    		and (
+    		    	<![CDATA[
+	    	    		( a.gmt_modified <= #{endDate} )
+	    			or ( b.gmt_modified <= #{endDate} )
+	    			or ( c.gmt_modified <= #{endDate} )
+    				]]>	    				
+    			)
+    			
+    	union
+    	
+    	select a.*, b.user_id member_id, d.user_id belong_user_id, d.alias_account belong_alias_account, b.team_id, b.title_type, c.phone, c.show_mobile, b.status user_team_status, d.user_type
+    	from user a, user_team b, account c, 
+    		(    	
+    			<![CDATA[
+    			select d1.*, d2.type user_type, d2.alias_account
+    			from user_team d1, user d2
+    			where d1.user_id = d2.id and d2.account_id = #{accountId} and d1.app_name = #{appName} and d1.status = 0 and d2.status = 0
+    			      and d1.gmt_create <= #{syncDate} and type != 2
+    			]]>
+    		) d
+    	where    
+    		<if test="domainId != null">a.domain_id = #{domainId} and</if>
+    		a.app_name = #{appName} and a.account_id = c.id
+    		and a.id = b.user_id 
+    		and b.team_id = d.team_id 
+    		and (
+    		    	<![CDATA[
+	    	    		( a.gmt_modified > #{syncDate} and a.gmt_modified <= #{endDate} )
+	    			or ( b.gmt_modified > #{syncDate} and b.gmt_modified <= #{endDate} )
+	    			or ( c.gmt_modified > #{syncDate} and c.gmt_modified <= #{endDate} )
+    				]]>	    				
+    			)	
+    			
+    	    			
+    	union
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	select a.*, b.user_id member_id, d.user_id belong_user_id, d.alias_account belong_alias_account, b.team_id, b.title_type, c.phone, c.show_mobile, b.status user_team_status, d.user_type
+    	from user a, user_team b, account c, 
+    		(    	
+    			<![CDATA[
+    			select d1.*, d2.type user_type, d2.alias_account
+    			from user_team d1, user d2
+    			where d1.user_id = d2.id and d2.account_id = #{accountId} and d1.app_name = #{appName} and d1.status = 0 and d2.status = 0
+    			      and d1.gmt_create <= #{syncDate} and d2.type = 2
+    			]]>
+    		) d
+    	where    
+    		<if test="domainId != null">a.domain_id = #{domainId} and</if>
+    		a.app_name = #{appName} and a.account_id = c.id
+    		and a.id = b.user_id 
+    		and b.team_id = d.team_id 
+    		and (
+    		    	<![CDATA[
+	    	    		( a.gmt_modified > #{syncDate} and a.gmt_modified <= #{endDate} )
+	    			or ( b.gmt_modified > #{syncDate} and b.gmt_modified <= #{endDate} )
+	    			or ( c.gmt_modified > #{syncDate} and c.gmt_modified <= #{endDate} )
+    				]]>	    				
+    			)			
+
+    </select>
+    <!-- 
+    管理员listTeamMemberChange case sql
+    select a.*,b.type from user_team a, user b, team c where b.type = 0 and b.app_name = 'ALISHISHENG' and a.team_id = c.id and b.domain_id = c.domain_id
+     -->
+
+</mapper>

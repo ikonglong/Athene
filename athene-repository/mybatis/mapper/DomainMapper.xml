@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.alibaba.alimei.dao.IDomainMapper">
+
+    <resultMap id="DomainMap" type="com.alibaba.alimei.dao.vo.Domain">
+        <result column="number" property="number" />
+        <result column="name" property="name" />
+        <result column="city" property="city" />
+        <result column="address" property="address" />
+        <result column="contact" property="contact" />
+        <result column="phone" property="phone" />
+        <result column="id" property="id" />
+        <result column="status" property="status" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="app_name" property="appName" />
+        <result column="app_parent" property="appParent" />
+    </resultMap>
+
+    <insert id="clear" useGeneratedKeys="false">
+        delete from domain where app_name = #{appName}
+    </insert>
+
+    <insert id="insert" parameterType="Domain" useGeneratedKeys="false">
+        insert into domain
+            (<include refid="allColumns"/>)
+        values
+            (#{number}, #{name}, #{city}, #{address}, #{contact}, #{phone}, #{id}, #{status}, now(), now(), #{appName}, #{appParent}, #{province}, #{district})
+    </insert>
+
+    <insert id="insertBatch" parameterType="List" useGeneratedKeys="false">
+        insert into domain
+            (<include refid="allColumns"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.number}, #{item.name}, #{item.city}, #{item.address}, #{item.contact}, #{item.phone}, #{item.id}, #{item.status}, now(), now(), #{item.appName}, #{item.appParent})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="Domain">
+        update domain
+        set gmt_modified = now(),
+        <trim suffixOverrides=",">
+            <if test="number != null">number = #{number},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="province != null">province = #{province},</if>
+            <if test="district != null">district = #{district},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="contact != null">contact = #{contact},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where id = #{id};
+    </update>
+
+    <update id="delete">
+        update domain
+        set
+            status = 1,
+            gmt_modified = now()
+        where
+            id = #{id};
+    </update>
+
+    <select id="get" resultMap="DomainMap">
+        select * from domain
+        where id = #{id}
+        limit 0, 1
+    </select>
+
+    <select id="count" parameterType="Map" resultType="int">
+        select count(0) from domain
+        <include refid="where"/>
+    </select>
+
+    <select id="list" parameterType="Map" resultMap="DomainMap">
+        select * from domain
+        <include refid="where"/>
+        limit #{offset}, #{length}
+    </select>
+    
+    <sql id="in">
+    	<foreach collection="list" item="i" open="(" separator="," close=")">#{i}</foreach>
+    </sql>
+    
+    <select id="getNamesByIds" parameterType="List" resultType="java.lang.String">
+    	select distinct name from domain where id in <include refid="in"/>
+    </select>
+
+    <sql id="allColumns">
+        number, name, city, address, contact, phone,  id, status, gmt_create, gmt_modified, app_name, app_parent, province, district
+    </sql>
+
+    <sql id="where">
+        where status = '0'
+        <if test="domain.number != null">and number = #{domain.number}</if>
+        <if test="domain.name != null">and name = #{domain.name}</if>
+        <if test="domain.city != null">and city = #{domain.city}</if>
+        <if test="domain.address != null">and address = #{domain.address}</if>
+        <if test="domain.contact != null">and contact = #{domain.contact}</if>
+        <if test="domain.phone != null">and phone = #{domain.phone}</if>
+        <if test="domain.id != null">and id = #{domain.id}</if>
+        <if test="domain.status != null">and status = #{domain.status}</if>
+        <if test="domain.gmtCreate != null">and gmt_create = #{domain.gmtCreate}</if>
+        <if test="domain.gmtModified != null">and gmt_modified = #{domain.gmtModified}</if>
+        <if test="domain.appName != null">and app_name = #{domain.appName}</if>
+        <if test="domain.appParent != null">and app_parent = #{domain.appParent}</if>
+
+        <if test="keyword != null">
+            and name like '%${keyword}%'
+        </if>
+    </sql>
+
+</mapper>

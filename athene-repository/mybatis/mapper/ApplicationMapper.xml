@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.alibaba.alimei.dao.IApplicationMapper">
+
+    <resultMap id="applicationMap" type="com.alibaba.alimei.dao.vo.Application">
+        <result column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="pic_url" property="picUrl" />
+        <result column="type" property="type" />
+        <result column="download_url" property="downloadUrl" />
+        <result column="entrance_url" property="entranceUrl" />
+        <result column="ios_identify" property="iosIdentify" />
+        <result column="andriod_identify" property="andriodIdentify" />
+        <result column="ios_supported" property="iosSupported" />
+        <result column="andriod_supported" property="andriodSupported" />
+        <result column="teacher_allowed" property="teacherAllowed" />
+        <result column="parent_allowed" property="parentAllowed" />
+        <result column="student_allowed" property="studentAllowed" />
+        <result column="need_auth" property="needAuth" />
+        <result column="need_display_nav_bar" property="needDisplayNavBar" />
+        <result column="description" property="desc" />
+    </resultMap>
+
+	<select id="list" resultMap="applicationMap">
+        select * from application
+    </select>
+</mapper>

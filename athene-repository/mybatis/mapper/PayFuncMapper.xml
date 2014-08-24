@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.alibaba.alimei.dao.IPayFuncMapper">
+
+    <resultMap id="PayFuncMap" type="com.alibaba.alimei.dao.vo.PayFunc">
+        <result column="user_id" property="userId" />
+
+        <result column="function_code" property="functionCode" />
+        <result column="function_causer" property="functionCauser" />
+
+        <result column="amount" property="amount" />
+
+        <result column="biz_status" property="bizStatus" />
+
+        <result column="task_id" property="taskId" />
+
+        <result column="function_operator" property="functionOperator" />
+        <result column="function_unique" property="functionUnique" />
+
+        <result column="id" property="id" />
+        <result column="status" property="status" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="app_name" property="appName" />
+        <result column="app_parent" property="appParent" />
+    </resultMap>
+
+    <insert id="clear" >
+        delete from pay_func where app_name = #{appName}
+    </insert>
+
+    <insert id="insert" parameterType="PayFunc" useGeneratedKeys="false">
+        insert into pay_func
+            (<include refid="allColumns"/>)
+        values
+            (#{userId}, #{functionCode}, #{functionCauser},
+            #{amount},#{bizStatus},#{taskId},#{functionOperator}, #{functionUnique},
+        #{id}, #{status}, now(), now(), #{appName}, #{appParent})
+    </insert>
+
+
+    <update id="updateByUserId" parameterType="PayFunc">
+        <![CDATA[
+        update pay_func
+        set gmt_modified = now(),
+             biz_status=#{bizStatus},task_id=#{taskId}
+
+        where app_name = #{appName} and user_id = #{userId} and gmt_create <= #{gmtCreate}
+        ]]>
+    </update>
+
+    <update id="update" parameterType="PayFunc">
+        <![CDATA[
+        update pay_func
+        set gmt_modified = now(),
+             biz_status=#{bizStatus},task_id=#{taskId}
+
+        where id=#{id}
+        ]]>
+    </update>
+
+    <select id="list" parameterType="Map" resultMap="PayFuncMap">
+        select * from pay_func
+        <where>
+            <if test="bizStatus != null">and biz_status = #{bizStatus}</if>
+            <if test="functionCode != null">and function_code = #{functionCode}</if>
+            <if test="userId != null">and user_id = #{userId}</if>
+
+            <if test="lteq_gmtCreate != null">
+                <![CDATA[
+                and gmt_create <= #{lteq_gmtCreate}
+                ]]>
+            </if>
+
+            <if test="appName != null">and app_name = #{appName}</if>
+            <if test="appParent != null">and app_parent = #{appParent}</if>
+        </where>
+        limit #{offset},#{length}
+    </select>
+
+    <select id="listGroupByUser" parameterType="Map" resultMap="PayFuncMap">
+        select user_id,sum(amount) as amount from pay_func
+        <where>
+            <![CDATA[
+           gmt_create <= #{gmtCreate} and
+            biz_status=#{bizStatus}
+            ]]>
+            <if test="functionCode != null">and function_code = #{functionCode}</if>
+            <if test="appName != null">and app_name = #{appName}</if>
+            <if test="appParent != null">and app_parent = #{appParent}</if>
+        </where>
+        group by user_id
+    </select>
+
+    <sql id="allColumns">
+        user_id, function_code, function_causer,amount,biz_status,task_id,function_operator,function_unique,
+        id, status, gmt_create, gmt_modified, app_name, app_parent
+    </sql>
+
+</mapper>

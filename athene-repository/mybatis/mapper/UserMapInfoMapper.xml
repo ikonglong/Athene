@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alibaba.alimei.dao.IUserMapInfoMapper">
+
+	<select id="getUserMap" resultType="UserMapInfo"
+		useCache="true">
+	    <![CDATA[
+	   select * from usermap where binary mailuid=#{uid}
+	    ]]>
+	</select>
+
+	<select id="getAllUserMapList" resultType="UserMapInfo"
+		useCache="true">
+	    <![CDATA[
+	   select * from usermap
+	    ]]>
+	</select>
+
+    <select id="getUserMapByAccount" resultType="UserMapInfo"
+            useCache="true">
+	    <![CDATA[
+	   select * from usermap where mailaccount=#{account} limit 0,1
+	    ]]>
+	</select>
+
+	<insert id="saveUserMap" parameterType="UserMapInfo"
+		useGeneratedKeys="false">
+	         <![CDATA[
+	   insert into usermap(id,mailuid,mailaccount,userid,gmt_create,gmt_modified) values (#{id},#{mailuid},#{mailaccount},#{userid},#{gmt_create},#{gmt_modified})
+	    ]]>
+	</insert>
+</mapper>

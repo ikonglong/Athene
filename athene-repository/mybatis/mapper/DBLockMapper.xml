@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.alibaba.alimei.dao.IDBLockMapper">
+
+    <resultMap id="DBLockMap" type="com.alibaba.alimei.dao.vo.DBLock">
+        <result column="lock_key" property="lockKey" />
+        <result column="lasttime" property="lasttime" />
+        <result column="timeout" property="timeout" />
+        <result column="client_ip" property="clientIp" />
+    </resultMap>
+
+
+
+    <insert id="insert" parameterType="DBLock" useGeneratedKeys="false">
+        insert into db_lock
+            (<include refid="allColumns"/>)
+        values
+            (#{lockKey}, now(),#{timeout},#{clientIp})
+    </insert>
+
+
+
+    <delete id="deleteTimeout" parameterType="java.lang.String">
+        delete from db_lock
+         where lock_key = #{lockKey} and TIMESTAMPDIFF(SECOND,lasttime,NOW())>timeout
+    </delete>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from db_lock
+         where lock_key = #{lockKey}
+    </delete>
+
+
+    <sql id="allColumns">
+        lock_key,lasttime,timeout,client_ip
+    </sql>
+
+</mapper>

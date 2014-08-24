@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.alibaba.alimei.dao.ITeamMapper">
+
+    <resultMap id="TeamMap" type="com.alibaba.alimei.dao.vo.Team">
+        <result column="description" property="description" />
+        <result column="sort" property="sort" />
+        <result column="email" property="email" />
+        <result column="name" property="name" />
+        <result column="type" property="type" />
+        <result column="biz_status" property="bizStatus" />
+        <result column="parent_id" property="parentId" />
+        <result column="owner_id" property="ownerId" />
+        <result column="domain_id" property="domainId" />
+        <result column="id" property="id" />
+        <result column="status" property="status" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="app_name" property="appName" />
+        <result column="app_parent" property="appParent" />
+    </resultMap>
+
+    <insert id="clear" useGeneratedKeys="false">
+        delete from team where app_name = #{appName}
+    </insert>
+
+    <insert id="insert" parameterType="Team" useGeneratedKeys="false">
+        insert into team
+            (<include refid="allColumns"/>)
+        values
+            (#{description}, 0, #{email}, #{name}, #{type}, #{bizStatus}, #{parentId}, #{ownerId}, #{domainId}, #{id}, #{status}, now(), now(), #{appName}, #{appParent})
+    </insert>
+
+    <insert id="insertBatch" parameterType="List" useGeneratedKeys="false">
+        insert into team
+            (<include refid="allColumns"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.description}, #{item.sort}, #{item.email}, #{item.name}, #{item.type}, #{item.bizStatus}, #{item.parentId}, #{item.ownerId}, #{item.domainId}, #{item.id}, #{item.status}, now(), now(), #{item.appName}, #{item.appParent})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="Team">
+        update team
+        set gmt_modified = now(),
+        <trim suffixOverrides=",">
+            <if test="description != null">description = #{description},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="bizStatus != null">biz_status = #{bizStatus},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="ownerId != null">owner_id = #{ownerId},</if>
+            <if test="ownerId == 'f***'">owner_id = '',</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="appName != null">app_name = #{appName},</if>
+        </trim>
+        where id = #{id};
+    </update>
+
+    <update id="delete" parameterType="Team">
+        update team
+        set
+            status = 1,
+            gmt_modified = now()
+        where
+            id = #{id};
+    </update>
+
+    <select id="get" resultMap="TeamMap">
+        select * from team
+        where app_name = #{appName} and id = #{id}
+        limit 0, 1
+    </select>
+
+    <select id="count" parameterType="Team" resultType="int">
+        select count(0) from team
+        <where>
+            <if test="description != null">and description = #{description}</if>
+            <if test="sort != null">and sort = #{sort}</if>
+            <if test="email != null">and email = #{email}</if>
+            <if test="name != null">and name = #{name}</if>
+            <if test="type != null">and type = #{type}</if>
+            <if test="bizStatus != null">and biz_status = #{bizStatus}</if>
+            <if test="parentId != null">and parent_id = #{parentId}</if>
+            <if test="ownerId != null">and owner_id = #{ownerId}</if>
+            <if test="domainId != null">and domain_id = #{domainId}</if>
+            <if test="id != null">and id = #{id}</if>
+            <if test="status != null">and status = #{status}</if>
+            <if test="gmtCreate != null">and gmt_create = #{gmtCreate}</if>
+            <if test="gmtModified != null">and gmt_modified = #{gmtModified}</if>
+            <if test="appName != null">and app_name = #{appName}</if>
+            <if test="appParent != null">and app_parent = #{appParent}</if>
+        </where>
+    </select>
+
+    <select id="list" parameterType="Map" resultMap="TeamMap">
+        select * from team
+        <if test="team != null">
+            <where>
+                status = '0'
+                <if test="team.description != null">and description = #{team.description}</if>
+                <if test="team.sort != null">and sort = #{team.sort}</if>
+                <if test="team.email != null">and email = #{team.email}</if>
+                <if test="team.name != null">and name = #{team.name}</if>
+                <if test="team.type != null">and type = #{team.type}</if>
+                <if test="team.bizStatus != null">and biz_status = #{team.bizStatus}</if>
+                <if test="team.parentId != null">and parent_id = #{team.parentId}</if>
+                <if test="team.ownerId != null">and owner_id = #{team.ownerId}</if>
+                <if test="team.domainId != null">and domain_id = #{team.domainId}</if>
+                <if test="team.id != null">and id = #{team.id}</if>
+                <if test="team.gmtCreate != null">and gmt_create = #{team.gmtCreate}</if>
+                <if test="team.gmtModified != null">and gmt_modified = #{team.gmtModified}</if>
+                <if test="team.appName != null">and app_name = #{team.appName}</if>
+                <if test="team.appParent != null">and app_parent = #{team.appParent}</if>
+            </where>
+        </if>
+        order by sort
+        limit #{offset}, #{length}
+    </select>
+
+    <sql id="allColumns">
+        description, sort, email, name, type, biz_status, parent_id, owner_id, domain_id,  id, status, gmt_create, gmt_modified, app_name, app_parent
+    </sql>
+    <select id="countTeamForUpdate" parameterType="Map" resultType="int">
+        select count(0) from team
+        <where>
+            status = '0' and id != #{teamId}
+            <if test="team.description != null">and description = #{team.description}</if>
+            <if test="team.sort != null">and sort = #{team.sort}</if>
+            <if test="team.email != null">and email = #{team.email}</if>
+            <if test="team.name != null">and name = #{team.name}</if>
+            <if test="team.type != null">and type = #{team.type}</if>
+            <if test="team.bizStatus != null">and biz_status = #{team.bizStatus}</if>
+            <if test="team.parentId != null">and parent_id = #{team.parentId}</if>
+            <if test="team.ownerId != null">and owner_id = #{team.ownerId}</if>
+            <if test="team.domainId != null">and domain_id = #{team.domainId}</if>
+            <if test="team.gmtCreate != null">and gmt_create = #{team.gmtCreate}</if>
+            <if test="team.gmtModified != null">and gmt_modified = #{team.gmtModified}</if>
+            <if test="team.appName != null">and app_name = #{team.appName}</if>
+            <if test="team.appParent != null">and app_parent = #{team.appParent}</if>
+        </where>
+    </select>
+
+</mapper>

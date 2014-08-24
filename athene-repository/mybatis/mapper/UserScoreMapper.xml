@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.alibaba.alimei.dao.IUserScoreMapper">
+
+    <resultMap id="UserScoreMap" type="com.alibaba.alimei.dao.vo.UserScore">
+        <result column="user_id" property="userId" />
+        <result column="score" property="score" />
+        <result column="amount" property="amount" />
+
+        <result column="id" property="id" />
+        <result column="status" property="status" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="app_name" property="appName" />
+        <result column="app_parent" property="appParent" />
+    </resultMap>
+
+    <insert id="clear" useGeneratedKeys="false">
+        delete from user_score where app_name = #{appName}
+    </insert>
+
+    <insert id="insert" parameterType="UserScore" useGeneratedKeys="false">
+        insert into user_score
+            (<include refid="allColumns"/>)
+        values
+            (#{userId}, #{score},#{amount}, #{id}, #{status}, now(), now(), #{appName}, #{appParent})
+    </insert>
+
+    <insert id="insertBatch" parameterType="List" useGeneratedKeys="false">
+        insert into user_score
+            (<include refid="allColumns"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.userId}, #{item.score},#{item.amount}, #{item.id}, #{item.status}, now(), now(), #{item.appName}, #{item.appParent})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="java.util.Map">
+        update user_score
+        set gmt_modified = now(),
+        score = score + #{score}
+        where app_name = #{appName} and user_id = #{userId};
+    </update>
+
+    <update id="addAmount" parameterType="java.util.Map">
+        update user_score
+        set gmt_modified = now(),
+        amount = amount + #{amount}
+        where app_name = #{appName} and user_id = #{userId};
+    </update>
+
+    <update id="delete">
+        delete from user_score where app_name = #{appName} and user_id = #{userId};
+    </update>
+
+    <select id="get" resultMap="UserScoreMap">
+        select * from user_score
+        where app_name = #{appName} and user_id = #{userId}
+        limit 0, 1
+    </select>
+
+    <select id="count" parameterType="UserScore" resultType="int">
+        select count(0) from user_score
+        <where>
+            <if test="userId != null">and user_id = #{userId}</if>
+            <if test="score != null">and score = #{score}</if>
+            <if test="status != null">and status = #{status}</if>
+            <if test="appName != null">and app_name = #{appName}</if>
+            <if test="appParent != null">and app_parent = #{appParent}</if>
+        </where>
+    </select>
+
+    <select id="list" parameterType="Map" resultMap="UserScoreMap">
+        select * from user_score
+        <if test="userScore != null">
+            <where>
+                <if test="userScore.userId != null">and user_id = #{userScore.userId}</if>
+                <if test="userScore.score != null">and score = #{userScore.score}</if>
+                <if test="userScore.status != null">and status = #{userScore.status}</if>
+                <if test="userScore.appName != null">and app_name = #{userScore.appName}</if>
+                <if test="userScore.appParent != null">and app_parent = #{userScore.appParent}</if>
+            </where>
+        </if>
+        limit #{offset}, #{length}
+    </select>
+
+    <sql id="allColumns">
+        user_id, score,amount ,  id, status, gmt_create, gmt_modified, app_name, app_parent
+    </sql>
+
+    <select id="getScoreSumByLoginId" resultType="int">
+        select case when sum(us.score) is null then 0 else sum(us.score) end
+        from
+        (select * from account where loginid = #{loginId} and status = '0' and app_name = #{appName}) a
+        ,(select * from user where status = '0' and app_name = #{appName}) u
+        ,(select * from user_score where status = '0' and app_name = #{appName}) us
+        where  a.id = u.account_id and u.id = us.user_id
+    </select>
+</mapper>

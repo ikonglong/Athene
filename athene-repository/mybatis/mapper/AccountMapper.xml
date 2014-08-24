@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.alibaba.alimei.dao.IAccountMapper">
+
+    <resultMap id="AccountMap" type="com.alibaba.alimei.dao.vo.Account">
+        <result column="loginid" property="loginId" />
+        <result column="default_role" property="defaultRole" />
+        <result column="biz_status" property="bizStatus" />
+        <result column="master_account" property="masterAccount" />
+        <result column="phone" property="phone" />
+        <result column="alipay" property="alipay" />
+        <result column="show_mobile" property="showMobile" />
+        <result column="id" property="id" />
+        <result column="status" property="status" />
+        <result column="app_name" property="appName" />
+        <result column="app_parent" property="appParent" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+    <insert id="clear" useGeneratedKeys="false">
+        delete from account where app_name = #{appName}
+    </insert>
+
+    <insert id="insert" parameterType="Account" useGeneratedKeys="false">
+        insert into account
+            (<include refid="allColumns"/>)
+        values
+            (#{loginId}, #{defaultRole}, #{bizStatus}, #{masterAccount}, #{phone}, #{alipay}, #{id}, #{status}, #{appName}, #{appParent}, now(), now())
+    </insert>
+
+    <insert id="insertBatch" parameterType="List" useGeneratedKeys="false">
+        insert into account
+            (<include refid="allColumns"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.loginId}, #{item.defaultRole}, #{item.bizStatus}, #{item.masterAccount}, #{item.phone}, #{item.alipay}, #{item.id}, #{item.status}, #{item.appName}, #{item.appParent}, now(), now())
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="Account">
+        update account
+        set gmt_modified = now(),
+        <trim suffixOverrides=",">
+            <if test="loginId != null">loginid = #{loginId},</if>
+            <if test="defaultRole != null">default_role = #{defaultRole},</if>
+            <if test="bizStatus != null">biz_status = #{bizStatus},</if>
+            <if test="masterAccount != null">master_account = #{masterAccount},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="alipay != null">alipay = #{alipay},</if>
+            <if test="showMobile != null">show_mobile = #{showMobile},</if>
+        </trim>
+        where id = #{id};
+    </update>
+
+    <update id="updateByUserId" parameterType="Account">
+        update account
+        set gmt_modified = now(),
+        <trim suffixOverrides=",">
+            <if test="account.loginId != null">loginid = #{account.loginId},</if>
+            <if test="account.defaultRole != null">default_role = #{account.defaultRole},</if>
+            <if test="account.bizStatus != null">biz_status = #{account.bizStatus},</if>
+            <if test="account.masterAccount != null">master_account = #{account.masterAccount},</if>
+            <if test="account.status != null">status = #{account.status},</if>
+            <if test="account.phone != null">phone = #{account.phone},</if>
+            <if test="account.alipay != null">alipay = #{account.alipay},</if>
+            <if test="account.showMobile != null">show_mobile = #{account.showMobile},</if>
+        </trim>
+        where id = (select account_id from user where id = #{userId} and status = 0 and app_name = #{appName});
+    </update>
+
+    <update id="delete">
+        update account
+        set
+            status = 1,
+            gmt_modified = now()
+        where
+            app_name = #{appName} and id = #{id};
+    </update>
+
+    <select id="get" resultMap="AccountMap">
+        select * from account
+        where app_name = #{appName} and id = #{id}
+        limit 0, 1
+    </select>
+
+    <select id="queryByAccount" resultMap="AccountMap">
+        select * from account
+        where app_name = #{appName} and loginid = #{loginId} and status ='0'
+        limit 0, 1
+    </select>
+
+    <select id="count" parameterType="Map" resultType="int">
+        select count(0) from account
+        <include refid="where"/>
+    </select>
+
+    <select id="list" parameterType="Map" resultMap="AccountMap">
+        select * from account
+        <include refid="where"/>
+        limit #{offset}, #{length}
+    </select>
+
+    <sql id="allColumns">
+        loginid, default_role, biz_status, master_account, phone, alipay,  id, status, app_name, app_parent, gmt_create, gmt_modified
+    </sql>
+
+    <select id="getAccountByMasterMail" resultMap="AccountMap">
+        select * from account
+        where master_account = #{mail}
+        limit 0, 1
+    </select>
+ 
+    <select id="getAccountByLoginId" resultMap="AccountMap">
+        select * from account where loginId = #{loginId} and status = '0' limit 0, 1
+    </select>
+    
+    <select id="getAccountById" resultMap="AccountMap">
+        select * from account where id = #{id} limit 0, 1
+    </select>
+
+    <update id="updateAccountByLoginId" parameterType="Map">
+        update account
+        set gmt_modified = now(),
+        <trim suffixOverrides=",">
+            <if test="account.defaultRole != null">default_role = #{account.defaultRole},</if>
+            <if test="account.bizStatus != null">biz_status = #{account.bizStatus},</if>
+            <if test="account.masterAccount != null">master_account = #{account.masterAccount},</if>
+            <if test="account.status != null">status = #{account.status},</if>
+            <if test="account.phone != null">phone = #{account.phone},</if>
+            <if test="account.alipay != null">alipay = #{account.alipay},</if>
+            <if test="account.showMobile != null">show_mobile = #{account.showMobile},</if>
+        </trim>
+        where loginid = #{loginId} and status = '0'
+    </update>
+
+    <select id="checkDuplicate" parameterType="Account" resultType="int">
+        select count(0) from account
+        <where>
+            status = '0'
+            <if test="masterAccount != null">and master_account != #{masterAccount}</if>
+            <if test="loginId != null">and loginid != #{loginId}</if>
+
+            <if test="defaultRole != null">and default_role = #{defaultRole}</if>
+            <if test="bizStatus != null">and biz_status = #{bizStatus}</if>
+            <if test="phone != null">and phone = #{phone}</if>
+            <if test="alipay != null">and alipay = #{alipay}</if>
+            <if test="status != null">and status = #{status}</if>
+            <if test="appName != null">and app_name = #{appName}</if>
+            <if test="appParent != null">and app_parent = #{appParent}</if>
+        </where>
+    </select>
+
+    <update id="deleteAccount">
+        update account
+        set
+            status = #{status},
+            gmt_modified = now()
+        where
+            app_name = #{appName} and id = #{id};
+    </update>
+
+    <select id="getAccountByUserId" resultMap="AccountMap" >
+        select a.*
+    	from user u, account a
+    	where
+    		u.account_id = a.id
+    		and u.id = #{userId}
+    		and a.status = '0'
+    </select>
+    
+    <select id="getAccountByAliasAccount" resultMap="AccountMap" >
+        select a.*
+    	from user u, account a
+    	where
+    		u.account_id = a.id
+    		and u.alias_account = #{aliasAccount}
+    		and a.status = 0
+    </select>
+    
+    <select id="getAccountListByLoginIdForDelete" resultMap="AccountMap">
+        select
+        account.loginid,
+        account.default_role,
+        account.biz_status,
+        account.master_account,
+        account.phone,
+        account.alipay,
+        account.show_mobile,
+        account.id,
+        account.status + 1 status,
+        account.app_name,
+        account.app_parent,
+        account.gmt_create,
+        account.gmt_modified
+        from account where loginId = #{loginId}
+        order by status desc
+    </select>
+
+    <sql id="where">
+        where app_name = #{appName} and status = '0'
+        <if test="account != null">
+            <if test="account.loginId != null">and loginid = #{account.loginId}</if>
+            <if test="account.defaultRole != null">and default_role = #{account.defaultRole}</if>
+            <if test="account.bizStatus != null">and biz_status = #{account.bizStatus}</if>
+            <if test="account.masterAccount != null">and master_account = #{account.masterAccount}</if>
+            <if test="account.phone != null">and phone = #{account.phone}</if>
+            <if test="account.alipay != null">and alipay = #{account.alipay}</if>
+            <if test="account.appName != null">and app_name = #{account.appName}</if>
+            <if test="account.appParent != null">and app_parent = #{account.appParent}</if>
+        </if>
+        <if test="keyword != null">
+            and loginid like '%${keyword}%'
+        </if>
+    </sql>
+</mapper>

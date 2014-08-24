@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.alibaba.alimei.dao.IUserParentInfoMapper">
+
+    <resultMap id="UserParentInfoMap" type="com.alibaba.alimei.dao.vo.UserParentInfo">
+        <result column="user_id" property="userId" />
+        <result column="number" property="number" />
+        <result column="name" property="name" />
+        <result column="gender" property="gender" />
+        <result column="class_name" property="className" />
+        <result column="phone1" property="phone1" />
+        <result column="account1" property="account1" />
+        <result column="biz_status1" property="bizStatus1" />
+        <result column="phone2" property="phone2" />
+        <result column="account2" property="account2" />
+        <result column="biz_status2" property="bizStatus2" />
+        <result column="biz_status" property="bizStatus" />
+        <result column="class_id" property="classId" />
+        <result column="status" property="status" />
+        <result column="app_name" property="appName" />
+        <result column="app_parent" property="appParent" />
+    </resultMap>
+
+    <insert id="clear" useGeneratedKeys="false">
+        delete from user_parent_info where app_name = #{appName}
+    </insert>
+
+    <insert id="insert" parameterType="UserParentInfo" useGeneratedKeys="false">
+        insert into user_parent_info
+            (<include refid="allColumns"/>)
+        values
+            (#{userId}, #{number}, #{name}, #{gender}, #{className}, #{phone1}, #{account1}, #{bizStatus1}, #{phone2}, #{account2}, #{bizStatus2}, #{bizStatus}, #{domainId}, #{classId}, #{status}, #{appName}, #{appParent})
+    </insert>
+
+    <insert id="insertBatch" parameterType="List" useGeneratedKeys="false">
+        insert into user_parent_info
+            (<include refid="allColumns"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.userId}, #{item.number}, #{item.name}, #{item.gender}, #{item.className}, #{item.phone1}, #{item.account1}, #{item.bizStatus1}, #{item.phone2}, #{item.account2}, #{item.bizStatus2}, #{item.bizStatus}, #{item.domainId}, #{item.classId}, #{item.status}, #{item.appName}, #{item.appParent})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="Map">
+        update user_parent_info
+        <set>
+            gmt_modified = now(),
+            <if test="userParentInfo.number != null">number = #{userParentInfo.number},</if>
+            <if test="userParentInfo.number == 'f***'">number = '',</if>
+            <if test="userParentInfo.name != null">name = #{userParentInfo.name},</if>
+            <if test="userParentInfo.gender != null">gender = #{userParentInfo.gender},</if>
+            <if test="userParentInfo.className != null">class_name = #{userParentInfo.className},</if>
+            <if test="userParentInfo.phone1 != null">phone1 = #{userParentInfo.phone1},</if>
+            <if test="userParentInfo.account1 != null">account1 = #{userParentInfo.account1},</if>
+            <if test="userParentInfo.bizStatus1 != null">biz_status1 = #{userParentInfo.bizStatus1},</if>
+            <if test="userParentInfo.phone2 != null">phone2 = #{userParentInfo.phone2},</if>
+            <if test="userParentInfo.account2 != null">account2 = #{userParentInfo.account2},</if>
+            <if test="userParentInfo.bizStatus2 != null">biz_status2 = #{userParentInfo.bizStatus2},</if>
+            <if test="userParentInfo.bizStatus != null">biz_status = #{userParentInfo.bizStatus},</if>
+            <if test="userParentInfo.domainId != null">domain_id = #{userParentInfo.domainId},</if>
+            <if test="userParentInfo.classId != null">class_id = #{userParentInfo.classId},</if>
+            <if test="userParentInfo.status != null">status = #{userParentInfo.status},</if>
+        </set>
+        where app_name = #{appName} and user_id = #{userId};
+    </update>
+
+    <update id="updateClassName" parameterType="Map">
+        update user_parent_info
+        set class_name = #{className}, gmt_modified = now()
+        <if test="className == null">
+            , class_id = null
+        </if>
+        where app_name = #{appName} and domain_id = #{domainId} and class_id = #{classId} and status = '0'
+        <if test="userId != null">
+            and user_id = #{userId}
+        </if>
+    </update>
+
+    <update id="updateOtherAccount" parameterType="UserParentInfo">
+        update user_parent_info
+        <set>
+            gmt_modified = now()
+            <if test="userParentInfo.phone1 != null">phone1 = #{userParentInfo.phone1},</if>
+            <if test="userParentInfo.phone1 == null">phone1 = null,</if>            
+            <if test="userParentInfo.account1 != null">account1 = #{userParentInfo.account1},</if>
+            <if test="userParentInfo.account1 == null">account1 = null,</if>            
+            <if test="userParentInfo.bizStatus1 != null">biz_status1 = #{userParentInfo.bizStatus1},</if>
+            <if test="userParentInfo.bizStatus1 == null">biz_status1 = null,</if>            
+            <if test="userParentInfo.phone2 != null">phone2 = #{userParentInfo.phone2},</if>
+            <if test="userParentInfo.phone2 == null">phone2 = null,</if>            
+            <if test="userParentInfo.account2 != null">account2 = #{userParentInfo.account2},</if>
+            <if test="userParentInfo.account2 == null">account2 = null,</if>            
+            <if test="userParentInfo.bizStatus2 != null">biz_status2 = #{userParentInfo.bizStatus2},</if>
+            <if test="userParentInfo.bizStatus2 == null">biz_status2 = null,</if>
+        </set>
+        where app_name = #{appName} and user_id = #{userId};
+    </update>
+
+    <update id="deleteOtherAccount" parameterType="Map">
+        update user_parent_info
+        <set>
+            gmt_modified = now(),
+            <if test="deleteAccount1 != null">phone1 = null, account1 = null, biz_status1 = null,</if>
+            <if test="deleteAccount2 != null">phone2 = null, account2 = null, biz_status2 = null,</if>
+        </set>
+        where app_name = #{appName} and user_id = #{userId};
+    </update>
+
+    <update id="updateBizStatus">
+        update user_parent_info set biz_status = #{bizStatus}, gmt_modified = now()
+        where app_name = #{appName} and domain_id = #{domainId} and user_id in <include refid="in"/>;
+    </update>
+
+    <update id="delete" parameterType="Map">
+        update user_parent_info
+        set
+            status = 1
+        where
+            app_name = #{appName}
+            and user_id in  <include refid="in"/>;
+    </update>
+
+    <select id="get" resultMap="UserParentInfoMap">
+        select * from user_parent_info
+        where app_name = #{appName} and user_id = #{userId} and status = '0'
+        limit 0, 1
+    </select>
+
+    <select id="count" parameterType="Map" resultType="int">
+        select count(0) from user_parent_info upi
+        <include refid="where"/>
+    </select>
+
+    <select id="list" parameterType="Map" resultMap="UserParentInfoMap">
+        select temp.* ,
+        a1.phone phone1,
+        a2.phone phone2,
+        a1.biz_status biz_status1,
+        a2.biz_status biz_status2,
+        clazz.description class_name
+        from (
+        select  upi.user_id,
+        upi.number,
+        upi.name,
+        upi.gender,
+        upi.account1,
+        upi.account2,
+        upi.biz_status,
+        upi.class_id,
+        upi.status,
+        upi.app_name,
+        upi.app_parent
+        from user_parent_info upi
+        <include refid="where"/>
+        order by upi.number
+        limit #{offset}, #{length}
+        ) temp
+        left join (select * from account where status = '0') a1 on temp.account1 = a1.loginid
+        left join (select * from account where status = '0') a2 on temp.account2 = a2.loginid
+        left join (select * from team where type = '2' and status = '0' ) clazz on temp.class_id = clazz.id
+    </select>
+
+    <sql id="in">
+    	<foreach collection="list" item="i" open="(" separator="," close=")">#{i}</foreach>
+    </sql>
+
+    <sql id="where">
+        where upi.app_name = #{userParentInfo.appName} and upi.domain_id = #{userParentInfo.domainId}
+        <if test="userParentInfo.gender != null">and upi.gender = #{userParentInfo.gender}</if>
+        <if test="userParentInfo.bizStatus != null">and upi.biz_status = #{userParentInfo.bizStatus}</if>
+        <if test="userParentInfo.status != null">and upi.status = #{userParentInfo.status}</if>
+        <if test="userParentInfo.name != null">and upi.name = #{userParentInfo.name}</if>
+        <if test="userParentInfo.account1 != null">and upi.account1 = #{userParentInfo.account1}</if>
+        <if test="userParentInfo.account2 != null">and upi.account2 = #{userParentInfo.account2}</if>
+        <if test="userParentInfo.userId != null">and upi.user_id = #{userParentInfo.userId}</if>
+
+        <if test="classId != null">
+            <if test="classId != 'none'.toString()">
+                and upi.class_id  = #{classId}
+            </if>
+            <if test="classId == 'none'.toString()">
+                and upi.class_id  is null
+            </if>
+        </if>
+
+        <if test="keyword != null">
+        and ( number like '%${keyword}%' 
+	          or upi.name like '%${keyword}%'
+	          or upi.phone1 like '%${keyword}%'
+	          or upi.account1 like '%${keyword}%'
+	          or upi.phone2 like '%${keyword}%'
+	          or upi.account2 like '%${keyword}%' )
+        </if>
+    </sql>
+
+    <sql id="allColumns">
+        user_id, number, name, gender, class_name, phone1, account1, biz_status1, phone2, account2, biz_status2, biz_status, domain_id, class_id,  status, app_name, app_parent
+    </sql>
+
+    <select id="getStudentListByParent" resultMap="UserParentInfoMap">
+        select * from user_parent_info
+        where app_name = #{appName} and (account1 = #{oldAccount} or account2 = #{oldAccount}) and status = '0'
+    </select>
+
+</mapper>

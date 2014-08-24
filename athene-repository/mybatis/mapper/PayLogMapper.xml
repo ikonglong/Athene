@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.alibaba.alimei.dao.IPayLogMapper">
+
+    <resultMap id="PayLogMap" type="com.alibaba.alimei.dao.vo.PayLog">
+        <result column="task_id" property="taskId" />
+        <result column="user_id" property="userId" />
+        <result column="user_name" property="userName" />
+
+        <result column="batch_no" property="batchNo" />
+        <result column="detail_no" property="detailNo" />
+        <result column="alipay_no" property="alipayNo" />
+
+        <result column="user_alipay" property="userAlipay" />
+        <result column="from_alipay" property="fromAlipay" />
+
+        <result column="amount" property="amount" />
+
+        <result column="biz_status" property="bizStatus" />
+        <result column="error_status" property="errorCode" />
+        <result column="error_msg" property="errorMsg" />
+
+        <result column="remark" property="remark" />
+
+
+        <result column="id" property="id" />
+        <result column="status" property="status" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="app_name" property="appName" />
+        <result column="app_parent" property="appParent" />
+    </resultMap>
+
+    <insert id="clear" >
+        delete from pay_log where app_name = #{appName}
+    </insert>
+
+    <insert id="insert" parameterType="PayLog" useGeneratedKeys="false">
+        insert into pay_log
+            (<include refid="allColumns"/>)
+        values
+            (#{taskId}, #{userId},#{userName},
+            #{batchNo},#{detailNo},#{alipayNo},#{userAlipay},#{fromAlipay},#{amount},#{bizStatus},#{errorCode},#{errorMsg},#{remark},
+        #{id}, #{status}, now(), now(), #{appName}, #{appParent})
+    </insert>
+
+    <select id="getByNo" parameterType="Map" resultMap="PayLogMap">
+        select * from pay_log
+        where batch_no=#{batchNo} and detail_no=#{detailNo}
+        limit 0,1
+    </select>
+
+    <update id="update" parameterType="PayLog">
+        update pay_log
+        set gmt_modified = now(),
+              alipay_no=#{alipayNo},biz_status=#{bizStatus},error_code=#{errorCode},error_msg=#{errorMsg},remark=#{remark}
+        where id=#{id}
+    </update>
+
+
+
+    <select id="count" parameterType="Map" resultType="int">
+        select count(0) from pay_log
+        <where>
+            <if test="userId != null">and user_id = #{userId}</if>
+            <if test="amount != null">and amount = #{amount}</if>
+
+            <if test="batchNo != null">and batch_no = #{batchNo}</if>
+            <if test="detailNo != null">and detail_no = #{detailNo}</if>
+
+            <if test="status != null">and status = #{status}</if>
+            <if test="bizStatus != null">and biz_status = #{bizStatus}</if>
+            <if test="appName != null">and app_name = #{appName}</if>
+            <if test="appParent != null">and app_parent = #{appParent}</if>
+        </where>
+    </select>
+
+    <select id="list" parameterType="Map" resultMap="PayLogMap">
+        select * from pay_log
+        <where>
+            <if test="userId != null">and user_id = #{userId}</if>
+            <if test="amount != null">and amount = #{amount}</if>
+
+            <if test="batchNo != null">and batch_no = #{batchNo}</if>
+            <if test="detailNo != null">and detail_no = #{detailNo}</if>
+
+            <if test="status != null">and status = #{status}</if>
+            <if test="bizStatus != null">and biz_status = #{bizStatus}</if>
+            <if test="appName != null">and app_name = #{appName}</if>
+            <if test="appParent != null">and app_parent = #{appParent}</if>
+        </where>
+        limit #{offset}, #{length}
+    </select>
+
+    <sql id="allColumns">
+        task_id,user_id,user_name,batch_no,detail_no,alipay_no,user_alipay,from_alipay, amount,biz_status,error_code,error_msg,remark,
+        id, status, gmt_create, gmt_modified, app_name, app_parent
+    </sql>
+
+</mapper>

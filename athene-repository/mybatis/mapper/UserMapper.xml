@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.alibaba.alimei.dao.IUserMapper">
+
+    <resultMap id="UserMap" type="com.alibaba.alimei.dao.vo.User">
+        <result column="number" property="number" />
+        <result column="name" property="name" />
+        <result column="gender" property="gender" />
+        <result column="alias_account" property="aliasAccount" />
+        <result column="account_id" property="accountId" />
+        <result column="type" property="type" />
+        <result column="domain_id" property="domainId" />
+        <result column="biz_status" property="bizStatus" />
+        <result column="role_name" property="roleName" />
+        <result column="id" property="id" />
+        <result column="status" property="status" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="app_name" property="appName" />
+        <result column="app_parent" property="appParent" />
+        <result column="relation_user_id" property="relationUserId" />
+        <result column="relation_type" property="relationType" />
+        <result column="loginid" property="account" />
+        <result column="phone" property="phone" />
+        <result column="alipay" property="alipay" />
+        <result column="show_mobile" property="showMobile" />
+        <result column="title_type" property="titleType" />
+        <result column="account_status" property="accountStatus" />
+    </resultMap>
+
+    <resultMap id="UserDetailMap" type="com.alibaba.alimei.dao.vo.User" extends="UserMap">
+        <result column="team_name" property="teamName" />
+    	<result column="team_id" property="teamId" />
+    	<result column="team_type" property="teamType" />
+    </resultMap>
+
+    <resultMap id="ParentInfo" type="com.alibaba.alimei.dao.vo.ParentInfo">
+        <result column="parent_id" property="parentId" />
+        <result column="student_id" property="studentId" />
+        <result column="student_name" property="studentName" />
+        <result column="class_id" property="classId" />
+        <result column="class_name" property="className" />
+        <result column="school_id" property="schoolId" />
+        <result column="school_name" property="schoolName" />
+        <result column="student_gender" property="studentGender" />
+    </resultMap>
+    <resultMap id="PersonalInfo" type="com.alibaba.alimei.dao.vo.PersonalInfo">
+        <result column="user_id" property="userId" />
+        <result column="user_name" property="userName" />
+        <result column="school_id" property="schoolId" />
+        <result column="school_name" property="schoolName" />
+    </resultMap>
+    <resultMap id="StudentInfo" type="com.alibaba.alimei.dao.vo.StudentInfo">
+        <result column="student_id" property="studentId" />
+        <result column="student_name" property="studentName" />
+        <result column="class_id" property="classId" />
+        <result column="class_name" property="className" />
+        <result column="school_id" property="schoolId" />
+        <result column="school_name" property="schoolName" />
+    </resultMap>
+
+    <insert id="clear" useGeneratedKeys="false">
+        delete from user where app_name = #{appName}
+    </insert>
+
+    <insert id="insert" parameterType="User" useGeneratedKeys="false">
+        insert into user
+            (<include refid="allColumns"/>)
+        values
+            (#{number}, #{name}, #{gender}, #{aliasAccount}, #{accountId}, #{type}, #{domainId}, #{bizStatus}, #{roleName}, #{id}, #{status}, now(), now(), #{appName}, #{appParent}, #{relationUserId}, #{relationType})
+    </insert>
+
+    <insert id="insertBatch" parameterType="List" useGeneratedKeys="false">
+        insert into user
+            (<include refid="allColumns"/>)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.number}, #{item.name}, #{item.gender}, #{item.aliasAccount}, #{item.accountId}, #{item.type}, #{item.domainId}, #{item.bizStatus}, #{item.roleName}, #{item.id}, #{item.status}, now(), now(), #{item.appName}, #{item.appParent}, #{item.relationUserId}, #{item.relationType})
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="User">
+        update user
+        set gmt_modified = now(),
+        <trim suffixOverrides=",">
+            <if test="user.number != null">number = #{user.number},</if>
+            <if test="user.number == 'f***'">number = '',</if>
+            <if test="user.name != null">name = #{user.name},</if>
+            <if test="user.gender != null">gender = #{user.gender},</if>
+            <if test="user.aliasAccount != null">alias_account = #{user.aliasAccount},</if>
+            <if test="user.accountId != null">account_id = #{user.accountId},</if>
+            <if test="user.type != null">type = #{user.type},</if>
+            <if test="user.bizStatus != null">biz_status = #{user.bizStatus},</if>
+            <if test="user.roleName != null">role_name = #{user.roleName},</if>
+            <if test="user.status != null">status = #{user.status},</if>
+        </trim>
+        where app_name = #{appName} and id = #{id};
+    </update>
+
+    <update id="delete">
+        update user
+        set
+            status = 1,
+            gmt_modified = now()
+        where
+            app_name = #{appName}
+            and id in <include refid="in"/>
+    </update>
+
+    <select id="get" resultMap="UserMap">
+        select * from user
+        where app_name = #{appName} and id = #{id}
+        limit 0, 1
+    </select>
+    
+    <select id="queryByAccountId" parameterType="User" resultMap="UserMap">
+        select * from user where app_name = #{appName} and domain_id = #{domainId} and status = 0 and account_id = #{accountId} and type = #{type}
+        limit 0, 1
+    </select>
+
+    <select id="count" parameterType="Map" resultType="int">
+       	select count(0) 
+       	from user 
+       	left join account 
+       	on user.account_id = account.id
+       	where user.app_name = #{user.appName} and user.status = #{user.status} and account.app_name = #{user.appName}
+		<if test="user.gender != null">and user.gender = #{user.gender}</if>
+        <if test="user.domainId != null">and user.domain_id = #{user.domainId}</if>
+		<if test="user.bizStatus != null">and user.biz_status = #{user.bizStatus}</if>
+		<if test="user.type != null">and user.type = #{user.type}</if>
+        <if test="user.phone != null">and account.loginid = #{user.phone}</if>
+		<if test="keyword != null">and ( user.number like '%${keyword}%' or user.name like '%${keyword}%' )</if>
+    </select>
+
+    <select id="countByTeam" parameterType="Map" resultType="int">
+        select count(0) from (
+	        select user_team.user_id 
+	        from user_team, team, user 
+	        where user_team.app_name = #{user.appName} and user_team.status = #{user.status} and team.status = #{user.status} 
+	        and team.id = user_team.team_id and user.id = user_team.user_id
+	        and team.id = #{teamId} and team.type = #{teamType}
+	        <if test="user.gender != null">and user.gender = #{user.gender}</if>
+			<if test="user.bizStatus != null">and user.biz_status = #{user.bizStatus}</if>
+			<if test="user.type != null">and user.type = #{user.type}</if>
+	        <if test="user.phone != null">and account.loginid = #{user.phone}</if>
+			<if test="keyword != null">and ( user.number like '%${keyword}%' or user.name like '%${keyword}%' )</if>
+	    ) t, user, account
+	    where user.app_name = #{user.appName} and user.status = #{user.status} and account.app_name = #{user.appName} and account.status = #{user.status}
+	    and t.user_id = user.id and user.account_id = account.id
+    </select>
+
+    <select id="list" parameterType="Map" resultMap="UserMap">
+       	select user.*, account.loginid, account.phone, account.alipay, account.biz_status account_status
+       	from user 
+       	left join account 
+       	on user.account_id = account.id
+       	where user.app_name = #{user.appName} and user.status = #{user.status} and account.app_name = #{user.appName} and account.status = #{user.status}
+        <if test="user.domainId != null">and user.domain_id = #{user.domainId}</if>
+		<if test="user.gender != null">and user.gender = #{user.gender}</if>
+		<if test="user.bizStatus != null">and user.biz_status = #{user.bizStatus}</if>
+		<if test="user.type != null">and user.type = #{user.type}</if>
+        <if test="user.phone != null">and account.loginid = #{user.phone}</if>
+		<if test="keyword != null">and ( user.number like '%${keyword}%' or user.name like '%${keyword}%' )</if>
+       	order by user.number
+		limit #{offset}, #{length}
+    </select>
+
+    <select id="listByTeam" parameterType="Map" resultMap="UserDetailMap">
+        select * from (
+	        select user_team.user_id, user_team.team_id, user_team.title_type, team.name team_name, team.type team_type 
+	        from user_team, team, user 
+	        where user_team.app_name = #{user.appName} and user_team.status = #{user.status} and team.status = #{user.status} 
+	        and team.id = user_team.team_id and user.id = user_team.user_id
+	        and team.id = #{teamId} and team.type = #{teamType}
+	        <if test="user.gender != null">and user.gender = #{user.gender}</if>
+			<if test="user.bizStatus != null">and user.biz_status = #{user.bizStatus}</if>
+			<if test="user.type != null">and user.type = #{user.type}</if>
+	        <if test="user.phone != null">and account.loginid = #{user.phone}</if>
+			<if test="keyword != null">and ( user.number like '%${keyword}%' or user.name like '%${keyword}%' )</if>
+	        order by user_team.gmt_create desc
+	    ) t, user, account
+	    where user.app_name = #{user.appName} and user.status = #{user.status} and account.app_name = #{user.appName} and account.status = #{user.status}
+	    and t.user_id = user.id and user.account_id = account.id
+        order by user.number
+        limit #{offset}, #{length}
+    </select>
+
+    <select id="listTeamByUserId" parameterType="Map" resultMap="UserDetailMap">
+        select user_team.user_id id, user_team.team_id team_id, user_team.title_type title_type, team.name team_name, team.type team_type 
+        from user_team, team, user 
+        where user_team.app_name = #{appName} and user_team.status = 0 and team.status = 0 
+        and team.id = user_team.team_id and user.id = user_team.user_id
+        and user_team.user_id in <include refid="in"/>;
+    </select>
+
+    <sql id="allColumns">
+        number, name, gender, alias_account, account_id, type, domain_id, biz_status, role_name,  id, status, gmt_create, gmt_modified, app_name, app_parent, relation_user_id, relation_type
+    </sql>
+
+    <update id="deleteList">
+        update user set status = 1, gmt_modified = now()
+        where app_name = #{appName} and domain_id = #{domainId} and id in <include refid="in"/>;
+    </update>
+
+    <select id="listMembersByTeam" parameterType="Map" resultType="java.lang.String">
+        <![CDATA[
+        select user.alias_account from user, user_team, team 
+        where user_team.user_id = user.id and user_team.team_id = team.id
+        and user.status = 0 and team.status = 0 and user_team.status = 0 and user.alias_account <> '' and user.app_name = #{appName} and team.app_name = #{appName}
+        and team.email = #{team}
+        ]]>
+    </select>
+
+    <select id="listByType" parameterType="Map" resultMap="UserMap">
+        select * from user where app_name = #{appName} and domain_id = #{domainId} and status = 0 and type = #{type}
+    </select>
+
+    <select id="listById" parameterType="Map" resultMap="UserMap">
+        select * from user where app_name = #{appName} and status = 0 and id in <include refid="in"/>;
+    </select>
+
+    <select id="listDetailByType" parameterType="Map" resultMap="UserMap">
+        select user.*, account.phone, account.alipay, account.loginid, account.biz_status account_status from user, account
+        where user.account_id = account.id and user.status = 0 and account.status = 0 
+        and user.app_name = #{appName} and user.domain_id = #{domainId} and user.type = #{type}
+    </select>
+    
+    <select id="getAccountUserByAliasAccount" resultMap="UserMap" >
+        select a.*, c.phone, c.show_mobile
+    	from user a, account c
+    	where     		
+    		a.account_id = c.id
+    		and a.alias_account = #{aliasAccount}
+    </select>
+
+    <select id="listByAlias" parameterType="List" resultMap="UserMap">
+        select * from user where alias_account in <include refid="in"/>
+    </select>
+
+    <select id="getNumberByAliasAccounts" parameterType="List" resultType="java.lang.String">
+        select distinct number from user where alias_account in <include refid="in"/>
+    </select>
+    
+    <sql id="in">
+    	<foreach collection="list" item="i" open="(" separator="," close=")">#{i}</foreach>
+    </sql>
+
+    <update id="updateRelatedBizStatus" parameterType="Map">
+        update user
+        set gmt_modified = now(), biz_status = #{bizStatus}
+        where app_name = #{appName} and domain_id = #{domainId} 
+        and relation_type = #{relationType} and relation_user_id in <include refid="in"/>;
+    </update>
+
+    <update id="deleteByRelated" parameterType="Map">	        
+        update user
+        set gmt_modified = now(), status = 1
+        where app_name = #{appName} and domain_id = #{domainId} 
+        and relation_type = #{relationType} and relation_user_id in <include refid="in"/>;
+    </update>
+
+    <update id="updateBizStatus">
+        update user set biz_status = #{bizStatus}, gmt_modified = now()
+        where app_name = #{appName} and domain_id = #{domainId}
+          and (id in <include refid="in"/> or relation_user_id in <include refid="in"/>)
+    </update>
+
+    <select id="listByAccountId" parameterType="java.lang.String" resultMap="UserMap">
+        select * from user where  status = 0 and account_id = #{accountId}
+    </select>
+
+    <select id="getUserByUserId" parameterType="java.lang.String" resultMap="UserMap">
+        select * from user where  status = 0 and id = #{userId} limit 0,1
+    </select>
+
+    <select id="getUserByAliasEmail" parameterType="java.lang.String" resultMap="UserMap">
+        select * from user where  status = 0 and alias_account = #{aliasEmail} limit 0,1
+    </select>
+
+    <update id="removeParentRole">
+        update user
+        set
+        status = 1,
+        gmt_modified = now()
+        where
+        app_name = #{appName}
+        and domain_id = #{domainId}
+        and relation_user_id = #{studentId}
+        and account_id in (select id from account where loginid in <include refid="in"/> and status = '0' and type = '1')
+    </update>
+
+    <select id="getParentUserId" parameterType="Map" resultType="String">
+        select user.id
+        from user, user_parent_info
+        where user_parent_info.name = #{studentName} and user_parent_info.account1 = #{phone}
+        and user.relation_user_id = user_parent_info.user_id
+        and user.status = '0' and user_parent_info.status = '0' and user.domain_id = #{domainId}
+        and user.app_name = #{appName}
+    </select>
+
+    <select id="getParentUserIdByStudentId" parameterType="Map" resultType="String">
+        select user.id
+        from user
+        where
+        user.app_name = #{appName} and status = '0' and domain_id = #{schoolId}
+        and user.relation_user_id in <foreach collection="studentIdList" open="(" separator="," close=")" item="i">#{i}</foreach>
+    </select>
+
+    <select id="listUsersByLoginId" parameterType="java.lang.String" resultMap="UserMap">
+        select u.* from user u, account a
+        where u.account_id = a.id
+        and a.loginid = #{loginId} and u.status = '0' and a.status = '0'
+    </select>
+
+    <select id="listAllTeacherByTeacherId" parameterType="List" resultMap="UserMap">
+        select u.*, a.loginid
+        from user u, account a
+        where u.account_id = a.id
+        and a.id in(
+        select account_id from user
+        where id in <foreach collection="userIdList" open="(" separator="," close=")" item="i">#{i}</foreach> and status = '0'
+        )
+        and a.status = '0' and u.status = '0' and u.type = '0'
+    </select>
+
+    <select id = "countUserNumByPhone" resultType="int">
+        select count(0) from account a, user u
+        where a.id = u.account_id
+        and a.phone = #{phone} and u.domain_id = #{schoolId} and u.id != #{teacherId} and u.type = '0'
+        and a.app_name = #{appName} and u.app_name = #{appName}
+        and a.status = '0' and u.status = '0'
+    </select>
+    <select id = "countStudentByPhoneAndName" resultType="int">
+        select count(0) from account a, user_parent_info u
+        where a.loginid = u.account1
+        and a.phone = #{phone} and u.domain_id = #{schoolId}
+        and a.app_name = #{appName} and u.app_name = #{appName}
+        and a.status = '0' and u.status = '0'
+		and u.user_id != #{studentId}
+		and u.name = #{studentName}
+    </select>
+
+    <select id="getParentAccountStatusByStudentId" resultType="String">
+        select a.biz_status
+        from account a, user u
+        where u.account_id = a.id
+        and u.relation_user_id = #{studentId}
+        and a.status = '0' and u.status = '0' and a.app_name = #{appName} and u.app_name = #{appName}
+    </select>
+
+    <select id="getTeacherAccountStatusByTeacherId" resultType="int">
+        select a.biz_status
+        from account a, user u
+        where u.account_id = a.id
+        and u.id = #{teacherId}
+        and a.status = '0' and u.status = '0' and a.app_name = #{appName} and u.app_name = #{appName}
+    </select>
+
+    <select id="getAdminIdByTeacherId" resultMap="UserMap">
+        select admin.*
+        from user t, account a, user admin
+        where t.account_id = a.id and a.id = admin.account_id
+        and t.id = #{teacherId} and admin.type = '2'
+        and t.status = '0' and a.status = '0' and admin.status = '0'
+        and t.app_name = #{appName} and a.app_name = #{appName} and admin.app_name = #{appName}
+        and admin.domain_id = #{schoolId}
+    </select>
+
+    <select id="getUser" parameterType="Map" resultMap="UserMap">
+        select * from user
+        where user.app_name = #{appName} and status = '0'
+        <if test="user.relationUserId != null"> and relation_user_id = #{user.relationUserId}</if>
+        <if test="user.domainId != null"> and user.domain_id = #{user.domainId}</if>
+    </select>
+
+
+    <select id="getClassIdListManaged" resultType="String">
+        select team.id from
+        (select * from team where type = '2' and status = '0' and app_name = #{appName}) team,
+        user
+        where user.id = #{teacherId}
+        and user.status = '0' and user.app_name = #{appName}
+        and team.owner_id = user.id
+    </select>
+
+    <select id="getParentListByStudentId" resultMap="UserMap">
+        select *
+        from user
+        where
+        user.app_name = #{appName} and status = '0'
+        and relation_user_id = #{studentId}
+    </select>
+
+    <select id="getAllUserByLoginId" resultMap="UserMap">
+        select user.* from
+        (select * from account where loginid = #{loginId} and status = '0' and app_name = #{appName}) account
+        left join (select * from user where status = '0' and app_name = #{appName}) user on account.id = user.account_id
+    </select>
+    <select id="getParentInfo" resultMap="ParentInfo">
+        select p.id parent_id, s.id student_id, s.name student_name, s.gender student_gender,
+        t.id class_id, t.description class_name, s.domain_id school_id, d.name school_name
+        from user p, user s, user_team ut, team t, domain d
+        where p.id = #{userId} and p.status = '0' and p.app_name = #{appName}
+        and p.relation_user_id = s.id and s.id = ut.user_id and ut.team_id = t.id and s.domain_id = d.id
+        and s.status = 0 and ut.status = '0' and t.status = '0' and d.status = '0'
+        limit 0, 1
+    </select>
+    <select id="getPersonalInfo" resultMap="PersonalInfo">
+        select u.id user_id, d.id school_id, d.name school_name, u.name user_name
+        from user u, domain d
+        where u.id = #{userId} and u.status = '0' and u.app_name = #{appName}
+        and u.domain_id = d.id
+    </select>
+    <select id="getStudentInfo" resultMap="StudentInfo">
+        select u.id student_id, d.id school_id, d.name school_name, u.name student_name, t.id class_id, t.description class_name
+        from user u, user_team ut, domain d, team t
+        where u.id = #{studentId} and u.status = '0' and u.app_name = #{appName}
+        and u.domain_id = d.id and u.id = ut.user_id and ut.team_id = t.id and ut.status = '0'
+        and t.status = '0' and d.status = '0' and u.type = '3'
+        limit 0, 1
+    </select>
+</mapper>

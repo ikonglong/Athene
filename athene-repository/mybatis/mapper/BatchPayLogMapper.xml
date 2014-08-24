@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.alibaba.alimei.dao.IBatchPayLogMapper">
+
+    <resultMap id="BatchPayLogMap" type="com.alibaba.alimei.dao.vo.BatchPayLog">
+
+        <result column="batch_no" property="batchNo" />
+
+        <result column="amount" property="amount" />
+
+        <result column="biz_status" property="bizStatus" />
+        <result column="error_status" property="errorCode" />
+        <result column="error_msg" property="errorMsg" />
+
+        <result column="remark" property="remark" />
+
+        <result column="num" property="num" />
+        <result column="success_num" property="successNum" />
+        <result column="success_amount" property="successAmount" />
+
+        <result column="check_result_count" property="checkResultCount" />
+        <result column="check_result_time" property="checkResultTime" />
+
+        <result column="id" property="id" />
+        <result column="status" property="status" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="app_name" property="appName" />
+        <result column="app_parent" property="appParent" />
+    </resultMap>
+
+    <insert id="clear" >
+        delete from batch_pay_log where app_name = #{appName}
+    </insert>
+
+    <insert id="insert" parameterType="BatchPayLog" useGeneratedKeys="false">
+        insert into batch_pay_log
+            (<include refid="allColumns"/>)
+        values
+        ( #{batchNo},#{amount},#{bizStatus},#{errorCode},#{errorMsg},#{remark},#{num},#{successNum},#{successAmount},
+        #{checkResultCount},#{checkResultTime},
+        #{id}, #{status}, now(), now(), #{appName}, #{appParent})
+    </insert>
+
+
+    <update id="update" parameterType="BatchPayLog">
+        update batch_pay_log
+        set gmt_modified = now(),
+              biz_status=#{bizStatus},error_code=#{errorCode},error_msg=#{errorMsg},remark=#{remark},
+              check_result_count=#{checkResultCount},check_result_time=#{checkResultTime},
+              success_num=#{successNum},success_amount=#{successAmount}
+        where
+              id=#{id}
+    </update>
+
+
+
+    <select id="list" parameterType="Map" resultMap="BatchPayLogMap">
+        select * from batch_pay_log
+        <where>
+            <if test="amount != null">and amount = #{amount}</if>
+
+            <if test="status != null">and status = #{status}</if>
+            <if test="bizStatus != null">and biz_status = #{bizStatus}</if>
+            <if test="appName != null">and app_name = #{appName}</if>
+            <if test="appParent != null">and app_parent = #{appParent}</if>
+
+            <if test="lteq_checkResultCount != null">
+                <![CDATA[
+                and check_result_count <= #{lteq_checkResultCount}
+                ]]>
+            </if>
+            <if test="lteq_checkResultTime != null">
+                <![CDATA[
+                and check_result_time <= #{lteq_checkResultTime}
+                ]]>
+            </if>
+
+        </where>
+        limit #{offset}, #{length}
+    </select>
+
+
+    <sql id="allColumns">
+        batch_no, amount,biz_status,error_code,error_msg,remark,num,success_num,success_amount,check_result_count,check_result_time,
+        id, status, gmt_create, gmt_modified, app_name, app_parent
+    </sql>
+
+</mapper>

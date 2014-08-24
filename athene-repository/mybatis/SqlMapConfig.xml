@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<!-- 这个配置使全局的映射器启用或禁用缓存 -->
+		<setting name="cacheEnabled" value="true" />
+		<!-- 允许 JDBC 支持生成的键。需要适合的驱动。如果设置为 true 则这个设置强制生成的键被使用，尽管一些驱动拒绝兼容但仍然有效（比如 Derby） -->
+		<setting name="useGeneratedKeys" value="true" />
+		<!-- 配置默认的执行器。SIMPLE 执行器没有什么特别之处。REUSE 执行器重用预处理语句。BATCH 执行器重用语句和批量更新  -->
+		<setting name="defaultExecutorType" value="REUSE" />
+		<!-- 全局启用或禁用延迟加载。当禁用时，所有关联对象都会即时加载。 -->
+		<setting name="lazyLoadingEnabled" value="false"/>
+		<!-- 设置超时时间，它决定驱动等待一个数据库响应的时间。  -->
+		<setting name="defaultStatementTimeout" value="25000"/> 
+	</settings>
+	
+	<!-- 别名配置 -->
+	<typeAliases>
+        <typeAlias alias="AppInfo" type="com.alibaba.alimei.dao.vo.AppInfo" />
+        <typeAlias alias="AuthTokenInfo" type="com.alibaba.alimei.dao.vo.AuthTokenInfo" />
+        <typeAlias alias="UserMapInfo" type="com.alibaba.alimei.dao.vo.UserMapInfo" />
+        <typeAlias alias="DeviceTokenInfo" type="com.alibaba.alimei.dao.vo.DeviceTokenInfo" />
+        <typeAlias alias="FeedbackInfo" type="com.alibaba.alimei.dao.vo.FeedbackInfo" />
+        <typeAlias alias="AppVerInfo" type="com.alibaba.alimei.dao.vo.AppVerInfo" />
+        <typeAlias alias="SetInfo" type="com.alibaba.alimei.dao.vo.SetInfo" />
+        <typeAlias alias="LoginlogInfo" type="com.alibaba.alimei.dao.vo.LoginlogInfo" />
+        <typeAlias alias="SetInfoTemplate" type="com.alibaba.alimei.dao.vo.SetInfoTemplate"/>
+        <typeAlias alias="MailDomain" type="com.alibaba.alimei.dao.vo.MailDomain"/>
+
+        <typeAlias alias="Account" type="com.alibaba.alimei.dao.vo.Account" />
+        <typeAlias alias="Domain" type="com.alibaba.alimei.dao.vo.Domain" />
+        <typeAlias alias="ScoreLog" type="com.alibaba.alimei.dao.vo.ScoreLog" />
+        <typeAlias alias="Team" type="com.alibaba.alimei.dao.vo.Team" />
+        <typeAlias alias="User" type="com.alibaba.alimei.dao.vo.User" />
+        <typeAlias alias="UserParentInfo" type="com.alibaba.alimei.dao.vo.UserParentInfo" />
+        <typeAlias alias="UserRole" type="com.alibaba.alimei.dao.vo.UserRole" />
+        <typeAlias alias="UserScore" type="com.alibaba.alimei.dao.vo.UserScore" />
+        <typeAlias alias="UserTeam" type="com.alibaba.alimei.dao.vo.UserTeam" />
+        <typeAlias alias="ShippingAddress" type="com.alibaba.alimei.dao.vo.ShippingAddress" />
+        <typeAlias alias="PayLog" type="com.alibaba.alimei.dao.vo.PayLog"/>
+        <typeAlias alias="BatchPayLog" type="com.alibaba.alimei.dao.vo.BatchPayLog"/>
+        <typeAlias alias="PayTask" type="com.alibaba.alimei.dao.vo.PayTask"/>
+        <typeAlias alias="PayFunc" type="com.alibaba.alimei.dao.vo.PayFunc"/>
+        <typeAlias alias="DocPreview" type="com.alibaba.alimei.dao.vo.DocPreview"/>
+        <typeAlias alias="DBLock" type="com.alibaba.alimei.dao.vo.DBLock"/>
+        <typeAlias alias="WebFeedback" type="com.alibaba.alimei.dao.vo.WebFeedback"/>
+    </typeAliases>
+	
+	<!-- 指定映射器路径 -->
+	<mappers>
+		<mapper resource="mybatis/mapper/AppInfoMapper.xml" />
+		<mapper resource="mybatis/mapper/TokenInfoMapper.xml" />
+		<mapper resource="mybatis/mapper/UserMapInfoMapper.xml" />
+		<mapper resource="mybatis/mapper/DeviceTokenMapper.xml" />
+		<mapper resource="mybatis/mapper/FeedbackMapper.xml" />
+		<mapper resource="mybatis/mapper/AppVerInfoMapper.xml" />
+		<mapper resource="mybatis/mapper/SetInfoMapper.xml" />
+        <mapper resource="mybatis/mapper/LoginlogInfoMapper.xml" />
+        <mapper resource="mybatis/mapper/MailDomainMapper.xml" />
+
+        <mapper resource="mybatis/mapper/AccountMapper.xml" />
+        <mapper resource="mybatis/mapper/DomainMapper.xml" />
+        <mapper resource="mybatis/mapper/ScoreLogMapper.xml" />
+        <mapper resource="mybatis/mapper/TeamMapper.xml" />
+        <mapper resource="mybatis/mapper/UserMapper.xml" />
+        <mapper resource="mybatis/mapper/UserParentInfoMapper.xml" />
+        <mapper resource="mybatis/mapper/UserRoleMapper.xml" />
+        <mapper resource="mybatis/mapper/UserScoreMapper.xml" />
+        <mapper resource="mybatis/mapper/UserTeamMapper.xml" />
+        <mapper resource="mybatis/mapper/SyncMapper.xml" />
+        <mapper resource="mybatis/mapper/ContactMapper.xml" />
+        <mapper resource="mybatis/mapper/ShippingAddressMapper.xml" />
+        <mapper resource="mybatis/mapper/PayLogMapper.xml" />
+        <mapper resource="mybatis/mapper/BatchPayLogMapper.xml" />
+        <mapper resource="mybatis/mapper/PayTaskMapper.xml" />
+        <mapper resource="mybatis/mapper/PayFuncMapper.xml" />
+        <!-- <mapper resource="mybatis/mapper/TeamSyncMapper.xml" /> -->
+        <mapper resource="mybatis/mapper/DocPreviewMapper.xml" />
+        <mapper resource="mybatis/mapper/DBLockMapper.xml" />
+        <mapper resource="mybatis/mapper/WebFeedbackMapper.xml" />
+	</mappers>
+
+</configuration>
+
