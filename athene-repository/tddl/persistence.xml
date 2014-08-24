@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/tx    http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+       ">
+
+    <!-- TDDL DataSource  -->
+    <bean id="tddlDataSource" class="com.taobao.tddl.client.jdbc.TDataSource" init-method="init">
+        <property name="appRuleFile" value="classpath:tddl/tddl-rule.xml"/>
+        <property name="appName" value="ALIMEI_APP"/>
+        <property name="useLocalConfig" value="true"/>
+    </bean>
+
+    <!-- 配置事务管理器，注意这里的dataSource和SqlSessionFactoryBean的dataSource要一致，不然事务就没有作用了 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="tddlDataSource"/>
+    </bean>
+
+    <!-- 可通过注解控制事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml"/>
+        <property name="dataSource" ref="tddlDataSource"/>
+    </bean>
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    </bean>
+
+    <bean id="appInfoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IAppInfoMapper"/>
+    </bean>
+    <bean id="tokenInfoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.ITokenInfoMapper"/>
+    </bean>
+    <bean id="userMapInfoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IUserMapInfoMapper"/>
+    </bean>
+    <bean id="deviceTokenMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IDeviceTokenMapper"/>
+    </bean>
+    <bean id="feedbackMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IFeedbackMapper"/>
+    </bean>
+    <bean id="appVerInfoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IAppVerInfoMapper"/>
+    </bean>
+    <bean id="setInfoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.ISetInfoMapper"/>
+    </bean>
+    <bean id="loginlogInfoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.ILoginlogInfoMapper"/>
+    </bean>
+    <bean id="mailDomainMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IMailDomainMapper"/>
+    </bean>
+
+    <bean id="AccountMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IAccountMapper"/>
+    </bean>
+    <bean id="DomainMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IDomainMapper"/>
+    </bean>
+    <bean id="ScoreLogMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IScoreLogMapper"/>
+    </bean>
+    <bean id="TeamMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.ITeamMapper"/>
+    </bean>
+    <bean id="UserMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IUserMapper"/>
+    </bean>
+    <bean id="UserParentInfoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IUserParentInfoMapper"/>
+    </bean>
+    <bean id="UserRoleMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IUserRoleMapper"/>
+    </bean>
+    <bean id="UserScoreMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IUserScoreMapper"/>
+    </bean>
+    <bean id="UserTeamMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IUserTeamMapper"/>
+    </bean>
+    <bean id="SyncMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.ISyncMapper"/>
+    </bean>
+    <bean id="ContactMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IContactMapper"/>
+    </bean>
+    <bean id="ShippingAddressMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IShippingAddressMapper"/>
+    </bean>
+    <bean id="PayLogMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IPayLogMapper"/>
+    </bean>
+
+    <bean id="BatchPayLogMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IBatchPayLogMapper"/>
+    </bean>
+
+    <bean id="PayTaskMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IPayTaskMapper"/>
+    </bean>
+    <bean id="PayFuncMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IPayFuncMapper"/>
+    </bean>
+
+    <bean id="WebFeedbackMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IWebFeedbackMapper"/>
+    </bean>
+
+    <!--
+    <bean id="TeamSyncMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.ITeamSyncMapper"/>
+    </bean>
+    -->
+
+    <bean id="docPreviewMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IDocPreviewMapper"/>
+    </bean>
+
+    <bean id="dbLockMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.alibaba.alimei.dao.IDBLockMapper"/>
+    </bean>
+</beans>

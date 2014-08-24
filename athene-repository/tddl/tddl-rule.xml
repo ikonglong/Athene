@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="vtabroot" class="com.taobao.tddl.interact.rule.VirtualTableRoot" init-method="init">
+		<property name="defaultDbIndex" value="ALIMEI_GROUP" />
+		<property name="dbType" value="MYSQL" />
+		<property name="tableRules">
+		<map>
+            <entry key="devicetoken" value-ref="devicetoken_bean"></entry>
+            <entry key="setinfo" value-ref="setinfo_bean"></entry>
+            <entry key="tokeninfo" value-ref="tokeninfo_bean"></entry>
+            <entry key="doc_preview" value-ref="doc_preview_rule"></entry>
+            <!--<entry key="usermap" value-ref="usermap_bean"></entry>-->
+        </map>
+		</property>
+	</bean>
+
+    <bean id="devicetoken_bean" class="com.taobao.tddl.interact.rule.TableRule">
+        <property name="dbNamePattern" value="ALIMEI_GROUP"/>
+        <property name="tbNamePattern" value="devicetoken_{0000}"></property>
+        <property name="tbRuleArray">
+            <value>Math.abs(String.valueOf(#userid,1,1024#).hashCode()) %1024</value>
+        </property>
+        <property name="allowFullTableScan" value="true"/>
+    </bean>
+
+    <bean id="setinfo_bean" class="com.taobao.tddl.interact.rule.TableRule">
+        <property name="dbNamePattern" value="ALIMEI_GROUP"/>
+        <property name="tbNamePattern" value="setinfo_{0000}"></property>
+        <property name="tbRuleArray">
+            <value>Math.abs(String.valueOf(#userid,1,1024#).hashCode()) %1024</value>
+        </property>
+        <property name="allowFullTableScan" value="true"/>
+    </bean>
+
+    <bean id="tokeninfo_bean" class="com.taobao.tddl.interact.rule.TableRule">
+        <property name="dbNamePattern" value="ALIMEI_GROUP"/>
+        <property name="tbNamePattern" value="tokeninfo_{0000}"></property>
+        <property name="tbRuleArray">
+            <value>Math.abs(String.valueOf(#userid,1,1024#).hashCode()) %1024</value>
+        </property>
+        <property name="allowFullTableScan" value="true"/>
+    </bean>
+
+    <!--
+    <bean id="usermap_bean" class="com.taobao.tddl.interact.rule.TableRule">
+        <property name="dbNamePattern" value="ALIMEI_GROUP"/>
+        <property name="tbNamePattern" value="usermap_{0000}"></property>
+        <property name="tbRuleArray">
+            <value>Math.abs(String.valueOf(#mailuid,1,1024#).hashCode()) %1024</value>
+        </property>
+        <property name="allowFullTableScan" value="true"/>
+    </bean>
+    -->
+
+    <bean id="doc_preview_rule" class="com.taobao.tddl.interact.rule.TableRule">
+        <property name="dbNamePattern" value="ALIMEI_GROUP"/>
+        <property name="tbNamePattern" value="doc_preview_{0000}"></property>
+        <property name="tbRuleArray">
+            <value>Math.abs(String.valueOf(#md5_digest,1,1024#).hashCode()) % 1024</value>
+        </property>
+        <property name="allowFullTableScan" value="true"/>
+    </bean>
+</beans>
