@@ -2,6 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
+	
     <groupId>com.51quest</groupId>
     <artifactId>athene</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -9,12 +10,13 @@
 	<name>athene</name>
 	
 	<modules>
-		<module>web</module>
-        <module>application</module>
-        <module>domain</module>
-        <module>infrastructure</module>
+		<module>athene-web</module>
+        <module>athene-application</module>
+        <module>athene-domain</module>
+		<module>athene-repository</module>
+        <module>athene-infrastructure</module>
     </modules>
-
+	
     <properties>
         <java.version>1.6</java.version>
         <java.encoding>UTF-8</java.encoding>
