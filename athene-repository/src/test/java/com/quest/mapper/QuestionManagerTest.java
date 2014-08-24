@@ -27,5 +27,6 @@ public class QuestionManagerTest extends BaseTest {
         question.noOfExposures = 0;
         question.questionTitleId = 1;
         questionManager.submitQestion(question);
+        //! 先测试加一条记录到 表里，其实应该保存对象的时候 同时为其他表插入数据并做关联
     }
 }
