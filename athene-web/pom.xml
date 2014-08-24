@@ -13,6 +13,7 @@
     <artifactId>athene-web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
+    <name>athene-web</name>
 
     <dependencies>
         <dependency>
@@ -23,9 +24,8 @@
 
         <dependency>
             <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>3.0</version>
-            <scope>compile</scope>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
         </dependency>
 
     </dependencies>

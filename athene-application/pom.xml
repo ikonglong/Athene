@@ -18,10 +18,9 @@
     <dependencies>
         <dependency>
             <groupId>com.51quest</groupId>
-            <artifactId>athene-doamin</artifactId>
+            <artifactId>athene-domain</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
     </dependencies>
 	
 </project>
