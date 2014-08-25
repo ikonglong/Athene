@@ -13,6 +13,7 @@
     <artifactId>athene-repository</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
+	<name>athene-repository</name>
 
     <dependencies>
         <dependency>

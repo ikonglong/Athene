@@ -1,1 +1,1 @@
-mvn clean in stall -Dproject.artifact.file=VALUE
+mvn clean install -Dproject.artifact.file=VALUE
