@@ -1,14 +1,14 @@
 --问题表
 drop table if exists `athene`.`Question`;
 CREATE TABLE `athene`.`Question` (
-  `questionId` decimal(10,0) DEFAULT 1 NOT NULL, 
-  `authorId` decimal(10,0) DEFAULT NULL,
-  `questionTitleId` decimal(10,0) NOT NULL,
+  `questionId` bigint NOT NULL AUTO_INCREMENT,
+  `authorId` bigint DEFAULT NULL,
+  `questionTitleId` bigint NOT NULL,
   `content` varchar(4000) DEFAULT NULL,
   `state` varchar(45) DEFAULT NULL,
-  `categoryId` decimal(10,0) DEFAULT NULL,
-  `noOfExposures` int(11) DEFAULT NULL,
-  `tagId` decimal(10,0) DEFAULT NULL,
+  `categoryId` bigint DEFAULT NULL,
+  `noOfExposures` bigint DEFAULT NULL,
+  `tagId` bigint DEFAULT NULL,
   PRIMARY KEY (`questionId`),
   UNIQUE KEY `questionId_UNIQUE` (`questionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
@@ -16,37 +16,37 @@ CREATE TABLE `athene`.`Question` (
 --问题标签表
 drop table if exists `athene`.`QuestionTag`;
 CREATE TABLE `athene`.`QuestionTag` (
-  `tagId` DECIMAL NOT NULL,
+  `tagId` bigint NOT NULL,
   `tagContent` VARCHAR(100) NULL,
   PRIMARY KEY (`tagId`));
 
 --评论表
 drop table if exists `athene`.`Comment`;
 CREATE TABLE `athene`.`Comment` (
-  `commentId` DECIMAL NOT NULL,
-  `targetId` DECIMAL NULL,
+  `commentId` bigint NOT NULL,
+  `targetId` bigint NULL,
   `content` VARCHAR(4000) NULL,
   PRIMARY KEY (`commentId`));
 
 --答案表
 drop table if exists `athene`.`Answer`;
 CREATE TABLE `athene`.`Answer` (
-  `answerId` DECIMAL NOT NULL,
-  `author` DECIMAL NULL,
+  `answerId` bigint NOT NULL,
+  `author` bigint NULL,
   `isAccepted` INT NULL,
   PRIMARY KEY (`answerId`));
 
 --用户表
 drop table if exists `athene`.`User`;
 CREATE TABLE `athene`.`User` (
-  `userId` DECIMAL NOT NULL,
+  `userId` bigint NOT NULL,
   `username` VARCHAR(100) NULL,
   PRIMARY KEY (`userId`));
 
 --问题标题表
 drop table if exists `athene`.`QuestionTitle`;
 CREATE TABLE `athene`.`QuestionTitle` (
-  `questionTitleId` DECIMAL NOT NULL,
+  `questionTitleId` bigint NOT NULL,
   `questionTitleContent` VARCHAR(1000) NULL,
   PRIMARY KEY (`questionTitleId`));
 
