@@ -10,10 +10,7 @@ public interface QuestionManager {
 
     public void submitQestion (Question question);
 
-//    public Question findQuestionByAuthor(String author) {
-//
-//
-//    }
+    public Question findQuestionByAuthor(String author);
 //
 //    public Question findQuestionByTag (String tag) {
 //
@@ -35,13 +32,8 @@ public interface QuestionManager {
 //
 //    }
 //
-//    public QuestionTitle findTitleByTitleContent (String titleContent) {
+    public QuestionTitle findTitleByTitleContent (String titleContent) ;
+
 //
-//
-//    }
-//
-//    public void saveQuestionTitle(QuestionTitle title) {
-//
-//
-//    }
+    public void saveQuestionTitle(QuestionTitle title);
 }

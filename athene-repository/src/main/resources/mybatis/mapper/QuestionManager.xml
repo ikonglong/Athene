@@ -15,10 +15,25 @@
         <result column="questionTitleId" property="questionTitleId" />
     </resultMap>
 
+    <resultMap id="QuestionTitle" type="com.quest.model.QuestionTitle">
+        <result column="questionTitleId" property="questionTitleId" />
+        <result column="questionTitleContent" property="questionTitleContent" />
+    </resultMap>
+
     <insert id="submitQestion" parameterType="com.quest.model.Question" useGeneratedKeys="true"
             keyProperty="questionId">
         insert into Question (authorId,questionTitleId,content,state,categoryId,noOfExposures,tagId)
         values (#{authorId},#{questionTitleId},#{content},#{state},#{categoryId},#{noOfExposures},#{tagId})
+    </insert>
+
+    <select id="findTitleByTitleContent" resultMap="QuestionTitle">
+        select * from QuestionTitle where questionTitleContent = #{title}
+    </select>
+
+    <insert id="saveQuestionTitle" parameterType="com.quest.model.QuestionTitle" useGeneratedKeys="true"
+            keyProperty="questionTitleId">
+        insert into QuestionTitle (questionTitleContent)
+        values (#{questionTitleContent})
     </insert>
 
 </mapper>

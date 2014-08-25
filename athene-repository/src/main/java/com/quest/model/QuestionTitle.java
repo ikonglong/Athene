@@ -9,7 +9,7 @@ public class QuestionTitle {
     public long questionTitleId;
 
     //! 问题标题
-    public String questionContent;
+    public String questionTitleContent;
 
     public long getQuestionTitleId() {
         return questionTitleId;
@@ -19,11 +19,11 @@ public class QuestionTitle {
         this.questionTitleId = questionTitleId;
     }
 
-    public String getQuestionContent() {
-        return questionContent;
+    public String getQuestionTitleContent() {
+        return questionTitleContent;
     }
 
-    public void setQuestionContent(String questionContent) {
-        this.questionContent = questionContent;
+    public void setQuestionTitleContent(String questionTitleContent) {
+        this.questionTitleContent = questionTitleContent;
     }
 }

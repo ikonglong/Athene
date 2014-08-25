@@ -7,14 +7,9 @@ import com.quest.model.QuestionTag;
  */
 public interface TagManager {
 
-//    public void submitTag(QuestionTag tag) {
+    public void submitTag(QuestionTag tag);
 //
-//
-//    }
-//
-//    public QuestionTag findTagByTagId(long tagId) {
-//
-//
-//    }
+    public QuestionTag findTagByTagId(long tagId);
 
+    public QuestionTag findTagByTagContent(String tag);
 }
