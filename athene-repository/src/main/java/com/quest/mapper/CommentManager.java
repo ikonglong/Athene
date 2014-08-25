@@ -7,10 +7,8 @@ import com.quest.model.Comment;
  */
 public interface CommentManager {
 
-//    public void submitComment (Comment comment) {
-//
-//
-//    }
+    //! 添加一个评论
+    public void submitComment (Comment comment);
 //
 //    public Comment loadCommentByTargetId(long targetId) {
 //

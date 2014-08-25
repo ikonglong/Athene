@@ -11,6 +11,17 @@ public class QuestionTitle {
     //! 问题标题
     public String questionTitleContent;
 
+    //! 标题对应的问题
+    public long questionId;
+
+    public long getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(long questionId) {
+        this.questionId = questionId;
+    }
+
     public long getQuestionTitleId() {
         return questionTitleId;
     }

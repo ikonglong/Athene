@@ -14,6 +14,17 @@ public class Comment {
     //! 评论内容
     public String content;
 
+    //! 被评论数
+    public int numOfComments;
+
+    public int getNumOfComments() {
+        return numOfComments;
+    }
+
+    public void setNumOfComments(int numOfComments) {
+        this.numOfComments = numOfComments;
+    }
+
     public long getCommentId() {
         return commentId;
     }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.quest.mapper.CommentManager">
+
+    <resultMap id="Comment" type="com.quest.model.Comment">
+        <result column="commentId" property="commentId" />
+        <result column="targetId" property="targetId" />
+        <result column="content" property="content" />
+        <result column="numOfComments" property="numOfComments" />
+    </resultMap>
+
+    <insert id="submitComment" parameterType="com.quest.model.Comment" useGeneratedKeys="true"
+            keyProperty="commentId">
+        insert into Comment (targetId,content,numOfComments)
+        values (#{targetId},#{content},#{numOfComments})
+    </insert>
+
+</mapper>

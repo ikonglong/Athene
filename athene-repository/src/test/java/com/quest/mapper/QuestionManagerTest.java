@@ -44,7 +44,7 @@ public class QuestionManagerTest extends BaseTest {
         question.categoryId = 1;
 
         //! 填入问题具体内容
-        question.content = "做技术有前途还是做产品有前途，还是应该去扔下硬币决定？";
+        question.content = "具体要怎么才能学好java?";
         question.state = "new";
 
         //! 如果问题有标签则插入一个标签
@@ -61,7 +61,7 @@ public class QuestionManagerTest extends BaseTest {
         question.noOfExposures = 0;
 
         //! 问题的标题
-        String title = "软件发展方向怎么选择，请各位大大进来讨论？";
+        String title = "java 容易学吗？";
         QuestionTitle questionTitle = questionManager.findTitleByTitleContent(title);
         if (questionTitle == null) {
             questionTitle = new QuestionTitle();
@@ -71,4 +71,36 @@ public class QuestionManagerTest extends BaseTest {
 
         questionManager.submitQestion(question);
    }
+
+    @Test
+    public void  testFindQuestionTitleByFuzzyInput() throws Exception {
+
+        String input = "软件";
+        List<QuestionTitle> questionTitles = questionManager.findQuestionTitleByFuzzyInput(input);
+        Assert.assertNotNull(questionTitles);
+        Assert.assertSame(1,questionTitles.size());
+        for (QuestionTitle t : questionTitles) {
+            System.out.print(t.getQuestionTitleContent() + "=========" +t.getQuestionTitleId() );
+
+        }
+    }
+
+    @Test
+    public void testAddAnswerForQuestion() throws Exception {
+        Answer answer = new Answer();
+        answer.authorId = 1;
+        answer.isAccepted = false;
+        answer.questionId = 1;
+        answer.answerContent = "java 是语言里最简单的！";
+        answer.numOfComments = 0;
+        questionManager.addAnswerForQuestion(answer);
+
+    }
+
+    @Test
+    public void  testLookupCountOfAnswersByQuestionId()  throws Exception {
+
+        int questionCount = questionManager.lookupCountOfAnswersByQuestionId(1);
+        Assert.assertSame(2,questionCount);
+    }
 }

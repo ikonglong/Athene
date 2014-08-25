@@ -13,11 +13,21 @@
         <result column="noOfExposures" property="noOfExposures" />
         <result column="tagId" property="tagId" />
         <result column="questionTitleId" property="questionTitleId" />
+        <result column="numOfComments" property="numOfComments" />
     </resultMap>
 
     <resultMap id="QuestionTitle" type="com.quest.model.QuestionTitle">
         <result column="questionTitleId" property="questionTitleId" />
         <result column="questionTitleContent" property="questionTitleContent" />
+    </resultMap>
+
+    <resultMap id="Answer" type="com.quest.model.Answer">
+        <result column="answerId" property="answerId" />
+        <result column="authorId" property="authorId" />
+        <result column="isAccepted" property="isAccepted" />
+        <result column="numOfComments" property="numOfComments" />
+        <result column="questionId" property="questionId" />
+        <result column="answerContent" property="answerContent" />
     </resultMap>
 
     <insert id="submitQestion" parameterType="com.quest.model.Question" useGeneratedKeys="true"
@@ -26,14 +36,28 @@
         values (#{authorId},#{questionTitleId},#{content},#{state},#{categoryId},#{noOfExposures},#{tagId})
     </insert>
 
-    <select id="findTitleByTitleContent" resultMap="QuestionTitle">
-        select * from QuestionTitle where questionTitleContent = #{title}
-    </select>
-
     <insert id="saveQuestionTitle" parameterType="com.quest.model.QuestionTitle" useGeneratedKeys="true"
             keyProperty="questionTitleId">
         insert into QuestionTitle (questionTitleContent)
         values (#{questionTitleContent})
     </insert>
+
+    <insert id="addAnswerForQuestion" parameterType="com.quest.model.Answer" useGeneratedKeys="true"
+            keyProperty="answerId">
+        insert into Answer (authorId,isAccepted,questionId,numOfComments,answerContent)
+        values (#{authorId},#{isAccepted},#{questionId},#{numOfComments},#{answerContent})
+    </insert>
+
+    <select id="findTitleByTitleContent" resultMap="QuestionTitle">
+        select * from QuestionTitle where questionTitleContent = #{title}
+    </select>
+
+    <select id="findQuestionTitleByFuzzyInput" resultMap="QuestionTitle">
+        select * from QuestionTitle where questionTitleContent like CONCAT('%',#{input},'%')
+    </select>
+
+    <select id="lookupCountOfAnswersByQuestionId" resultType="int">
+        select count(1) from Answer where questionId = #{questionId}
+    </select>
 
 </mapper>

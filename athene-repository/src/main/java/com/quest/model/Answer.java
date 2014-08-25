@@ -9,10 +9,51 @@ public class Answer {
     public long answerId;
 
     //! 答案提交者
-    public String author;
+    public long authorId;
 
     //! 答案是否被采纳
     public boolean isAccepted;
+
+    //! 答案所对应的问题
+    public long questionId;
+
+    //! 答案内容
+    public String answerContent;
+
+    //! 被评论数
+    public int numOfComments;
+
+    public long getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(long questionId) {
+        this.questionId = questionId;
+    }
+
+    public int getNumOfComments() {
+        return numOfComments;
+    }
+
+    public void setNumOfComments(int numOfComments) {
+        this.numOfComments = numOfComments;
+    }
+
+    public long getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(long authorId) {
+        this.authorId = authorId;
+    }
+
+    public String getAnswerContent() {
+        return answerContent;
+    }
+
+    public void setAnswerContent(String answerContent) {
+        this.answerContent = answerContent;
+    }
 
     public long getAnswerId() {
         return answerId;
@@ -20,14 +61,6 @@ public class Answer {
 
     public void setAnswerId(long answerId) {
         this.answerId = answerId;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public boolean isAccepted() {
