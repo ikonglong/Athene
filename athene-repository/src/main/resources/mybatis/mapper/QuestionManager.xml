@@ -5,12 +5,11 @@
 
     <resultMap id="Question" type="com.quest.model.Question">
         <result column="questionId" property="questionId" />
-        <result column="name" property="name" />
         <result column="authorId" property="authorId" />
         <result column="content" property="content" />
         <result column="state" property="state" />
         <result column="categoryId" property="categoryId" />
-        <result column="noOfExposures" property="noOfExposures" />
+        <result column="numOfExposures" property="numOfExposures" />
         <result column="tagId" property="tagId" />
         <result column="questionTitleId" property="questionTitleId" />
         <result column="numOfComments" property="numOfComments" />
@@ -30,10 +29,11 @@
         <result column="answerContent" property="answerContent" />
     </resultMap>
 
+    <!-- insert statement -->
     <insert id="submitQestion" parameterType="com.quest.model.Question" useGeneratedKeys="true"
             keyProperty="questionId">
-        insert into Question (authorId,questionTitleId,content,state,categoryId,noOfExposures,tagId)
-        values (#{authorId},#{questionTitleId},#{content},#{state},#{categoryId},#{noOfExposures},#{tagId})
+        insert into Question (authorId,questionTitleId,content,state,categoryId,numOfExposures,tagId)
+        values (#{authorId},#{questionTitleId},#{content},#{state},#{categoryId},#{numOfExposures},#{tagId})
     </insert>
 
     <insert id="saveQuestionTitle" parameterType="com.quest.model.QuestionTitle" useGeneratedKeys="true"
@@ -48,6 +48,7 @@
         values (#{authorId},#{isAccepted},#{questionId},#{numOfComments},#{answerContent})
     </insert>
 
+    <!-- select statement -->
     <select id="findTitleByTitleContent" resultMap="QuestionTitle">
         select * from QuestionTitle where questionTitleContent = #{title}
     </select>
@@ -60,4 +61,13 @@
         select count(1) from Answer where questionId = #{questionId}
     </select>
 
+    <!-- update statement -->
+    <update id="fixQuestion" parameterType="com.quest.model.Question"
+            flushCache="true">
+        update Question
+        <set>
+           content = #{content}
+        </set>
+        where questionId = #{questionId}
+    </update>
 </mapper>

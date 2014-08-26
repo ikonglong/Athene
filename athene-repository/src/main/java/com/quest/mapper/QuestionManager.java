@@ -14,6 +14,9 @@ public interface QuestionManager {
     //! 提交一个问题
     public void submitQestion (Question question);
 
+    //! 纠正一个问题
+    public void fixQuestion(Question content);
+
     //! 模糊查找问题
     public List<QuestionTitle> findQuestionTitleByFuzzyInput(String input);
 

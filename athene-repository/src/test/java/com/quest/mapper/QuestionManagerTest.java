@@ -58,7 +58,7 @@ public class QuestionManagerTest extends BaseTest {
         }
 
         //! 刚保存的问题曝光率为0
-        question.noOfExposures = 0;
+        question.numOfExposures = 0;
 
         //! 问题的标题
         String title = "java 容易学吗？";
@@ -102,5 +102,14 @@ public class QuestionManagerTest extends BaseTest {
 
         int questionCount = questionManager.lookupCountOfAnswersByQuestionId(1);
         Assert.assertSame(2,questionCount);
+    }
+
+    @Test
+    public void testFixQuestion() throws  Exception {
+
+        Question question = new Question();
+        question.questionId = 1;
+        question.content = "JAVA学习道路的正确体系结构是什么，比如先学什么，后学什么？";
+        questionManager.fixQuestion(question);
     }
 }

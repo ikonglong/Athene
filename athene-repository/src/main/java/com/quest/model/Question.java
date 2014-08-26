@@ -24,7 +24,10 @@ public class Question {
     public long categoryId;
 
     //! 曝光次数
-    public long noOfExposures;
+    public long numOfExposures;
+
+    //! 评论次数
+    public long numOfComments;
 
     //! 问题所属标签ID
     public long tagId;
@@ -77,12 +80,12 @@ public class Question {
         this.tagId = tagId;
     }
 
-    public long getNoOfExposures() {
-        return noOfExposures;
+    public long getNumOfExposures() {
+        return numOfExposures;
     }
 
-    public void setNoOfExposures(long noOfExposures) {
-        this.noOfExposures = noOfExposures;
+    public void setNumOfExposures(long numOfExposures) {
+        this.numOfExposures = numOfExposures;
     }
 
     public long getQuestionTitleId() {
