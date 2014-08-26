@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface TesterMapper {
 
-    public List<Tester> findByName(@Param("name") String name);
+    public List<Tester> findByName(@Param("name") String name); 
 
 }
