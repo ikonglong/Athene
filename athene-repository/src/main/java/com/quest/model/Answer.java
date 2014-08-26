@@ -6,22 +6,33 @@ package com.quest.model;
 public class Answer {
 
     //! 答案ID
-    public long answerId;
+    private long answerId;
 
     //! 答案提交者
-    public long authorId;
+    private long authorId;
 
     //! 答案是否被采纳
-    public boolean isAccepted;
+    private boolean isAccepted;
 
     //! 答案所对应的问题
-    public long questionId;
+    private long questionId;
 
     //! 答案内容
-    public String answerContent;
+    private String answerContent;
 
     //! 被评论数
-    public int numOfComments;
+    private int numOfComments;
+
+    //! 被赞的次数
+    private int numOfVotes;
+
+    public int getNumOfVotes() {
+        return numOfVotes;
+    }
+
+    public void setNumOfVotes(int numOfVotes) {
+        this.numOfVotes = numOfVotes;
+    }
 
     public long getQuestionId() {
         return questionId;

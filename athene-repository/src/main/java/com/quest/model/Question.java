@@ -6,31 +6,31 @@ package com.quest.model;
 public class Question {
 
     //! 问题ID
-    public long questionId;
+    private long questionId;
 
     //! 作者ID
-    public long authorId;
+    private long authorId;
 
     //! 问题标题
-    public long questionTitleId;
+    private long questionTitleId;
 
     //! 问题详细内容
-    public String content;
+    private String content;
 
     //! 问题的状态
-    public String state;
+    private String state;
 
     //! 类目ID
-    public long categoryId;
+    private long categoryId;
 
     //! 曝光次数
-    public long numOfExposures;
+    private long numOfExposures;
 
     //! 评论次数
-    public long numOfComments;
+    private long numOfComments;
 
     //! 问题所属标签ID
-    public long tagId;
+    private long tagId;
 
     public long getQuestionId() {
         return questionId;

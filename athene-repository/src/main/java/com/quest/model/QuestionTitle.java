@@ -6,13 +6,13 @@ package com.quest.model;
 public class QuestionTitle {
 
     //! 问题标题ID
-    public long questionTitleId;
+    private long questionTitleId;
 
     //! 问题标题
-    public String questionTitleContent;
+    private String questionTitleContent;
 
     //! 标题对应的问题
-    public long questionId;
+    private long questionId;
 
     public long getQuestionId() {
         return questionId;

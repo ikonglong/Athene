@@ -6,10 +6,10 @@ package com.quest.model;
 public class QuestionTag {
 
     //! 问题标签
-    public long tagId;
+    private long tagId;
 
     //! 问题标签
-    public String tagContent;
+    private String tagContent;
 
     public long getTagId() {
         return tagId;

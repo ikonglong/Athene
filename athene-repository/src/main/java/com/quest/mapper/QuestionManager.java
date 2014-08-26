@@ -26,6 +26,10 @@ public interface QuestionManager {
     //! 为问题添加一个答案
     public void addAnswerForQuestion(Answer answer);
 
+    //! 根据问题ID 更新投票数
+    public void updateVoteForAnswer(long answerId);
+
+
 //    public Question findQuestionByAuthor(String author);
 //
 //    public Question findQuestionByTag (String tag) {

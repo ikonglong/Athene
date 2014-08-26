@@ -37,15 +37,15 @@ public class QuestionManagerTest extends BaseTest {
 
         //! 此时需要一个作者，所以构造一个会员
         User author = new User();
-        author.userId = 1;
-        question.authorId = author.userId;
+        author.setUserId(1);
+        question.setAuthorId(author.getUserId());
 
         //! 此时需要一个类目，所以构造一个类目
-        question.categoryId = 1;
+        question.setCategoryId(1);
 
         //! 填入问题具体内容
-        question.content = "具体要怎么才能学好java?";
-        question.state = "new";
+        question.setContent("具体要怎么才能学好java?");
+        question.setState("new");
 
         //! 如果问题有标签则插入一个标签
         String tag = "软件";
@@ -53,19 +53,19 @@ public class QuestionManagerTest extends BaseTest {
 
         if (questionTag == null){
             questionTag = new QuestionTag();
-            questionTag.tagContent = tag;
+            questionTag.setTagContent(tag);
             tagManager.submitTag(questionTag);
         }
 
         //! 刚保存的问题曝光率为0
-        question.numOfExposures = 0;
+        question.setNumOfExposures(0);
 
         //! 问题的标题
         String title = "java 容易学吗？";
         QuestionTitle questionTitle = questionManager.findTitleByTitleContent(title);
         if (questionTitle == null) {
             questionTitle = new QuestionTitle();
-            questionTitle.questionTitleContent = title;
+            questionTitle.setQuestionTitleContent(title);
             questionManager.saveQuestionTitle(questionTitle);
         }
 
@@ -88,11 +88,11 @@ public class QuestionManagerTest extends BaseTest {
     @Test
     public void testAddAnswerForQuestion() throws Exception {
         Answer answer = new Answer();
-        answer.authorId = 1;
-        answer.isAccepted = false;
-        answer.questionId = 1;
-        answer.answerContent = "java 是语言里最简单的！";
-        answer.numOfComments = 0;
+        answer.setAuthorId(1);
+        answer.setAccepted(false);
+        answer.setQuestionId(1);
+        answer.setAnswerContent( "java 是语言里最简单的！");
+        answer.setNumOfComments(0);
         questionManager.addAnswerForQuestion(answer);
 
     }
@@ -108,8 +108,8 @@ public class QuestionManagerTest extends BaseTest {
     public void testFixQuestion() throws  Exception {
 
         Question question = new Question();
-        question.questionId = 1;
-        question.content = "JAVA学习道路的正确体系结构是什么，比如先学什么，后学什么？";
+        question.setQuestionId(1);
+        question.setContent("JAVA学习道路的正确体系结构是什么，比如先学什么，后学什么？");
         questionManager.fixQuestion(question);
     }
 }

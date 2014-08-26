@@ -5,7 +5,7 @@ drop table if exists `athene`.`QuestionTag`;
 drop table if exists `athene`.`Comment`;
 drop table if exists `athene`.`User`;
 drop table if exists `athene`.`QuestionTitle`;
-
+drop table if exists `athene`.`UserVotes`;
 
 CREATE TABLE `athene`.`Question` (
   `questionId` bigint NOT NULL AUTO_INCREMENT,
@@ -48,6 +48,7 @@ CREATE TABLE `athene`.`Answer` (
   `questionId` bigint NULL,
   `numOfComments` INT DEFAULT 0,
    `answerContent` VARCHAR(4000) NULL,
+    `numOfVotes` INT DEFAULT 0,
   PRIMARY KEY (`answerId`));
 
 
@@ -64,3 +65,9 @@ CREATE TABLE `athene`.`QuestionTitle` (
   `questionTitleContent` VARCHAR(1000) NULL,
    `questionId` bigint NULL,
   PRIMARY KEY (`questionTitleId`));
+
+  CREATE TABLE `athene`.`UserVotes` (
+  `voteId` bigint NOT NULL AUTO_INCREMENT,
+  `voterId`bigint NOT NULL,
+  `voteTargetId`bigint NOT NULL,
+  PRIMARY KEY (`voteId`));

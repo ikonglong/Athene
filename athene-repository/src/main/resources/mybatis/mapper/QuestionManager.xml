@@ -70,4 +70,14 @@
         </set>
         where questionId = #{questionId}
     </update>
+
+    <update id="updateVoteForAnswer" parameterType="long"
+            flushCache="true">
+        update Answer
+        <set>
+            numOfVotes = numOfVotes +1
+        </set>
+        where answerId = #{answerId}
+    </update>
+
 </mapper>

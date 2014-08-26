@@ -58,4 +58,9 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
         <property name="mapperInterface" value="com.quest.mapper.CommentManager"/>
     </bean>
+
+    <bean id="voteManager" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.quest.mapper.VoteManager"/>
+    </bean>
 </beans>

@@ -6,18 +6,18 @@ package com.quest.model;
 public class Comment {
 
     //! 评论ID
-    public long commentId;
+    private long commentId;
 
     //! 评论目标
-    public long targetId;
+    private long targetId;
 
     //! 评论内容
-    public String content;
+    private String content;
 
     //! 被评论数
-    public int numOfComments;
+    private int numOfComments;
 
-    public int targetType;
+    private int targetType;
 
     public int getTargetType() {
         return targetType;

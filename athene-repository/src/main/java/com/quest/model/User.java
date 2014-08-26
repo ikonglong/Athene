@@ -6,10 +6,10 @@ package com.quest.model;
 public class User {
 
     //! 用户ID
-    public long userId;
+    private long userId;
 
     //! 用户名
-    public String username;
+    private String username;
 
     public long getUserId() {
         return userId;
