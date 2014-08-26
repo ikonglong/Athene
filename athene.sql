@@ -36,6 +36,7 @@ CREATE TABLE `athene`.`Comment` (
   `targetId` bigint NULL,
   `content` VARCHAR(4000) NULL,
   `numOfComments` INT DEFAULT 0,
+  `targetType` INT DEFAULT 0,
   PRIMARY KEY (`commentId`));
 
 

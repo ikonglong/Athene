@@ -17,6 +17,16 @@ public class Comment {
     //! 被评论数
     public int numOfComments;
 
+    public int targetType;
+
+    public int getTargetType() {
+        return targetType;
+    }
+
+    public void setTargetType(int targetType) {
+        this.targetType = targetType;
+    }
+
     public int getNumOfComments() {
         return numOfComments;
     }

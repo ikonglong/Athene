@@ -8,12 +8,13 @@
         <result column="targetId" property="targetId" />
         <result column="content" property="content" />
         <result column="numOfComments" property="numOfComments" />
+        <result column="targetType" property="targetType" />
     </resultMap>
 
     <insert id="submitComment" parameterType="com.quest.model.Comment" useGeneratedKeys="true"
             keyProperty="commentId">
-        insert into Comment (targetId,content,numOfComments)
-        values (#{targetId},#{content},#{numOfComments})
+        insert into Comment (targetId,content,numOfComments,targetType)
+        values (#{targetId},#{content},#{numOfComments},#{targetType})
     </insert>
 
 </mapper>

@@ -19,6 +19,7 @@ public class CommentManagerTest extends  BaseTest {
         comment.targetId = 1;
         comment.content = "你的问题范围太大，根本没办法回答！";
         comment.numOfComments = 0;
+        comment.targetType = 0;//! 对问题进行评论
         commentManager.submitComment(comment);
     }
 
