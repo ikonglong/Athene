@@ -10,12 +10,9 @@ import java.util.Map;
  */
 public interface VoteManager {
 
-    //! 1. 保存一个投票 2. 给答案加上投票数
-    public void voteAnswer(long answerId);
-
     public void saveVote(Vote vote);
 
-    //! 根据投票人ID 获取问题
-    public Vote findAnswerByVoterIdAndAnswerId(@Param(value="vote") Map<String,Integer> voteParamMap);
+    //! 根据投票人ID 获取投票
+    public Vote findVoteByVoterIdAndAnswerId(@Param(value="vote") Map<String,Long> voteParamMap);
 
 }

@@ -63,4 +63,7 @@
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
         <property name="mapperInterface" value="com.quest.mapper.VoteManager"/>
     </bean>
+
+    <bean id="voteService" class="com.quest.service.VoteService">
+    </bean>
 </beans>

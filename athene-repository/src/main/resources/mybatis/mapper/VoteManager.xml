@@ -15,7 +15,7 @@
         values (#{voterId},#{voteTargetId})
     </insert>
 
-    <select id="findAnswerByVoterIdAndAnswerId" resultType="com.quest.model.Vote">
+    <select id="findVoteByVoterIdAndAnswerId" resultType="com.quest.model.Vote">
         select * from UserVotes where voterId = #{vote.voterId} and voteTargetId = #{vote.answerId}
     </select>
 </mapper>

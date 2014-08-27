@@ -33,10 +33,10 @@ public class VoteManagerTest extends BaseTest {
     public void testVoteAnswer() throws Exception {
 
         //! 首先查看用户是否已经VOTE 过该答案
-        Map<String,Integer> voteParamMap = new HashMap<String,Integer>();
-        voteParamMap.put("voterId",1);
-        voteParamMap.put("answerId",1);
-        Vote userVote = voteManager.findAnswerByVoterIdAndAnswerId(voteParamMap);
+        Map<String,Long> voteParamMap = new HashMap<String,Long>();
+        voteParamMap.put("voterId",1L);
+        voteParamMap.put("answerId",1L);
+        Vote userVote = voteManager.findVoteByVoterIdAndAnswerId(voteParamMap);
         if (userVote == null) {
 
             //! 先保存一个投票
@@ -52,10 +52,10 @@ public class VoteManagerTest extends BaseTest {
     @Test
     public  void  findAnswerByVoterIdAndAnswerId() throws  Exception {
         //! 首先查看用户是否已经VOTE 过该答案
-        Map<String,Integer> voteParamMap = new HashMap<String,Integer>();
-        voteParamMap.put("voterId",1);
-        voteParamMap.put("answerId",1);
-        Vote userVote = voteManager.findAnswerByVoterIdAndAnswerId(voteParamMap);
+        Map<String,Long> voteParamMap = new HashMap<String,Long>();
+        voteParamMap.put("voterId",1L);
+        voteParamMap.put("answerId",1L);
+        Vote userVote = voteManager.findVoteByVoterIdAndAnswerId(voteParamMap);
         Assert.assertNull(userVote);
     }
 }
