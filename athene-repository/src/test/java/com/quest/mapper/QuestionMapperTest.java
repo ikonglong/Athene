@@ -52,15 +52,27 @@ public class QuestionMapperTest extends BaseTest {
 
     @Test
     public void testFindQuestionsByQuestionTitle() throws Exception {
-        List<Question> questions = questionMapper.findQuestionsByQuestionTitle("java 容易学吗？");
-        Assert.assertEquals(1,questions.size());
+        List<Question> questions = questionMapper.findQuestionsByQuestionTitle("java");
+        System.out.println(questions.size());
     }
 
     @Test
     public void testFindQuestionsByQuestionContent() throws Exception {
-        List<Question> questions = questionMapper.findQuestionsByQuestionContent("具体要怎么才能学好java?");
-        Assert.assertEquals(1,questions.size());
+        List<Question> questions = questionMapper.findQuestionsByQuestionContent("java");
+        System.out.println(questions.size());
 
+    }
+
+    @Test
+    public void testFixQuestion() throws Exception {
+        Question question = new Question();
+        question.setModifiedTime(new Date());
+        question.setCreatorId(1);
+        question.setContent("hihi test1");
+        question.setQuestionTitle("hihi test1");
+        question.setState("verified");
+        question.setQuestionId(1);
+        questionMapper.fixQuestion(question);
     }
     /*@Test
     public void testAddAnswerForQuestion() throws Exception {

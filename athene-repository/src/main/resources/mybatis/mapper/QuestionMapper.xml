@@ -56,7 +56,19 @@
             flushCache="true">
         update question
         <set>
-           content = #{content},
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="questionTitle != null">
+                title = #{questionTitle},
+            </if>
+            <if test="state!=null">
+                state = #{state},
+            </if>
+            <if test="categoryId != 0">
+                category_id = #{categoryId},
+            </if>
+
             modified_time = #{modifiedTime},
             modifier_id = #{modifierId}
         </set>
