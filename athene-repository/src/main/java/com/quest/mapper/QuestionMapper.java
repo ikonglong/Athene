@@ -23,10 +23,35 @@ public interface QuestionMapper {
     public void fixQuestion(Question content);
 
     /**
+     * 根据问题ID更新答案数
+     * @param questionId
+     */
+    public void updateAnswerCountByQuestionId(long questionId);
+
+    /**
+     * 根据问题ID更新评论数
+     * @param questionId
+     */
+    public void updateCommentCountByQuestionId(long questionId);
+
+    /**
+     * 根据问题ID更新曝光数
+     * @param questionId
+     */
+    public void updateExposureCountByQuestionId(long questionId);
+
+    /**
      * 模糊查找问题
      * @param input 输入
      */
     public List<Question> findQuestionsByQuestionContent(String input);
+
+    /**
+     * 根据标题查找问题
+     * @param title
+     * @return
+     */
+    public List<Question> findQuestionsByQuestionTitle(String title);
 
     /**
      * 根据类目ID查询问题

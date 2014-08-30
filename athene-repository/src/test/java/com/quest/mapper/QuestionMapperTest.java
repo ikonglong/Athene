@@ -1,11 +1,11 @@
 package com.quest.mapper;
 
-import com.quest.athene.domain.model.*;
-import org.junit.Assert;
+import com.quest.athene.domain.model.Question;
+import com.quest.athene.domain.model.User;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
+import java.util.Date;
 
 /**
  * Created by hongfeiyanghf on 14-8-25.
@@ -13,13 +13,10 @@ import java.util.List;
 public class QuestionMapperTest extends BaseTest {
 
     @Autowired
-    private QuestionMapper questionManager;
-
-    @Autowired
-    private TagMapper tagManager;
+    private QuestionMapper questionMapper;
 
     @Test
-    public void testSubmitQestion() throws Exception {
+    public void testSubmitQestion() throws Exception {// ok
 
         //! 构造一个问题
         Question question = new Question();
@@ -33,32 +30,22 @@ public class QuestionMapperTest extends BaseTest {
         question.setCategoryId(1);
 
         //! 填入问题具体内容
-        question.setContent("具体要怎么才能学好java?");
+        question.setContent("知呼的模式到底好不好？");
         question.setState("new");
-
-        //! 如果问题有标签则插入一个标签
-        String tag = "软件";
-        QuestionTag questionTag = tagManager.findTagByTagContent(tag);
-
-        if (questionTag == null){
-            questionTag = new QuestionTag();
-            questionTag.setTagContent(tag);
-            tagManager.submitTag(questionTag);
-        }
 
         //! 刚保存的问题曝光率为0
         question.setNumOfExposures(0);
 
         //! 问题的标题
-        String title = "java 容易学吗？";
-       /* QuestionTitle questionTitle = questionManager.findTitleByTitleContent(title);
-        if (questionTitle == null) {
-            questionTitle = new QuestionTitle();
-            questionTitle.setQuestionTitleContent(title);
-            questionManager.saveQuestionTitle(questionTitle);
-        }*/
+        String title = "现在问答到底以什么模式来做？";
+        question.setQuestionTitle(title);
+        question.setModifiedTime(new Date());
+        question.setModifierId(1);
+        question.setCreatedTime(new Date());
+        question.setCreatorId(1);
+        question.setIsDeleted("n");
 
-        questionManager.submitQestion(question);
+        questionMapper.submitQestion(question);
    }
 
     @Test
@@ -74,7 +61,7 @@ public class QuestionMapperTest extends BaseTest {
         }*/
     }
 
-    @Test
+    /*@Test
     public void testAddAnswerForQuestion() throws Exception {
         Answer answer = new Answer();
         answer.setAuthorId(1);
@@ -100,5 +87,5 @@ public class QuestionMapperTest extends BaseTest {
         question.setQuestionId(1);
         question.setContent("JAVA学习道路的正确体系结构是什么，比如先学什么，后学什么？");
         questionManager.fixQuestion(question);
-    }
+    }*/
 }

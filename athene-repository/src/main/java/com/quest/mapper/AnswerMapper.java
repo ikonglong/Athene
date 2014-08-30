@@ -4,6 +4,7 @@ import com.quest.athene.domain.model.Answer;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by hongfeiyanghf on 14-8-30.
@@ -15,6 +16,34 @@ public interface AnswerMapper {
      * @param answer
      */
     public void addAnswerForQuestion(Answer answer);
+
+    /**
+     * 根据答案ID查询答案
+     * @param answerId
+     * @return
+     */
+    public Answer findAnswerByAnswerId(long answerId);
+
+    /**
+     * 根据答案内容模糊查找问题
+     * @param answerContent
+     * @return
+     */
+    public List<Answer> findAnswersByAnswerContent(String answerContent);
+
+    /**
+     * 根据回答者ID查找答案
+     * @param authorId
+     * @return
+     */
+    public List<Answer> findAnswersByAuthorId(long authorId);
+
+    /**
+     * 根据问题ID查找答案
+     * @param questionId
+     * @return
+     */
+    public List<Answer> findAnswersByQuestionId(long questionId);
 
     /**
      * 根据问题ID 更新投票数

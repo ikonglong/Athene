@@ -3,7 +3,7 @@
 
 <mapper namespace="com.quest.mapper.CommentMapper">
 
-    <resultMap id="Comment" type="com.quest.athene.domain.model.Comment" extends="baseEntity">
+    <resultMap id="Comment" type="com.quest.athene.domain.model.Comment" extends="com.quest.mapper.BaseMapper.BaseEntity">
         <result column="commentId" property="commentId" />
         <result column="targetId" property="targetId" />
         <result column="content" property="content" />

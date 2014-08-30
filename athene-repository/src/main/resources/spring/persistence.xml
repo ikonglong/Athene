@@ -39,22 +39,22 @@
     </bean>
     -->
 
-    <bean id="questionManager" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <bean id="questionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
         <property name="mapperInterface" value="com.quest.mapper.QuestionMapper"/>
     </bean>
 
-    <bean id="tagManager" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <bean id="answerMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-        <property name="mapperInterface" value="com.quest.mapper.TagMapper"/>
+        <property name="mapperInterface" value="com.quest.mapper.AnswerMapper"/>
     </bean>
 
-    <bean id="commentManager" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <bean id="commentMapperr" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
         <property name="mapperInterface" value="com.quest.mapper.CommentMapper"/>
     </bean>
 
-    <bean id="voteManager" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <bean id="voteMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
         <property name="mapperInterface" value="com.quest.mapper.VoteMapper"/>
     </bean>

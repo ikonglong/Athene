@@ -3,7 +3,7 @@ package com.quest.athene.domain.model;
 /**
  * Created by hongfeiyanghf on 14-8-24.
  */
-public class Question {
+public class Question extends BaseEntity {
 
     /**
      * 问题ID
@@ -18,7 +18,7 @@ public class Question {
     /**
      * 问题标题
      */
-    private long questionTitleId;
+    private String questionTitle;
 
     /**
      * 问题详细内容
@@ -46,9 +46,9 @@ public class Question {
     private long numOfComments;
 
     /**
-     * 问题所属标签ID
+     * 答案数
      */
-    private long tagId;
+    private long numOfAnswers;
 
     public long getQuestionId() {
         return questionId;
@@ -90,12 +90,12 @@ public class Question {
         this.categoryId = categoryId;
     }
 
-    public long getTagId() {
-        return tagId;
+    public long getNumOfAnswers() {
+        return numOfAnswers;
     }
 
-    public void setTagId(long tagId) {
-        this.tagId = tagId;
+    public void setNumOfAnswers(long numOfAnswers) {
+        this.numOfAnswers = numOfAnswers;
     }
 
     public long getNumOfExposures() {
@@ -106,11 +106,19 @@ public class Question {
         this.numOfExposures = numOfExposures;
     }
 
-    public long getQuestionTitleId() {
-        return questionTitleId;
+    public String getQuestionTitle() {
+        return questionTitle;
     }
 
-    public void setQuestionTitleId(long questionTitleId) {
-        this.questionTitleId = questionTitleId;
+    public void setQuestionTitle(String questionTitle) {
+        this.questionTitle = questionTitle;
+    }
+
+    public long getNumOfComments() {
+        return numOfComments;
+    }
+
+    public void setNumOfComments(long numOfComments) {
+        this.numOfComments = numOfComments;
     }
 }

@@ -16,16 +16,19 @@
 	
 	<!-- 别名配置 -->
 	<typeAliases>
-        <typeAlias alias="Tester" type="com.quest.athene.domain.model.Tester" />
+        <typeAlias alias="BaseEntity" type="com.quest.athene.domain.model.BaseEntity" />
         <typeAlias alias="Question" type="com.quest.athene.domain.model.Question" />
+        <typeAlias alias="Answer" type="com.quest.athene.domain.model.Answer" />
+        <typeAlias alias="Vote" type="com.quest.athene.domain.model.Vote" />
     </typeAliases>
 	
 	<!-- 指定映射器路径 -->
 	<mappers>
-        <mapper resource="mybatis/mapper/QuestionManager.xml" />
-        <mapper resource="mybatis/mapper/TagManager.xml" />
-        <mapper resource="mybatis/mapper/CommentManager.xml" />
-        <mapper resource="mybatis/mapper/VoteManager.xml" />
+        <mapper resource="mybatis/mapper/BaseMapper.xml" />
+        <mapper resource="mybatis/mapper/QuestionMapper.xml" />
+        <mapper resource="mybatis/mapper/AnswerMapper.xml" />
+        <mapper resource="mybatis/mapper/CommentMapper.xml" />
+        <mapper resource="mybatis/mapper/VoteMapper.xml" />
 	</mappers>
 
 </configuration>

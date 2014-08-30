@@ -3,7 +3,7 @@
 
 <mapper namespace="com.quest.mapper.BaseMapper">
 
-    <resultMap id="baseEntity" type="com.quest.athene.domain.model.BaseEntity">
+    <resultMap id="BaseEntity" type="com.quest.athene.domain.model.BaseEntity">
         <result column="create_id" property="createId" />
         <result column="create_time" property="createTime" />
         <result column="modifier_id" property="modifierId" />
@@ -11,13 +11,4 @@
         <result column="is_deleted" property="isDeleted" />
     </resultMap>
 
-    <insert id="saveVote" parameterType="com.quest.athene.domain.model.Vote" useGeneratedKeys="true"
-            keyProperty="voteId">
-        insert into UserVotes (voterId,voteTargetId)
-        values (#{voterId},#{voteTargetId})
-    </insert>
-
-    <select id="findVoteByVoterIdAndAnswerId" resultType="com.quest.athene.domain.model.Vote">
-        select * from UserVotes where voterId = #{vote.voterId} and voteTargetId = #{vote.answerId}
-    </select>
 </mapper>

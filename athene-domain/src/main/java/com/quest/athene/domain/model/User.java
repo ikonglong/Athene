@@ -3,7 +3,7 @@ package com.quest.athene.domain.model;
 /**
  * Created by hongfeiyanghf on 14-8-24.
  */
-public class User {
+public class User extends BaseEntity {
 
     /**
      * 用户ID

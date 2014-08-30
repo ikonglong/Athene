@@ -3,7 +3,7 @@
 
 <mapper namespace="com.quest.mapper.QuestionMapper">
 
-    <resultMap id="Question" type="com.quest.athene.domain.model.Question" extends="baseEntity">
+    <resultMap id="Question" type="com.quest.athene.domain.model.Question" extends="com.quest.mapper.BaseMapper.BaseEntity" >
         <result column="id" property="questionId" />
         <result column="title" property="title" />
         <result column="content" property="content" />
@@ -16,31 +16,35 @@
     </resultMap>
 
     <!-- insert statement -->
-    <insert id="submitQestion" parameterType="com.quest.athene.domain.model.Question" useGeneratedKeys="true"
+    <insert id="submitQestion" parameterType="Question" useGeneratedKeys="true"
             keyProperty="questionId">
-        insert into Question (authorId,questionTitleId,content,state,categoryId,numOfExposures,tagId)
-        values (#{authorId},#{questionTitleId},#{content},#{state},#{categoryId},#{numOfExposures},#{tagId})
-    </insert>
-
-    <insert id="saveQuestionTitle" parameterType="com.quest.athene.domain.model.QuestionTitle" useGeneratedKeys="true"
-            keyProperty="questionTitleId">
-        insert into QuestionTitle (questionTitleContent)
-        values (#{questionTitleContent})
-    </insert>
-
-    <insert id="addAnswerForQuestion" parameterType="com.quest.athene.domain.model.Answer" useGeneratedKeys="true"
-            keyProperty="answerId">
-        insert into Answer (authorId,isAccepted,questionId,numOfComments,answerContent)
-        values (#{authorId},#{isAccepted},#{questionId},#{numOfComments},#{answerContent})
+        insert into question (author_id,title,content,state,category_id,num_of_exposures,num_of_comments,num_of_answers,is_deleted,creator_id,created_time,modifier_id,modified_time)
+        values (#{authorId},#{questionTitle},#{content},#{state},#{categoryId},#{numOfExposures},#{numOfComments},#{numOfAnswers},#{isDeleted},#{creatorId},#{createdTime},#{modifierId},#{modifiedTime})
     </insert>
 
     <!-- select statement -->
-    <select id="findTitleByTitleContent" resultMap="QuestionTitle">
-        select * from QuestionTitle where questionTitleContent = #{title}
+    <select id="findQuestionsByQuestionTitle" resultMap="Question">
+        select * from question where title = #{questionTitle}
     </select>
 
-    <select id="findQuestionTitleByFuzzyInput" resultMap="QuestionTitle">
-        select * from QuestionTitle where questionTitleContent like CONCAT('%',#{input},'%')
+    <select id="findQuestionsByQuestionContent" resultMap="Question">
+        select * from question where content like CONCAT('%',#{input},'%')
+    </select>
+
+    <select id="findQuestionsByCategoryId" resultMap="Question">
+        select * from question where category_id = #{categoryId}
+    </select>
+
+    <select id="findQuestionsByState" resultMap="Question">
+        select * from question where state = #{state}
+    </select>
+
+    <select id="findQuestionsByAuthorId" resultMap="Question">
+        select * from question where author_id = #{author_id}
+    </select>
+
+    <select id="findQuestionByQuestionId" resultMap="Question">
+        select * from question where id = #{question_id}
     </select>
 
     <select id="lookupCountOfAnswersByQuestionId" resultType="int">
@@ -50,20 +54,70 @@
     <!-- update statement -->
     <update id="fixQuestion" parameterType="com.quest.athene.domain.model.Question"
             flushCache="true">
-        update Question
+        update question
         <set>
-           content = #{content}
+           content = #{content},
+            modified_time = #{modifiedTime},
+            modifier_id = #{modifierId}
         </set>
-        where questionId = #{questionId}
+        where id = #{questionId}
     </update>
 
-    <update id="updateVoteForAnswer" parameterType="long"
+    <update id="updateAnswerCountByQuestionId" parameterType="com.quest.athene.domain.model.Question"
             flushCache="true">
-        update Answer
+        update question
         <set>
-            numOfVotes = numOfVotes +1
+            num_of_answers = #{numOfAnswers},
+            modified_time = #{modifiedTime},
+            modifier_id = #{modifierId}
         </set>
-        where answerId = #{answerId}
+        where id = #{questionId}
     </update>
 
+    <update id="updateCommentCountByQuestionId" parameterType="com.quest.athene.domain.model.Question"
+            flushCache="true">
+        update question
+        <set>
+            num_of_comments = #{numOfComments},
+            modified_time = #{modifiedTime},
+            modifier_id = #{modifierId}
+        </set>
+        where id = #{questionId}
+    </update>
+
+    <update id="updateExposureCountByQuestionId" parameterType="com.quest.athene.domain.model.Question"
+            flushCache="true">
+        update question
+        <set>
+            num_of_exposures = #{numOfExposures},
+            modified_time = #{modifiedTime},
+            modifier_id = #{modifierId}
+        </set>
+        where id = #{questionId}
+    </update>
+
+    <!-- delete statement -->
+    <update id="deleteQuestionByQuestionId" parameterType="Question">
+        update question set is_deleted = 'y',
+            modified_time = #{modifiedTime},
+            modifier_id = #{modifierId} where id = #{questionId}
+    </update>
+
+    <update id="deleteQuestionsByAuthorId" parameterType="Question">
+        update question set is_deleted = 'y',
+            modified_time = #{modifiedTime},
+            modifier_id = #{modifierId} where author_id = #{authorId}
+    </update>
+
+    <update id="deleteQuestionsByCategoryId" parameterType="Question">
+        update question set is_deleted = 'y',
+            modified_time = #{modifiedTime},
+            modifier_id = #{modifierId} where category_id = #{categoryId}
+    </update>
+
+    <update id="deleteQuestionByQuestionTitle" parameterType="Question">
+        update question set is_deleted = 'y',
+            modified_time = #{modifiedTime},
+            modifier_id = #{modifierId} where title = #{questionTitle}
+    </update>
 </mapper>

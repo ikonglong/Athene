@@ -3,7 +3,7 @@ package com.quest.athene.domain.model;
 /**
  * Created by Administrator on 2014/8/26.
  */
-public class Vote {
+public class Vote extends BaseEntity {
 
     /**
      * 投票ID
