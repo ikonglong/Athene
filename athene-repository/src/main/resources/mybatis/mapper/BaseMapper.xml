@@ -8,6 +8,7 @@
         <result column="create_time" property="createTime" />
         <result column="modifier_id" property="modifierId" />
         <result column="modified_time" property="modifiedTime" />
+        <result column="is_deleted" property="isDeleted" />
     </resultMap>
 
     <insert id="saveVote" parameterType="com.quest.athene.domain.model.Vote" useGeneratedKeys="true"
