@@ -9,12 +9,8 @@
         <result column="is_accepted" property="isAccepted" />
         <result column="author_id" property="authorId" />
         <result column="question_id" property="questionId" />
-        <result column="is_accepted" property="isAccepted" />
-        <result column="is_accepted" property="isAccepted" />
-        <result column="is_accepted" property="isAccepted" />
-        <result column="is_accepted" property="isAccepted" />
-        <result column="is_accepted" property="isAccepted" />
-
+        <result column="num_of_votes" property="numOfVotes" />
+        <result column="num_of_comments" property="numOfComments" />
     </resultMap>
 
     <insert id="saveVote" parameterType="com.quest.athene.domain.model.Vote" useGeneratedKeys="true"

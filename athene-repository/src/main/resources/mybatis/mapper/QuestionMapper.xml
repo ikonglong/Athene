@@ -3,30 +3,16 @@
 
 <mapper namespace="com.quest.mapper.QuestionMapper">
 
-    <resultMap id="Question" type="com.quest.athene.domain.model.Question">
-        <result column="questionId" property="questionId" />
-        <result column="authorId" property="authorId" />
+    <resultMap id="Question" type="com.quest.athene.domain.model.Question" extends="baseEntity">
+        <result column="id" property="questionId" />
+        <result column="title" property="title" />
         <result column="content" property="content" />
         <result column="state" property="state" />
-        <result column="categoryId" property="categoryId" />
-        <result column="numOfExposures" property="numOfExposures" />
-        <result column="tagId" property="tagId" />
-        <result column="questionTitleId" property="questionTitleId" />
-        <result column="numOfComments" property="numOfComments" />
-    </resultMap>
-
-    <resultMap id="QuestionTitle" type="com.quest.athene.domain.model.QuestionTitle">
-        <result column="questionTitleId" property="questionTitleId" />
-        <result column="questionTitleContent" property="questionTitleContent" />
-    </resultMap>
-
-    <resultMap id="Answer" type="com.quest.athene.domain.model.Answer">
-        <result column="answerId" property="answerId" />
-        <result column="authorId" property="authorId" />
-        <result column="isAccepted" property="isAccepted" />
-        <result column="numOfComments" property="numOfComments" />
-        <result column="questionId" property="questionId" />
-        <result column="answerContent" property="answerContent" />
+        <result column="author_id" property="authorId" />
+        <result column="category_id" property="categoryId" />
+        <result column="num_of_exposures" property="numOfExposures" />
+        <result column="num_of_answers" property="numOfAnswers" />
+        <result column="num_of_comments" property="numOfComments" />
     </resultMap>
 
     <!-- insert statement -->
