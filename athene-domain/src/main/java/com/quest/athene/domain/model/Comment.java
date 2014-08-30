@@ -5,18 +5,29 @@ package com.quest.athene.domain.model;
  */
 public class Comment {
 
-    //! 评论ID
+    /**
+     * 评论ID
+     */
     private long commentId;
 
-    //! 评论目标
+    /**
+     * 评论目标
+     */
     private long targetId;
 
-    //! 评论内容
+    /**
+     * 评论内容
+     */
     private String content;
 
-    //! 被评论数
+    /**
+     * 被评论数
+     */
     private int numOfComments;
 
+    /**
+     * 目标类型
+     */
     private int targetType;
 
     public int getTargetType() {

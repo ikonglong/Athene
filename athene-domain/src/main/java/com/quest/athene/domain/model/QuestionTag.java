@@ -5,10 +5,14 @@ package com.quest.athene.domain.model;
  */
 public class QuestionTag {
 
-    //! 问题标签
+    /**
+     * 问题标签
+     */
     private long tagId;
 
-    //! 问题标签
+    /**
+     * 问题标签
+     */
     private String tagContent;
 
     public long getTagId() {

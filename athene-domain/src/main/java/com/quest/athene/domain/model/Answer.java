@@ -5,49 +5,47 @@ package com.quest.athene.domain.model;
  */
 public class Answer {
 
-    //! 答案ID
+    /**
+     * 答案ID
+     */
     private long answerId;
 
-    //! 答案提交者
+    /**
+     * 答案提交者
+     */
     private long authorId;
 
-    //! 答案是否被采纳
+    /**
+     * 答案是否被采纳
+     */
     private boolean isAccepted;
 
-    //! 答案所对应的问题
+    /**
+     * 答案所对应的问题
+     */
     private long questionId;
 
-    //! 答案内容
+    /**
+     * 答案内容
+     */
     private String answerContent;
 
-    //! 被评论数
+    /**
+     * 被评论数
+     */
     private int numOfComments;
 
-    //! 被赞的次数
+    /**
+     * 被赞的次数
+     */
     private int numOfVotes;
 
-    public int getNumOfVotes() {
-        return numOfVotes;
+    public long getAnswerId() {
+        return answerId;
     }
 
-    public void setNumOfVotes(int numOfVotes) {
-        this.numOfVotes = numOfVotes;
-    }
-
-    public long getQuestionId() {
-        return questionId;
-    }
-
-    public void setQuestionId(long questionId) {
-        this.questionId = questionId;
-    }
-
-    public int getNumOfComments() {
-        return numOfComments;
-    }
-
-    public void setNumOfComments(int numOfComments) {
-        this.numOfComments = numOfComments;
+    public void setAnswerId(long answerId) {
+        this.answerId = answerId;
     }
 
     public long getAuthorId() {
@@ -58,6 +56,22 @@ public class Answer {
         this.authorId = authorId;
     }
 
+    public boolean isAccepted() {
+        return isAccepted;
+    }
+
+    public void setAccepted(boolean isAccepted) {
+        this.isAccepted = isAccepted;
+    }
+
+    public long getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(long questionId) {
+        this.questionId = questionId;
+    }
+
     public String getAnswerContent() {
         return answerContent;
     }
@@ -66,19 +80,19 @@ public class Answer {
         this.answerContent = answerContent;
     }
 
-    public long getAnswerId() {
-        return answerId;
+    public int getNumOfComments() {
+        return numOfComments;
     }
 
-    public void setAnswerId(long answerId) {
-        this.answerId = answerId;
+    public void setNumOfComments(int numOfComments) {
+        this.numOfComments = numOfComments;
     }
 
-    public boolean isAccepted() {
-        return isAccepted;
+    public int getNumOfVotes() {
+        return numOfVotes;
     }
 
-    public void setAccepted(boolean isAccepted) {
-        this.isAccepted = isAccepted;
+    public void setNumOfVotes(int numOfVotes) {
+        this.numOfVotes = numOfVotes;
     }
 }

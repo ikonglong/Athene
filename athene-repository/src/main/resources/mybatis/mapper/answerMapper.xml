@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.quest.mapper.AnswerMapper">
+
+    <resultMap id="Answer" type="com.quest.athene.domain.model.Answer" extends="baseEntity">
+        <result column="id" property="answerId" />
+        <result column="content" property="answerContent" />
+        <result column="is_accepted" property="isAccepted" />
+        <result column="author_id" property="authorId" />
+        <result column="question_id" property="questionId" />
+        <result column="is_accepted" property="isAccepted" />
+        <result column="is_accepted" property="isAccepted" />
+        <result column="is_accepted" property="isAccepted" />
+        <result column="is_accepted" property="isAccepted" />
+        <result column="is_accepted" property="isAccepted" />
+
+    </resultMap>
+
+    <insert id="saveVote" parameterType="com.quest.athene.domain.model.Vote" useGeneratedKeys="true"
+            keyProperty="voteId">
+        insert into UserVotes (voterId,voteTargetId)
+        values (#{voterId},#{voteTargetId})
+    </insert>
+
+    <select id="findVoteByVoterIdAndAnswerId" resultType="com.quest.athene.domain.model.Vote">
+        select * from UserVotes where voterId = #{vote.voterId} and voteTargetId = #{vote.answerId}
+    </select>
+</mapper>

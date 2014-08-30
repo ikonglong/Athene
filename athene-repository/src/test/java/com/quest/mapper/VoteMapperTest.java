@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2014/8/26.
  */
-public class VoteManagerTest extends BaseTest {
+public class VoteMapperTest extends BaseTest {
 
     @Autowired
     private VoteMapper voteManager;
@@ -43,13 +43,13 @@ public class VoteManagerTest extends BaseTest {
             vote.setVoterId(1);
             vote.setVoteTargetId(1);
             voteManager.saveVote(vote);
-            questionManager.updateVoteForAnswer(vote.getVoteTargetId());
+//            questionManager.updateVoteForAnswer(vote.getVoteTargetId());
         }
 
     }
 
     @Test
-    public  void  findAnswerByVoterIdAndAnswerId() throws  Exception {
+    public void findAnswerByVoterIdAndAnswerId() throws  Exception {
         //! 首先查看用户是否已经VOTE 过该答案
         Map<String,Long> voteParamMap = new HashMap<String,Long>();
         voteParamMap.put("voterId",1L);

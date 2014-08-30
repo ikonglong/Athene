@@ -5,10 +5,14 @@ package com.quest.athene.domain.model;
  */
 public class User {
 
-    //! 用户ID
+    /**
+     * 用户ID
+     */
     private long userId;
 
-    //! 用户名
+    /**
+     * 用户名
+     */
     private String username;
 
     public long getUserId() {

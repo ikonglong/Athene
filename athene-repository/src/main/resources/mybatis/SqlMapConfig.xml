@@ -22,7 +22,6 @@
 	
 	<!-- 指定映射器路径 -->
 	<mappers>
-		<mapper resource="mybatis/mapper/TesterMapper.xml" />
         <mapper resource="mybatis/mapper/QuestionManager.xml" />
         <mapper resource="mybatis/mapper/TagManager.xml" />
         <mapper resource="mybatis/mapper/CommentManager.xml" />

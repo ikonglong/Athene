@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Created by Administrator on 2014/8/25.
  */
-public class CommentManagerTest extends  BaseTest {
+public class CommentMapperTest extends  BaseTest {
 
     @Autowired
     private CommentMapper commentManager;

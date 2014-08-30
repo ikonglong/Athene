@@ -1,8 +1,7 @@
 package com.quest.mapper;
 
-import com.quest.athene.domain.model.Answer;
+
 import com.quest.athene.domain.model.Question;
-import com.quest.athene.domain.model.QuestionTitle;
 
 import java.util.List;
 
@@ -11,49 +10,80 @@ import java.util.List;
  */
 public interface QuestionMapper {
 
-    //! 提交一个问题
+    /**
+     * 提交一个问题
+     * @param question 问题
+     */
     public void submitQestion (Question question);
 
-    //! 纠正一个问题
+    /**
+     * 纠正一个问题
+     * @param question 问题
+     */
     public void fixQuestion(Question content);
 
-    //! 模糊查找问题
-    public List<QuestionTitle> findQuestionTitleByFuzzyInput(String input);
+    /**
+     * 模糊查找问题
+     * @param input 输入
+     */
+    public List<Question> findQuestionsByQuestionContent(String input);
 
-    //! 查找问题有多少个答案，在联想问题标题的时候 需要显示
+    /**
+     * 根据类目ID查询问题
+     * @param categoryId
+     * @return
+     */
+    public List<Question> findQuestionsByCategoryId(long categoryId);
+
+    /**
+     * 根据状态查询问题
+     * @param state
+     * @return
+     */
+    public List<Question> findQuestionsByState(String state);
+
+    /**
+     * 根据提问者ID查询问题
+     * @param authorId
+     * @return
+     */
+    public List<Question> findQuestionsByAuthorId(long authorId);
+
+    /**
+     * 查找问题有多少个答案，在联想问题标题的时候 需要显示
+     * @param questionId 问题id
+     */
     public int lookupCountOfAnswersByQuestionId(long questionId);
 
-    //! 为问题添加一个答案
-    public void addAnswerForQuestion(Answer answer);
+    /**
+     * 根据问题ID查询问题
+     * @param questionId
+     * @return
+     */
+    public Question findQuestionByQuestionId(long questionId);
 
-    //! 根据问题ID 更新投票数
-    public void updateVoteForAnswer(long answerId);
+    /**
+     * 根据问题ID删除问题
+     * @param questionId
+     */
+    public void deleteQuestionByQuestionId(long questionId);
 
+    /**
+     * 根据提问者ID删除问题
+     * @param authorId
+     */
+    public void deleteQuestionsByAuthorId(long authorId);
 
-//    public Question findQuestionByAuthor(String author);
-//
-//    public Question findQuestionByTag (String tag) {
-//
-//
-//    }
-//
-//    public Question findQuestionByTitle (String title) {
-//
-//
-//    }
-//
-//    public Question findQuestionByTagId (String tagId) {
-//
-//
-//    }
-//
-//    public Question findQuestionByState (String state) {
-//
-//
-//    }
-//
-    public QuestionTitle findTitleByTitleContent (String titleContent) ;
+    /**
+     * 根据类目ID删除问题
+     * @param categoryId
+     */
+    public void deleteQuestionsByCategoryId(long categoryId);
 
-//
-    public void saveQuestionTitle(QuestionTitle title);
+    /**
+     * 根据问题标题删除问题
+     * @param questionTitle
+     */
+    public void deleteQuestionByQuestionTitle(String questionTitle);
+
 }

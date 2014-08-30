@@ -5,13 +5,19 @@ package com.quest.athene.domain.model;
  */
 public class Vote {
 
-    //! 投票ID
+    /**
+     * 投票ID
+     */
     private long voteId;
 
-    //! 投票人ID
+    /**
+     * 投票人ID
+     */
     private long voterId;
 
-    //! 投票对象 目前只对答案投票
+    /**
+     * 投票对象 目前只对答案投票
+     */
     private long voteTargetId;
 
     public long getVoteId() {

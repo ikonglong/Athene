@@ -12,7 +12,7 @@ public abstract class BaseEntity {
     private long creatorId;
     private Date createdTime;
     private long modifierId;
-    private Date modified_time;
+    private Date modifiedTime;
 
     public String getIsDeleted() {
         return isDeleted;
@@ -46,12 +46,11 @@ public abstract class BaseEntity {
         this.modifierId = modifierId;
     }
 
-    public Date getModified_time() {
-        return modified_time;
+    public Date getModifiedTime() {
+        return modifiedTime;
     }
 
-    public void setModified_time(Date modified_time) {
-        this.modified_time = modified_time;
+    public void setModifiedTime(Date modifiedTime) {
+        this.modifiedTime = modifiedTime;
     }
-
 }

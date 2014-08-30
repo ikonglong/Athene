@@ -5,31 +5,49 @@ package com.quest.athene.domain.model;
  */
 public class Question {
 
-    //! 问题ID
+    /**
+     * 问题ID
+     */
     private long questionId;
 
-    //! 作者ID
+    /**
+     * 作者ID
+     */
     private long authorId;
 
-    //! 问题标题
+    /**
+     * 问题标题
+     */
     private long questionTitleId;
 
-    //! 问题详细内容
+    /**
+     * 问题详细内容
+     */
     private String content;
 
-    //! 问题的状态
+    /**
+     * 问题的状态
+     */
     private String state;
 
-    //! 类目ID
+    /**
+     * 类目ID
+     */
     private long categoryId;
 
-    //! 曝光次数
+    /**
+     * 曝光次数
+     */
     private long numOfExposures;
 
-    //! 评论次数
+    /**
+     * 评论次数
+     */
     private long numOfComments;
 
-    //! 问题所属标签ID
+    /**
+     * 问题所属标签ID
+     */
     private long tagId;
 
     public long getQuestionId() {

@@ -1,19 +1,12 @@
 package com.quest.athene.domain.service;
 
-import com.quest.mapper.QuestionMapper;
-import com.quest.mapper.VoteMapper;
-import com.quest.model.Vote;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by hongfeiyanghf on 14-8-27.
  */
 public class VoteService {
 
-    @Autowired
+    /*@Autowired
     private VoteMapper voteManager;
 
     @Autowired
@@ -37,5 +30,5 @@ public class VoteService {
             questionManager.updateVoteForAnswer(vote.getVoteTargetId());
         }
 
-    }
+    }*/
 }
