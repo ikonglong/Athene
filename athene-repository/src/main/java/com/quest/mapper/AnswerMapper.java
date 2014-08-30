@@ -47,27 +47,27 @@ public interface AnswerMapper {
 
     /**
      * 根据问题ID 更新投票数
-     * @param answerId
+     * @param answer
      */
-    public void updateVoteCountForAnswer(long answerId);
+    public void updateVoteCountForAnswer(Answer answer);
 
     /**
      * 根据答案ID 修改答案的评论数
-     * @param answerId
+     * @param answer
      */
-    public void updateCommentCountForAnswer(long answerId);
+    public void updateCommentCountForAnswer(Answer answer);
 
     /**
      * 根据答案ID更新答案内容
-     * @param answerId
+     * @param answer
      */
-    public void updateContentByAnswerId(long answerId);
+    public void updateContentByAnswerId(Answer answer);
 
     /**
      * 根据作者ID和问题ID更新问题
-     * @param param
+     * @param answer
      */
-    public void updateAnswerByAuthorAndQuestionId(@Param(value="answerParam") HashMap<String,Long> param);
+    public void updateAnswerByAuthorAndQuestionId(Answer answer);
 
     /**
      * 根据答案ID删除答案

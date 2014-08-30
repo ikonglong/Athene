@@ -21,7 +21,7 @@
     </insert>
 
     <!-- update statement -->
-    <update id="updateVoteCountForAnswer" parameterType="long"
+    <update id="updateVoteCountForAnswer" parameterType="Answer"
             flushCache="true">
         update answer
         <set>
@@ -32,7 +32,7 @@
         where id = #{answerId}
     </update>
 
-    <update id="updateCommentCountForAnswer" parameterType="long"
+    <update id="updateCommentCountForAnswer" parameterType="Answer"
             flushCache="true">
         update answer
         <set>
@@ -61,8 +61,8 @@
             <if test="answerContent != null">
                 content = #{answerContent},
             </if>
-            <if test="answerContent != null">
-                is_accepted = #{answerContent},
+            <if test="isAccepted != null">
+                is_accepted = #{isAccepted},
             </if>
             modified_time = #{modifiedTime},
             modifier_id = #{modifierId}
@@ -92,7 +92,7 @@
     </select>
 
     <select id="findAnswersByAnswerContent" resultMap="Answer">
-        select * from answer where content = #{answerContent} and is_deleted = 'n'
+        select * from answer where content like CONCAT('%',#{answerContent},'%') and is_deleted = 'n'
     </select>
 
     <select id="findAnswersByAuthorId" resultMap="Answer">
