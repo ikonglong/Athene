@@ -14,6 +14,13 @@ public abstract class BaseEntity {
     private long modifierId;
     private Date modifiedTime;
 
+    protected BaseEntity() {}
+
+    protected BaseEntity(User creator) {
+        this.setCreatorId(creator.getUserId());
+        this.setCreatedTime(new Date());
+    }
+
     public String getIsDeleted() {
         return isDeleted;
     }
@@ -53,4 +60,17 @@ public abstract class BaseEntity {
     public void setModifiedTime(Date modifiedTime) {
         this.modifiedTime = modifiedTime;
     }
+
+    public static enum YesOrNo {
+        YES("y"), NO("n");
+
+        private String val;
+
+        private YesOrNo(String val) {
+            this.val = val;
+        }
+
+        public String val() { return this.val; }
+    }
+
 }

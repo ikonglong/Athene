@@ -4,7 +4,7 @@
 <mapper namespace="com.quest.mapper.CommentMapper">
 
     <resultMap id="Comment" type="com.quest.athene.domain.model.Comment">
-        <result column="commentId" property="commentId" />
+        <result column="id" property="id" />
         <result column="targetId" property="targetId" />
         <result column="content" property="content" />
         <result column="numOfComments" property="numOfComments" />
@@ -12,7 +12,7 @@
     </resultMap>
 
     <insert id="submitComment" parameterType="com.quest.athene.domain.model.Comment" useGeneratedKeys="true"
-            keyProperty="commentId">
+            keyProperty="id">
         insert into Comment (targetId,content,numOfComments,targetType)
         values (#{targetId},#{content},#{numOfComments},#{targetType})
     </insert>

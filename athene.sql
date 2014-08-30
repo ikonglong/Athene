@@ -32,12 +32,12 @@ CREATE TABLE `athene`.`QuestionTag` (
 
 
 CREATE TABLE `athene`.`Comment` (
-  `commentId` bigint NOT NULL AUTO_INCREMENT,
+  `id` bigint NOT NULL AUTO_INCREMENT,
   `targetId` bigint NULL,
   `content` VARCHAR(4000) NULL,
   `numOfComments` INT DEFAULT 0,
   `targetType` INT DEFAULT 0,
-  PRIMARY KEY (`commentId`));
+  PRIMARY KEY (`id`));
 
 
 

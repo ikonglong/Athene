@@ -1,14 +1,18 @@
 package com.quest.athene.domain.model;
 
+import com.google.common.base.Preconditions;
+
+import java.util.Date;
+
 /**
  * Created by hongfeiyanghf on 14-8-24.
  */
-public class Comment {
+public class Comment extends BaseEntity {
 
     /**
      * 评论ID
      */
-    private long commentId;
+    private long id;
 
     /**
      * 评论目标
@@ -30,6 +34,51 @@ public class Comment {
      */
     private int targetType;
 
+    public Comment() {}
+
+    public Comment(String content, User commenter) {
+        super(commenter);
+        this.content = content;
+    }
+
+    /**
+     * 回复指定的评论
+     * @param commentId
+     */
+    public void replyToComment(long commentId) {
+        this.setTargetId(commentId);
+    }
+
+    /**
+     * 评论指定的问题
+     * @param questionId
+     */
+    public void commentOnQuestion(long questionId) {
+        this.setTargetId(questionId);
+    }
+
+    /**
+     * 评论指定的解答
+     * @param answerId
+     */
+    public void commentOnAnswer(long answerId) {
+        this.setTargetId(answerId);
+    }
+
+    /**
+     * 删除当前用户的当前评论
+     */
+    public void remove(User operator) {
+        Preconditions.checkState((this.id > 0), "id <= 0");
+        if (this.getCreatorId() != operator.getUserId()) {
+            throw new UnsupportedOperationException("Can't remove others' comment");
+        }
+
+        this.setIsDeleted(YesOrNo.YES.val());
+        this.setModifierId(operator.getUserId());
+        this.setModifiedTime(new Date());
+    }
+
     public int getTargetType() {
         return targetType;
     }
@@ -46,12 +95,12 @@ public class Comment {
         this.numOfComments = numOfComments;
     }
 
-    public long getCommentId() {
-        return commentId;
+    public long getId() {
+        return id;
     }
 
-    public void setCommentId(long commentId) {
-        this.commentId = commentId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getTargetId() {
