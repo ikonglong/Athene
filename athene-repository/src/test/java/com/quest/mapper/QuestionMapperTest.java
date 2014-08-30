@@ -2,10 +2,12 @@ package com.quest.mapper;
 
 import com.quest.athene.domain.model.Question;
 import com.quest.athene.domain.model.User;
+import junit.framework.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by hongfeiyanghf on 14-8-25.
@@ -49,18 +51,17 @@ public class QuestionMapperTest extends BaseTest {
    }
 
     @Test
-    public void  testFindQuestionTitleByFuzzyInput() throws Exception {
-
-        /*String input = "软件";
-        List<QuestionTitle> questionTitles = questionManager.findQuestionTitleByFuzzyInput(input);
-        Assert.assertNotNull(questionTitles);
-        Assert.assertSame(1,questionTitles.size());
-        for (QuestionTitle t : questionTitles) {
-            System.out.print(t.getQuestionTitleContent() + "=========" +t.getQuestionTitleId() );
-
-        }*/
+    public void testFindQuestionsByQuestionTitle() throws Exception {
+        List<Question> questions = questionMapper.findQuestionsByQuestionTitle("java 容易学吗？");
+        Assert.assertEquals(1,questions.size());
     }
 
+    @Test
+    public void testFindQuestionsByQuestionContent() throws Exception {
+        List<Question> questions = questionMapper.findQuestionsByQuestionContent("具体要怎么才能学好java?");
+        Assert.assertEquals(1,questions.size());
+
+    }
     /*@Test
     public void testAddAnswerForQuestion() throws Exception {
         Answer answer = new Answer();
