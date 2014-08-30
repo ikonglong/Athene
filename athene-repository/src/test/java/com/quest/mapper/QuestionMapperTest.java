@@ -2,6 +2,7 @@ package com.quest.mapper;
 
 import com.quest.athene.domain.model.Question;
 import com.quest.athene.domain.model.User;
+import com.sun.xml.internal.messaging.saaj.packaging.mime.util.QEncoderStream;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,31 +75,70 @@ public class QuestionMapperTest extends BaseTest {
         question.setQuestionId(1);
         questionMapper.fixQuestion(question);
     }
-    /*@Test
-    public void testAddAnswerForQuestion() throws Exception {
-        Answer answer = new Answer();
-        answer.setAuthorId(1);
-        answer.setAccepted(false);
-        answer.setQuestionId(1);
-        answer.setAnswerContent( "java 是语言里最简单的！");
-        answer.setNumOfComments(0);
-        questionManager.addAnswerForQuestion(answer);
 
+    @Test
+    public void testUpdateAnswerCountByQuestionId() throws Exception {
+        Question question = new Question();
+        question.setQuestionId(1);
+        question.setModifiedTime(new Date());
+        question.setModifierId(1);
+        questionMapper.updateAnswerCountByQuestionId(question);
     }
 
     @Test
-    public void  testLookupCountOfAnswersByQuestionId()  throws Exception {
-
-        int questionCount = questionManager.lookupCountOfAnswersByQuestionId(1);
-        Assert.assertSame(2,questionCount);
-    }
-
-    @Test
-    public void testFixQuestion() throws  Exception {
+    public void testUpdateCommentCountByQuestionId() throws Exception {
 
         Question question = new Question();
         question.setQuestionId(1);
-        question.setContent("JAVA学习道路的正确体系结构是什么，比如先学什么，后学什么？");
-        questionManager.fixQuestion(question);
-    }*/
+        question.setModifiedTime(new Date());
+        question.setModifierId(1);
+        questionMapper.updateCommentCountByQuestionId(question);
+    }
+
+    @Test
+    public void testUpdateExposureCountByQuestionId() throws Exception {
+
+        Question question = new Question();
+        question.setQuestionId(1);
+        question.setModifiedTime(new Date());
+        question.setModifierId(1);
+        questionMapper.updateExposureCountByQuestionId(question);
+    }
+
+    @Test
+    public void testFindQuestions() throws Exception {
+
+        Question question = new Question();
+//        question.setQuestionId(2);
+        question.setState("new");
+        questionMapper.findQuestions(question);
+    }
+
+    @Test
+    public void testFindQuestionsByCategoryId() throws Exception {
+        questionMapper.findQuestionsByCategoryId(1);
+
+    }
+
+    @Test
+    public void testFindQuestionsByState() throws Exception {
+        questionMapper.findQuestionsByState("new");
+    }
+
+    @Test
+    public void testFindQuestionsByAuthorId() throws Exception {
+        questionMapper.findQuestionsByAuthorId(1);
+
+    }
+
+    @Test
+    public void testFindQuestionByQuestionId() throws Exception {
+        questionMapper.findQuestionByQuestionId(1);
+    }
+
+    @Test
+    public void testLookupCountOfAnswersByQuestionId() throws Exception {
+
+        questionMapper.lookupCountOfAnswersByQuestionId(1);
+    }
 }

@@ -48,7 +48,34 @@
     </select>
 
     <select id="lookupCountOfAnswersByQuestionId" resultType="int">
-        select count(1) from Answer where questionId = #{questionId}
+        select count(1) from answer where question_id = #{questionId}
+    </select>
+
+    <select id="findQuestions" resultMap="Question">
+        select * from question
+        <where>
+            is_deleted = 'n'
+            <if test="questionId!=0">
+                and id = #{questionId}
+            </if>
+            <if test="questionTitle!=null">
+                and title like CONCAT('%',#{questionTitle},'%')
+            </if>
+            <if test="content!=null">
+                and content like CONCAT('%',#{content},'%')
+            </if>
+            <if test="state!=null">
+                and state = #{state}
+            </if>
+            <if test="authorId!=0">
+                and author_id = #{authorId}
+            </if>
+            <if test="categoryId!=0">
+                and category_id = #{categoryId}
+            </if>
+
+        </where>
+
     </select>
 
     <!-- update statement -->
@@ -65,6 +92,9 @@
             <if test="state!=null">
                 state = #{state},
             </if>
+            <if test="authorId!=null">
+                author_id = #{authorId},
+            </if>
             <if test="categoryId != 0">
                 category_id = #{categoryId},
             </if>
@@ -79,7 +109,7 @@
             flushCache="true">
         update question
         <set>
-            num_of_answers = #{numOfAnswers},
+            num_of_answers = num_of_answers+1,
             modified_time = #{modifiedTime},
             modifier_id = #{modifierId}
         </set>
@@ -90,7 +120,7 @@
             flushCache="true">
         update question
         <set>
-            num_of_comments = #{numOfComments},
+            num_of_comments = num_of_comments+1,
             modified_time = #{modifiedTime},
             modifier_id = #{modifierId}
         </set>
@@ -101,7 +131,7 @@
             flushCache="true">
         update question
         <set>
-            num_of_exposures = #{numOfExposures},
+            num_of_exposures = num_of_exposures+1,
             modified_time = #{modifiedTime},
             modifier_id = #{modifierId}
         </set>

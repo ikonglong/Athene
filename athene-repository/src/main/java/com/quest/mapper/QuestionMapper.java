@@ -20,25 +20,25 @@ public interface QuestionMapper {
      * 纠正一个问题
      * @param question 问题
      */
-    public void fixQuestion(Question content);
+    public void fixQuestion(Question question);
 
     /**
      * 根据问题ID更新答案数
-     * @param questionId
+     * @param question
      */
-    public void updateAnswerCountByQuestionId(long questionId);
+    public void updateAnswerCountByQuestionId(Question question);
 
     /**
      * 根据问题ID更新评论数
-     * @param questionId
+     * @param question
      */
-    public void updateCommentCountByQuestionId(long questionId);
+    public void updateCommentCountByQuestionId(Question question);
 
     /**
      * 根据问题ID更新曝光数
-     * @param questionId
+     * @param question
      */
-    public void updateExposureCountByQuestionId(long questionId);
+    public void updateExposureCountByQuestionId(Question question);
 
     /**
      * 模糊查找问题
@@ -86,6 +86,13 @@ public interface QuestionMapper {
      * @return
      */
     public Question findQuestionByQuestionId(long questionId);
+
+    /**
+     * 根据问题的参数查找问题
+     * @param question
+     * @return
+     */
+    public List<Question> findQuestions(Question question);
 
     /**
      * 根据问题ID删除问题
