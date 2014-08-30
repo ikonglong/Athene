@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.quest.mapper.QuestionManager">
+<mapper namespace="com.quest.mapper.QuestionMapper">
 
-    <resultMap id="Question" type="com.quest.model.Question">
+    <resultMap id="Question" type="com.quest.athene.domain.model.Question">
         <result column="questionId" property="questionId" />
         <result column="authorId" property="authorId" />
         <result column="content" property="content" />
@@ -15,12 +15,12 @@
         <result column="numOfComments" property="numOfComments" />
     </resultMap>
 
-    <resultMap id="QuestionTitle" type="com.quest.model.QuestionTitle">
+    <resultMap id="QuestionTitle" type="com.quest.athene.domain.model.QuestionTitle">
         <result column="questionTitleId" property="questionTitleId" />
         <result column="questionTitleContent" property="questionTitleContent" />
     </resultMap>
 
-    <resultMap id="Answer" type="com.quest.model.Answer">
+    <resultMap id="Answer" type="com.quest.athene.domain.model.Answer">
         <result column="answerId" property="answerId" />
         <result column="authorId" property="authorId" />
         <result column="isAccepted" property="isAccepted" />
@@ -30,19 +30,19 @@
     </resultMap>
 
     <!-- insert statement -->
-    <insert id="submitQestion" parameterType="com.quest.model.Question" useGeneratedKeys="true"
+    <insert id="submitQestion" parameterType="com.quest.athene.domain.model.Question" useGeneratedKeys="true"
             keyProperty="questionId">
         insert into Question (authorId,questionTitleId,content,state,categoryId,numOfExposures,tagId)
         values (#{authorId},#{questionTitleId},#{content},#{state},#{categoryId},#{numOfExposures},#{tagId})
     </insert>
 
-    <insert id="saveQuestionTitle" parameterType="com.quest.model.QuestionTitle" useGeneratedKeys="true"
+    <insert id="saveQuestionTitle" parameterType="com.quest.athene.domain.model.QuestionTitle" useGeneratedKeys="true"
             keyProperty="questionTitleId">
         insert into QuestionTitle (questionTitleContent)
         values (#{questionTitleContent})
     </insert>
 
-    <insert id="addAnswerForQuestion" parameterType="com.quest.model.Answer" useGeneratedKeys="true"
+    <insert id="addAnswerForQuestion" parameterType="com.quest.athene.domain.model.Answer" useGeneratedKeys="true"
             keyProperty="answerId">
         insert into Answer (authorId,isAccepted,questionId,numOfComments,answerContent)
         values (#{authorId},#{isAccepted},#{questionId},#{numOfComments},#{answerContent})
@@ -62,7 +62,7 @@
     </select>
 
     <!-- update statement -->
-    <update id="fixQuestion" parameterType="com.quest.model.Question"
+    <update id="fixQuestion" parameterType="com.quest.athene.domain.model.Question"
             flushCache="true">
         update Question
         <set>

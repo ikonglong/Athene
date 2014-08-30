@@ -1,7 +1,6 @@
 package com.quest.mapper;
 
-import com.quest.service.VoteService;
-import com.sun.org.apache.xml.internal.resolver.readers.ExtendedXMLCatalogReader;
+import com.quest.athene.domain.service.VoteService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class VoteServiceTest extends BaseTest {
 
     @Autowired
-    private VoteManager voteManager;
+    private VoteMapper voteManager;
 
     @Autowired
-    private QuestionManager questionManager;
+    private QuestionMapper questionManager;
 
     @Autowired
     private VoteService voteService;

@@ -1,11 +1,10 @@
 package com.quest.mapper;
 
-import com.quest.model.*;
+import com.quest.athene.domain.model.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.swing.text.html.HTML;
 import java.util.List;
 
 /**
@@ -14,10 +13,10 @@ import java.util.List;
 public class QuestionManagerTest extends BaseTest {
 
     @Autowired
-    private QuestionManager questionManager;
+    private QuestionMapper questionManager;
 
     @Autowired
-    private TagManager tagManager;
+    private TagMapper tagManager;
 
     @Test
     public void testSubmitQestion() throws Exception {

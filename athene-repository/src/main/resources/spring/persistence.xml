@@ -46,24 +46,24 @@
 
     <bean id="questionManager" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-        <property name="mapperInterface" value="com.quest.mapper.QuestionManager"/>
+        <property name="mapperInterface" value="com.quest.mapper.QuestionMapper"/>
     </bean>
 
     <bean id="tagManager" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-        <property name="mapperInterface" value="com.quest.mapper.TagManager"/>
+        <property name="mapperInterface" value="com.quest.mapper.TagMapper"/>
     </bean>
 
     <bean id="commentManager" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-        <property name="mapperInterface" value="com.quest.mapper.CommentManager"/>
+        <property name="mapperInterface" value="com.quest.mapper.CommentMapper"/>
     </bean>
 
     <bean id="voteManager" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-        <property name="mapperInterface" value="com.quest.mapper.VoteManager"/>
+        <property name="mapperInterface" value="com.quest.mapper.VoteMapper"/>
     </bean>
 
-    <bean id="voteService" class="com.quest.service.VoteService">
+    <bean id="voteService" class="com.quest.athene.domain.service.VoteService">
     </bean>
 </beans>

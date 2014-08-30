@@ -1,11 +1,11 @@
 package com.quest.mapper;
 
-import com.quest.model.QuestionTag;
+import com.quest.athene.domain.model.QuestionTag;
 
 /**
  * Created by hongfeiyanghf on 14-8-24.
  */
-public interface TagManager {
+public interface TagMapper {
 
     //! 新增一个标签
     public void submitTag(QuestionTag tag);

@@ -1,7 +1,6 @@
 package com.quest.mapper;
 
-import com.quest.model.Answer;
-import com.quest.model.Vote;
+import com.quest.athene.domain.model.Vote;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +14,10 @@ import java.util.Map;
 public class VoteManagerTest extends BaseTest {
 
     @Autowired
-    private VoteManager voteManager;
+    private VoteMapper voteManager;
 
     @Autowired
-    private QuestionManager questionManager;
+    private QuestionMapper questionManager;
 
     @Test
     public void  testSaveVote() throws  Exception {

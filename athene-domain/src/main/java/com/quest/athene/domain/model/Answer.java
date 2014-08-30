@@ -1,4 +1,4 @@
-package com.quest.model;
+package com.quest.athene.domain.model;
 
 /**
  * Created by hongfeiyanghf on 14-8-24.

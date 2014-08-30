@@ -1,6 +1,6 @@
 package com.quest.mapper;
 
-import com.quest.model.Tester;
+import com.quest.athene.domain.model.Tester;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

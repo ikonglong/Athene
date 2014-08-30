@@ -16,8 +16,8 @@
 	
 	<!-- 别名配置 -->
 	<typeAliases>
-        <typeAlias alias="Tester" type="com.quest.model.Tester" />
-        <typeAlias alias="Question" type="com.quest.model.Question" />
+        <typeAlias alias="Tester" type="com.quest.athene.domain.model.Tester" />
+        <typeAlias alias="Question" type="com.quest.athene.domain.model.Question" />
     </typeAliases>
 	
 	<!-- 指定映射器路径 -->

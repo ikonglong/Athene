@@ -1,4 +1,4 @@
-package com.quest.model;
+package com.quest.athene.domain.model;
 
 
 public class Tester {

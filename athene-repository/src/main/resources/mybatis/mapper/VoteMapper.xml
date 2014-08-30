@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.quest.mapper.VoteManager">
+<mapper namespace="com.quest.mapper.VoteMapper">
 
-    <resultMap id="Vote" type="com.quest.model.Vote">
+    <resultMap id="Vote" type="com.quest.athene.domain.model.Vote">
         <result column="voteId" property="voteId" />
         <result column="voterId" property="voterId" />
         <result column="voteTargetId" property="voteTargetId" />
     </resultMap>
 
-    <insert id="saveVote" parameterType="com.quest.model.Vote" useGeneratedKeys="true"
+    <insert id="saveVote" parameterType="com.quest.athene.domain.model.Vote" useGeneratedKeys="true"
             keyProperty="voteId">
         insert into UserVotes (voterId,voteTargetId)
         values (#{voterId},#{voteTargetId})
     </insert>
 
-    <select id="findVoteByVoterIdAndAnswerId" resultType="com.quest.model.Vote">
+    <select id="findVoteByVoterIdAndAnswerId" resultType="com.quest.athene.domain.model.Vote">
         select * from UserVotes where voterId = #{vote.voterId} and voteTargetId = #{vote.answerId}
     </select>
 </mapper>

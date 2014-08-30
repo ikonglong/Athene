@@ -1,6 +1,6 @@
 package com.quest.mapper;
 
-import com.quest.model.Comment;
+import com.quest.athene.domain.model.Comment;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class CommentManagerTest extends  BaseTest {
 
     @Autowired
-    private  CommentManager commentManager;
+    private CommentMapper commentManager;
 
     @Test
     public void testSubmitComment() throws Exception {

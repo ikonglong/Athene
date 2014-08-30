@@ -1,15 +1,15 @@
 package com.quest.mapper;
 
-import com.quest.model.Answer;
-import com.quest.model.Question;
-import com.quest.model.QuestionTitle;
+import com.quest.athene.domain.model.Answer;
+import com.quest.athene.domain.model.Question;
+import com.quest.athene.domain.model.QuestionTitle;
 
 import java.util.List;
 
 /**
  * Created by hongfeiyanghf on 14-8-24.
  */
-public interface QuestionManager {
+public interface QuestionMapper {
 
     //! 提交一个问题
     public void submitQestion (Question question);

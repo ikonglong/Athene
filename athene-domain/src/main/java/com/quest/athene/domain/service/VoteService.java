@@ -1,7 +1,7 @@
-package com.quest.service;
+package com.quest.athene.domain.service;
 
-import com.quest.mapper.QuestionManager;
-import com.quest.mapper.VoteManager;
+import com.quest.mapper.QuestionMapper;
+import com.quest.mapper.VoteMapper;
 import com.quest.model.Vote;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,10 +14,10 @@ import java.util.Map;
 public class VoteService {
 
     @Autowired
-    private VoteManager voteManager;
+    private VoteMapper voteManager;
 
     @Autowired
-    private QuestionManager questionManager;
+    private QuestionMapper questionManager;
 
     //! 1. 保存一个投票 2. 给答案加上投票数
     public void voteAnswer(long answerId, long userId){
