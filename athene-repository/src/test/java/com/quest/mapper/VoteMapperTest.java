@@ -5,7 +5,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,7 +16,7 @@ import java.util.Map;
 public class VoteMapperTest extends BaseTest {
 
     @Autowired
-    private VoteMapper voteManager;
+    private VoteMapper voteMapper;
 
     @Autowired
     private QuestionMapper questionManager;
@@ -25,7 +27,7 @@ public class VoteMapperTest extends BaseTest {
         Vote vote = new Vote();
         vote.setVoteId(1);
         vote.setVoteTargetId(1);
-        voteManager.saveVote(vote);
+        voteMapper.saveVote(vote);
     }
 
     @Test
@@ -35,26 +37,65 @@ public class VoteMapperTest extends BaseTest {
         Map<String,Long> voteParamMap = new HashMap<String,Long>();
         voteParamMap.put("voterId",1L);
         voteParamMap.put("answerId",1L);
-        Vote userVote = voteManager.findVoteByVoterIdAndAnswerId(voteParamMap);
+        Vote userVote = voteMapper.findVoteByVoterIdAndAnswerId(voteParamMap);
         if (userVote == null) {
 
             //! 先保存一个投票
             Vote vote = new Vote();
             vote.setVoterId(1);
             vote.setVoteTargetId(1);
-            voteManager.saveVote(vote);
+            voteMapper.saveVote(vote);
 //            questionManager.updateVoteForAnswer(vote.getVoteTargetId());
         }
 
     }
 
     @Test
-    public void findAnswerByVoterIdAndAnswerId() throws  Exception {
+    public void testFindAnswerByVoterIdAndAnswerId() throws  Exception {
         //! 首先查看用户是否已经VOTE 过该答案
         Map<String,Long> voteParamMap = new HashMap<String,Long>();
         voteParamMap.put("voterId",1L);
         voteParamMap.put("answerId",1L);
-        Vote userVote = voteManager.findVoteByVoterIdAndAnswerId(voteParamMap);
+        Vote userVote = voteMapper.findVoteByVoterIdAndAnswerId(voteParamMap);
         Assert.assertNull(userVote);
+    }
+
+    @Test
+    public void testFindVotesByVoterId() throws Exception {
+        List<Vote> votes = voteMapper.findVotesByVoterId(1);
+    }
+
+    @Test
+    public void testFindVotesByAnswerId() throws Exception {
+        List<Vote> votes = voteMapper.findVotesByAnswerId(1);
+    }
+
+    @Test
+    public void testDeleteVoteByVoterId() throws Exception {
+        Vote vote = new Vote();
+        vote.setVoterId(1);
+        vote.setModifierId(1);
+        vote.setModifiedTime(new Date());
+        voteMapper.deleteVoteByVoterId(vote);
+
+    }
+
+    @Test
+    public void testDeleteVoteByVoteId() throws Exception {
+        Vote vote = new Vote();
+        vote.setVoterId(1);
+        vote.setModifiedTime(new Date());
+        vote.setModifierId(1);
+        voteMapper.deleteVoteByVoterId(vote);
+    }
+
+    @Test
+    public void testDeleteVoteByTargetId() throws Exception {
+
+        Vote vote = new Vote();
+        vote.setVoteTargetId(1);
+        vote.setModifiedTime(new Date());
+        vote.setModifierId(1);
+        voteMapper.deleteVoteByTargetId(vote);
     }
 }

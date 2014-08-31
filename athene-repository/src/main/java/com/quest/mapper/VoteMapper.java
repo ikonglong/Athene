@@ -40,19 +40,19 @@ public interface VoteMapper {
 
     /**
      * 根据投票者ID删除投票
-     * @param voterId
+     * @param vote
      */
-    public void deleteVoteByVoterId(long voterId);
+    public void deleteVoteByVoterId(Vote vote);
 
     /**
      * 根据投票ID删除投票
-     * @param voteId
+     * @param vote
      */
-    public void deleteVoteByVoteId(long voteId);
+    public void deleteVoteByVoteId(Vote vote);
 
     /**
      * 根据投票目标ID删除投票
-     * @param targetId
+     * @param vote
      */
-    public void deleteVoteByTargetId(long targetId);
+    public void deleteVoteByTargetId(Vote vote);
 }
