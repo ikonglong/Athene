@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/tx    http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+       ">
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://218.244.139.152:3306/athene?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;failOverReadOnly=false" />
+        <property name="username" value="athene_test"/>
+        <property name="password" value="54tester" />
+        <property name="maxActive" value="20" />
+        <property name="initialSize" value="1" />
+        <property name="maxWait" value="60000" />
+        <property name="minIdle" value="3" />
+        <property name="removeAbandoned" value="true" />
+        <property name="removeAbandonedTimeout" value="180" />
+        <property name="connectionProperties" value="clientEncoding=GBK" />
+    </bean>
+
+    <!-- 配置事务管理器，注意这里的dataSource和SqlSessionFactoryBean的dataSource要一致，不然事务就没有作用了 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 可通过注解控制事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    </bean>
+    -->
+
+    <bean id="questionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.quest.mapper.QuestionMapper"/>
+    </bean>
+
+    <bean id="answerMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.quest.mapper.AnswerMapper"/>
+    </bean>
+
+    <bean id="commentMapperr" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.quest.mapper.CommentMapper"/>
+    </bean>
+
+    <bean id="voteMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <property name="mapperInterface" value="com.quest.mapper.VoteMapper"/>
+    </bean>
+
+    <bean id="voteService" class="com.quest.athene.domain.service.VoteService">
+    </bean>
+</beans>

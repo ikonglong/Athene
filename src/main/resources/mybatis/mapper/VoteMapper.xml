@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.quest.mapper.VoteMapper">
+
+    <resultMap id="Vote" type="com.quest.athene.domain.model.Vote" extends="com.quest.mapper.BaseMapper.BaseEntity">
+        <result column="id" property="voteId" />
+        <result column="voter_id" property="voterId" />
+        <result column="target_id" property="voteTargetId" />
+    </resultMap>
+
+    <!-- insert statement -->
+    <insert id="saveVote" parameterType="Vote" useGeneratedKeys="true"
+            keyProperty="voteId">
+        insert into user_vote (voter_id,target_id,is_deleted,creator_id,created_time,modifier_id,modified_time)
+        values (#{voterId},#{targetId},#{isDeleted},#{creatorId},#{createdTime},#{modifierId},#{modifiedTime})
+    </insert>
+
+    <!-- select statement -->
+    <select id="findVoteByVoterIdAndAnswerId" resultType="map">
+        select * from user_vote where voter_id = #{vote.voterId} and target_id = #{vote.answerId} and is_deleted = 'n'
+    </select>
+
+    <select id="findVotesByVoterId" resultType="long">
+        select * from user_vote where voter_id = #{voterId} and is_deleted = 'n'
+    </select>
+
+    <select id="findVotesByAnswerId" resultType="long">
+        select * from user_vote where target_id = #{answerId} and is_deleted = 'n'
+    </select>
+
+    <!-- update statement -->
+    <update id="deleteVoteByVoterId" parameterType="Vote">
+        update user_vote set is_deleted = 'y',modified_time = #{modifiedTime},
+            modifier_id = #{modifierId} where id = #{voterId}
+    </update>
+
+    <update id="deleteVoteByVoteId" parameterType="Vote">
+        update user_vote set is_deleted = 'y',modified_time = #{modifiedTime},
+        modifier_id = #{modifierId} where id = #{voteId}
+    </update>
+
+    <update id="deleteVoteByTargetId" parameterType="Vote">
+        update user_vote set is_deleted = 'y',modified_time = #{modifiedTime},
+        modifier_id = #{modifierId} where target_id = #{voteTargetId}
+    </update>
+</mapper>
