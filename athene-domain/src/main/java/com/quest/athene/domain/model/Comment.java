@@ -15,24 +15,26 @@ public class Comment extends BaseEntity {
     private long id;
 
     /**
-     * 评论目标
-     */
-    private long targetId;
-
-    /**
      * 评论内容
      */
     private String content;
+
+    /**
+     * 评论对象
+     */
+    private long objectId;
+
+    /**
+     * 对象类型
+     */
+    private int objectType;
 
     /**
      * 被评论数
      */
     private int numOfComments;
 
-    /**
-     * 目标类型
-     */
-    private int targetType;
+
 
     public Comment() {}
 
@@ -46,7 +48,7 @@ public class Comment extends BaseEntity {
      * @param commentId
      */
     public void replyToComment(long commentId) {
-        this.setTargetId(commentId);
+        this.setObjectId(commentId);
     }
 
     /**
@@ -54,7 +56,7 @@ public class Comment extends BaseEntity {
      * @param questionId
      */
     public void commentOnQuestion(long questionId) {
-        this.setTargetId(questionId);
+        this.setObjectId(questionId);
     }
 
     /**
@@ -62,7 +64,7 @@ public class Comment extends BaseEntity {
      * @param answerId
      */
     public void commentOnAnswer(long answerId) {
-        this.setTargetId(answerId);
+        this.setObjectId(answerId);
     }
 
     /**
@@ -79,22 +81,6 @@ public class Comment extends BaseEntity {
         this.setModifiedTime(new Date());
     }
 
-    public int getTargetType() {
-        return targetType;
-    }
-
-    public void setTargetType(int targetType) {
-        this.targetType = targetType;
-    }
-
-    public int getNumOfComments() {
-        return numOfComments;
-    }
-
-    public void setNumOfComments(int numOfComments) {
-        this.numOfComments = numOfComments;
-    }
-
     public long getId() {
         return id;
     }
@@ -103,19 +89,35 @@ public class Comment extends BaseEntity {
         this.id = id;
     }
 
-    public long getTargetId() {
-        return targetId;
-    }
-
-    public void setTargetId(long targetId) {
-        this.targetId = targetId;
-    }
-
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public long getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(long objectId) {
+        this.objectId = objectId;
+    }
+
+    public int getObjectType() {
+        return objectType;
+    }
+
+    public void setObjectType(int objectType) {
+        this.objectType = objectType;
+    }
+
+    public int getNumOfComments() {
+        return numOfComments;
+    }
+
+    public void setNumOfComments(int numOfComments) {
+        this.numOfComments = numOfComments;
     }
 }

@@ -4,11 +4,11 @@
 <mapper namespace="com.quest.mapper.BaseMapper">
 
     <resultMap id="BaseEntity" type="com.quest.athene.domain.model.BaseEntity">
-        <result column="create_id" property="createId" />
-        <result column="create_time" property="createTime" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="creator_id" property="creatorId" />
+        <result column="created_time" property="createdTime" />
         <result column="modifier_id" property="modifierId" />
         <result column="modified_time" property="modifiedTime" />
-        <result column="is_deleted" property="isDeleted" />
     </resultMap>
 
 </mapper>

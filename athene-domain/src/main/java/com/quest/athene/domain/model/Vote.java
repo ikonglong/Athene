@@ -18,7 +18,7 @@ public class Vote extends BaseEntity {
     /**
      * 投票对象 目前只对答案投票
      */
-    private long voteTargetId;
+    private long voteObjectId;
 
     public long getVoteId() {
         return voteId;
@@ -36,11 +36,11 @@ public class Vote extends BaseEntity {
         this.voterId = voterId;
     }
 
-    public long getVoteTargetId() {
-        return voteTargetId;
+    public long getVoteObjectId() {
+        return voteObjectId;
     }
 
-    public void setVoteTargetId(long voteTargetId) {
-        this.voteTargetId = voteTargetId;
+    public void setVoteObjectId(long voteObjectId) {
+        this.voteObjectId = voteObjectId;
     }
 }

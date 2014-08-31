@@ -16,11 +16,6 @@
     <name>athene-infrastructure</name>
 
 	<dependencies>
-        <dependency>
-            <groupId>com.51quest</groupId>
-            <artifactId>athene-repository</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
 
 	</dependencies>
 </project>

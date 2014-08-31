@@ -1,4 +1,4 @@
-package com.quest.mapper;
+package com.quest.athene.mapper;
 
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

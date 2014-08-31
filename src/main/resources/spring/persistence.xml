@@ -41,22 +41,22 @@
 
     <bean id="questionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-        <property name="mapperInterface" value="com.quest.mapper.QuestionMapper"/>
+        <property name="mapperInterface" value="com.quest.athene.mapper.QuestionMapper"/>
     </bean>
 
     <bean id="answerMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-        <property name="mapperInterface" value="com.quest.mapper.AnswerMapper"/>
+        <property name="mapperInterface" value="com.quest.athene.mapper.AnswerMapper"/>
     </bean>
 
     <bean id="commentMapperr" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-        <property name="mapperInterface" value="com.quest.mapper.CommentMapper"/>
+        <property name="mapperInterface" value="com.quest.athene.mapper.CommentMapper"/>
     </bean>
 
     <bean id="voteMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-        <property name="mapperInterface" value="com.quest.mapper.VoteMapper"/>
+        <property name="mapperInterface" value="com.quest.athene.mapper.VoteMapper"/>
     </bean>
 
     <bean id="voteService" class="com.quest.athene.domain.service.VoteService">

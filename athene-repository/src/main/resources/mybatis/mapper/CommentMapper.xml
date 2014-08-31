@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.quest.mapper.CommentMapper">
+<mapper namespace="com.quest.athene.mapper.CommentMapper">
 
     <resultMap id="Comment" type="com.quest.athene.domain.model.Comment" extends="com.quest.mapper.BaseMapper.BaseEntity">
-        <result column="commentId" property="commentId" />
-        <result column="targetId" property="targetId" />
+        <result column="id" property="id" />
         <result column="content" property="content" />
-        <result column="numOfComments" property="numOfComments" />
-        <result column="targetType" property="targetType" />
+        <result column="object_id" property="objectId" />
+        <result column="target_type" property="objectType" />
+        <result column="num_of_comments" property="numOfComments" />
     </resultMap>
 
-    <insert id="submitComment" parameterType="com.quest.athene.domain.model.Comment" useGeneratedKeys="true"
-            keyProperty="commentId">
-        insert into Comment (targetId,content,numOfComments,targetType)
-        values (#{targetId},#{content},#{numOfComments},#{targetType})
+    <insert id="insert" parameterType="com.quest.athene.domain.model.Comment"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into comment (content, object_id, object_type, num_of_comments, is_deleted, creator_id, created_time)
+        values (#{content}, #{objectId}, #{objectType}, #{numOfComments}, #{isDeleted}, #{creatorId}, #{createdTime})
     </insert>
+
+    <select id="findById" resultMap="Comment">
+        select id, content, object_id, object_type, num_of_comments, is_deleted, creator_id, created_time, modifier_id, modified_time
+         from comment where id = #{id}
+    </select>
 
 </mapper>

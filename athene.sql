@@ -33,10 +33,10 @@ CREATE TABLE `athene`.`QuestionTag` (
 
 CREATE TABLE `athene`.`Comment` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `targetId` bigint NULL,
+  `objectId` bigint NULL,
   `content` VARCHAR(4000) NULL,
   `numOfComments` INT DEFAULT 0,
-  `targetType` INT DEFAULT 0,
+  `objectType` INT DEFAULT 0,
   PRIMARY KEY (`id`));
 
 
@@ -69,5 +69,5 @@ CREATE TABLE `athene`.`QuestionTitle` (
   CREATE TABLE `athene`.`UserVotes` (
   `voteId` bigint NOT NULL AUTO_INCREMENT,
   `voterId`bigint NOT NULL,
-  `voteTargetId`bigint NOT NULL,
+  `voteObjectId`bigint NOT NULL,
   PRIMARY KEY (`voteId`));

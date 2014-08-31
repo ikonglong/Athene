@@ -1,4 +1,4 @@
-package com.quest.mapper;
+package com.quest.athene.mapper;
 
 
 import com.quest.athene.domain.model.Question;

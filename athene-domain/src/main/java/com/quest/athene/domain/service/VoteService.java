@@ -25,9 +25,9 @@ public class VoteService {
             //! 先保存一个投票
             Vote vote = new Vote();
             vote.setVoterId(userId);
-            vote.setVoteTargetId(answerId);
+            vote.setVoteObjectId(answerId);
             voteManager.saveVote(vote);
-            questionManager.updateVoteForAnswer(vote.getVoteTargetId());
+            questionManager.updateVoteForAnswer(vote.getVoteObjectId());
         }
 
     }*/

@@ -1,9 +1,7 @@
-package com.quest.mapper;
+package com.quest.athene.mapper;
 
 import com.quest.athene.domain.model.Question;
 import com.quest.athene.domain.model.User;
-import com.sun.xml.internal.messaging.saaj.packaging.mime.util.QEncoderStream;
-import junit.framework.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

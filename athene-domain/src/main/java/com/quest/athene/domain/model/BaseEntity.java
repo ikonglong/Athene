@@ -17,6 +17,7 @@ public abstract class BaseEntity {
     protected BaseEntity() {}
 
     protected BaseEntity(User creator) {
+        this.setIsDeleted(YesOrNo.YES.val());
         this.setCreatorId(creator.getUserId());
         this.setCreatedTime(new Date());
     }
