@@ -47,7 +47,7 @@ public class QuestionMapperTest extends BaseTest {
         question.setIsDeleted("n");
 
         questionMapper.submitQestion(question);
-   }
+    }
 
     @Test
     public void testFindQuestionsByQuestionTitle() throws Exception {

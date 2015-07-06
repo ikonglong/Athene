@@ -8,66 +8,71 @@ drop table if exists `athene`.`QuestionTitle`;
 drop table if exists `athene`.`UserVotes`;
 
 CREATE TABLE `athene`.`Question` (
-  `questionId` bigint NOT NULL AUTO_INCREMENT,
-  `authorId` bigint DEFAULT NULL,
-  `questionTitleId` bigint NOT NULL,
+  `question_id` bigint NOT NULL AUTO_INCREMENT,
+  `author_id` bigint DEFAULT NULL,
+  `question_title` varchar(4000) DEFAULT NULL,
   `content` varchar(4000) DEFAULT NULL,
   `state` varchar(45) DEFAULT NULL,
-  `categoryId` bigint DEFAULT NULL,
-  `numOfExposures` bigint DEFAULT NULL,
-  `tagId` bigint DEFAULT NULL,
-  `numOfAnswers` INT DEFAULT 0,
-  `numOfComments` INT DEFAULT 0,
-  PRIMARY KEY (`questionId`),
-  UNIQUE KEY `questionId_UNIQUE` (`questionId`)
+  `category_id` bigint DEFAULT NULL,
+  `num_Of_exposures` bigint DEFAULT NULL,
+  `tag_id` bigint DEFAULT NULL,
+  `num_of_answers` INT DEFAULT 0,
+  `num_of_comments` INT DEFAULT 0,
+  `is_deleted` CHAR DEFAULT 'Y',
+  `creator_id` bigint DEFAULT NULL,
+  `created_time` DATETIME,
+  `modifier_id` bigint DEFAULT NULL,
+  `modified_time` DATETIME,
+  PRIMARY KEY (`question_id`),
+  UNIQUE KEY `question_id_UNIQUE` (`question_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
 
 
 CREATE TABLE `athene`.`QuestionTag` (
-  `tagId` bigint NOT NULL AUTO_INCREMENT,
-  `tagContent` VARCHAR(100) NULL,
-  PRIMARY KEY (`tagId`));
+  `tag_id` bigint NOT NULL AUTO_INCREMENT,
+  `tag_content` VARCHAR(100) NULL,
+  PRIMARY KEY (`tag_id`));
 
 
 
 CREATE TABLE `athene`.`Comment` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `objectId` bigint NULL,
+  `object_id` bigint NULL,
   `content` VARCHAR(4000) NULL,
-  `numOfComments` INT DEFAULT 0,
-  `objectType` INT DEFAULT 0,
+  `num_of_comments` INT DEFAULT 0,
+  `object_type` INT DEFAULT 0,
   PRIMARY KEY (`id`));
 
 
 
 CREATE TABLE `athene`.`Answer` (
-  `answerId` bigint NOT NULL AUTO_INCREMENT,
-  `authorId` bigint NULL,
-  `isAccepted` INT NULL,
-  `questionId` bigint NULL,
-  `numOfComments` INT DEFAULT 0,
-   `answerContent` VARCHAR(4000) NULL,
-    `numOfVotes` INT DEFAULT 0,
-  PRIMARY KEY (`answerId`));
+  `answer_id` bigint NOT NULL AUTO_INCREMENT,
+  `author_id` bigint NULL,
+  `is_accepted` INT NULL,
+  `question_id` bigint NULL,
+  `num_of_comments` INT DEFAULT 0,
+   `answer_content` VARCHAR(4000) NULL,
+    `num_of_votes` INT DEFAULT 0,
+  PRIMARY KEY (`answer_id`));
 
 
 
 CREATE TABLE `athene`.`User` (
-  `userId` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(100) NULL,
-  PRIMARY KEY (`userId`));
+  PRIMARY KEY (`user_id`));
 
 
 
 CREATE TABLE `athene`.`QuestionTitle` (
-  `questionTitleId` bigint NOT NULL AUTO_INCREMENT,
-  `questionTitleContent` VARCHAR(1000) NULL,
-   `questionId` bigint NULL,
-  PRIMARY KEY (`questionTitleId`));
+  `question_title_id` bigint NOT NULL AUTO_INCREMENT,
+  `question_title_content` VARCHAR(1000) NULL,
+   `question_id` bigint NULL,
+  PRIMARY KEY (`question_title_id`));
 
   CREATE TABLE `athene`.`UserVotes` (
-  `voteId` bigint NOT NULL AUTO_INCREMENT,
-  `voterId`bigint NOT NULL,
-  `voteObjectId`bigint NOT NULL,
-  PRIMARY KEY (`voteId`));
+  `vote_id` bigint NOT NULL AUTO_INCREMENT,
+  `voter_id`bigint NOT NULL,
+  `vote_object_id`bigint NOT NULL,
+  PRIMARY KEY (`vote_id`));

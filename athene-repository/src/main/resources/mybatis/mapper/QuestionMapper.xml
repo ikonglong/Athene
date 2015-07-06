@@ -18,7 +18,7 @@
     <!-- insert statement -->
     <insert id="submitQestion" parameterType="Question" useGeneratedKeys="true"
             keyProperty="questionId">
-        insert into question (author_id,title,content,state,category_id,num_of_exposures,num_of_comments,num_of_answers,is_deleted,creator_id,created_time,modifier_id,modified_time)
+        insert into question (author_id,question_title,content,state,category_id,num_of_exposures,num_of_comments,num_of_answers,is_deleted,creator_id,created_time,modifier_id,modified_time)
         values (#{authorId},#{questionTitle},#{content},#{state},#{categoryId},#{numOfExposures},#{numOfComments},#{numOfAnswers},#{isDeleted},#{creatorId},#{createdTime},#{modifierId},#{modifiedTime})
     </insert>
 
