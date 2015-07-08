@@ -2,13 +2,13 @@ package com.quest.athene.mapper;
 
 
 import com.quest.athene.domain.model.Question;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * Created by hongfeiyanghf on 14-8-24.
  */
-
 public interface QuestionMapper {
 
     /**

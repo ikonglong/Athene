@@ -1,6 +1,7 @@
 package com.quest.athene.mapper;
 
 import com.quest.athene.domain.model.Answer;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

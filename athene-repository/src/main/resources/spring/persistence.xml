@@ -49,7 +49,7 @@
         <property name="mapperInterface" value="com.quest.athene.mapper.AnswerMapper"/>
     </bean>
 
-    <bean id="commentMapperr" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <bean id="commentMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
         <property name="mapperInterface" value="com.quest.athene.mapper.CommentMapper"/>
     </bean>

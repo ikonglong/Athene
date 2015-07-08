@@ -4,6 +4,7 @@ import com.quest.athene.domain.model.Question;
 import com.quest.athene.domain.repository.QuestionRepository;
 import com.quest.athene.mapper.QuestionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,26 +16,27 @@ import java.util.List;
 public class QuestionRepositoryImpl implements QuestionRepository {
 
     @Autowired
+    @Qualifier("questionMapper")
     private QuestionMapper questionMapper;
 
     @Override
     public void removeQuestionById(long questionId) {
-        questionMapper.deleteQuestionByQuestionId(questionId);
+//        questionMapper.deleteQuestionByQuestionId(questionId);
     }
 
     @Override
     public void submitQuestion(Question question) {
-        questionMapper.submitQestion(question);
+//        questionMapper.submitQestion(question);
     }
 
     @Override
     public void fixQuestionContent(Question question) {
-        questionMapper.fixQuestion(question);
+//        questionMapper.fixQuestion(question);
     }
 
     @Override
     public void fixQuestionTitle(Question question) {
-        questionMapper.fixQuestion(question);
+//        questionMapper.fixQuestion(question);
     }
 
     @Override

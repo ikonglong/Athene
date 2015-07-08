@@ -1,12 +1,14 @@
 package com.quest.athene.domain.repository;
 
 import com.quest.athene.domain.model.Question;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * Created by hongfeiyanghf on 14-8-31.
  */
+//@Repository
 public interface QuestionRepository {
 
     /**

@@ -11,16 +11,17 @@ import org.springframework.stereotype.Repository;
 @Repository("commentRepository")
 public class CommentRepositoryImpl implements CommentRepository {
 
-    @Autowired
-    private CommentMapper commentMapper;
+//    @Autowired
+//    private CommentMapper commentMapper;
 
     @Override
     public void save(Comment comment) {
-        commentMapper.insert(comment);
+//        commentMapper.insert(comment);
     }
 
     @Override
     public Optional<Comment> load(long commentId) {
-        return Optional.fromNullable(commentMapper.findById(commentId));
+//        return Optional.fromNullable(commentMapper.findById(commentId));
+        return null;
     }
 }

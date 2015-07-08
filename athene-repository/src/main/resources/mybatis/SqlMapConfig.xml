@@ -26,7 +26,7 @@
 	<mappers>
         <mapper resource="mybatis/mapper/BaseMapper.xml" />
         <mapper resource="mybatis/mapper/QuestionMapper.xml" />
-        <mapper resource="mybatis/mapper/AnswerMapper.xml" />
+        <mapper resource="mybatis/mapper/answerMapper.xml" />
         <mapper resource="mybatis/mapper/CommentMapper.xml" />
         <mapper resource="mybatis/mapper/VoteMapper.xml" />
 	</mappers>

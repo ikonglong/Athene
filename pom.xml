@@ -12,8 +12,8 @@
 	<modules>
 		<module>athene-web</module>
         <module>athene-application</module>
+        <module>athene-repository</module>
         <module>athene-domain</module>
-		<module>athene-repository</module>
         <module>athene-infrastructure</module>
     </modules>
 	

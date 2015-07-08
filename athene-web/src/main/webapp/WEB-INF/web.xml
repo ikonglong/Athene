@@ -10,7 +10,7 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:springMVC-servlet.xml</param-value>
+        <param-value>classpath*:spring/*.xml</param-value>
     </context-param>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -22,7 +22,7 @@
         <!-- 可以自定义servlet.xml配置文件的位置和名称，默认为WEB-INF目录下，名称为[<servlet-name>]-servlet.xml，如spring-servlet.xml-->
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath*:springMVC-servlet.xml</param-value>
+            <param-value>classpath*:spring/springMVC-servlet.xml</param-value>
         </init-param>
         <!-- 指定Spring Bean的配置文件所在目录。默认配置在WEB-INF目录下 -->
         <load-on-startup>1</load-on-startup>

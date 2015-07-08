@@ -3,6 +3,7 @@ package com.quest.athene.domain.service;
 import com.quest.athene.domain.model.Question;
 import com.quest.athene.domain.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +15,8 @@ import java.util.List;
 public class QuestionService {
 
     @Autowired
-    private QuestionRepository questionRepositoryImpl;
+//    @Qualifier("questionRepositoryImpl")
+    private QuestionRepository questionRepository;
 
 //    public void submitQuestion(Question question) {
 //        questionRepository.submitQuestion(question);
@@ -47,7 +49,7 @@ public class QuestionService {
 //    }
 
     public List<Question> findQuestionsByAuthorId(long authorId){
-        return questionRepositoryImpl.findQuestionsByAuthorId(authorId);
+        return questionRepository.findQuestionsByAuthorId(authorId);
 
     }
 }
