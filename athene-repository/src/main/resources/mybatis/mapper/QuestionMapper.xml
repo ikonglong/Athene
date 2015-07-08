@@ -24,7 +24,7 @@
 
     <!-- select statement -->
     <select id="findQuestionsByQuestionTitle" resultMap="Question">
-        select * from question where title like CONCAT('%',#{questionTitle},'%')
+        select * from question where question_title like CONCAT('%',#{questionTitle},'%')
     </select>
 
     <select id="findQuestionsByQuestionContent" resultMap="Question">

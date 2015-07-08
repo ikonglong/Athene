@@ -12,28 +12,28 @@ import org.springframework.stereotype.Service;
 public class CommentService {
 
     @Autowired
-    private CommentRepository commentRepository;
+    private CommentRepository CommentRepositoryImpl;
 
     public void replyToComment(String replyContent, User replier, long targetCommentId) {
         Comment comment = new Comment(replyContent, replier);
         comment.replyToComment(targetCommentId);
-        commentRepository.save(comment);
+        CommentRepositoryImpl.save(comment);
     }
 
     public void commentOnQuestion(String content, User commenter, long questionId) {
         Comment comment = new Comment(content, commenter);
         comment.commentOnQuestion(questionId);
-        commentRepository.save(comment);
+        CommentRepositoryImpl.save(comment);
     }
 
     public void commentOnAnswer(String content, User commenter, long answerId) {
         Comment comment = new Comment(content, commenter);
         comment.commentOnAnswer(answerId);
-        commentRepository.save(comment);
+        CommentRepositoryImpl.save(comment);
     }
 
     public void removeComment(long commentId, User operator) {
-        Optional<Comment> comment = commentRepository.load(commentId);
+        Optional<Comment> comment = CommentRepositoryImpl.load(commentId);
         if (!comment.isPresent()) {
             // TODO 做合适的处理
             return;

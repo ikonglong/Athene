@@ -18,9 +18,9 @@
     </modules>
 	
     <properties>
-        <java.version>1.6</java.version>
+        <java.version>1.7</java.version>
         <source.encoding>UTF-8</source.encoding>
-        <spring.version>3.2.10.RELEASE</spring.version>
+        <spring.version>4.1.6.RELEASE</spring.version>
         <project.build.sourceEncoding>${source.encoding}</project.build.sourceEncoding>
     </properties>
 
@@ -66,6 +66,11 @@
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -73,6 +78,12 @@
             <version>17.0</version>
         </dependency>
 
+        <!-- web view -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
+        </dependency>
 
         <!-- log -->
         <dependency>

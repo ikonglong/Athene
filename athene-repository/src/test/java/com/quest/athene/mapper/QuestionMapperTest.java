@@ -51,7 +51,7 @@ public class QuestionMapperTest extends BaseTest {
 
     @Test
     public void testFindQuestionsByQuestionTitle() throws Exception {
-        List<Question> questions = questionMapper.findQuestionsByQuestionTitle("java");
+        List<Question> questions = questionMapper.findQuestionsByQuestionTitle("现在问答到底以什么模式来做？");
         System.out.println(questions.size());
     }
 

@@ -1,9 +1,7 @@
 package com.quest.athene.mapper;
 
 import com.quest.athene.domain.model.Answer;
-import org.apache.ibatis.annotations.Param;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
